@@ -47,7 +47,7 @@ const DocumentScreen = ({ navigation, route }) => {
 
             <View>
               <Image
-                style={{ borderWidth: 1, borderColor: '#41d5fb', height: '65%', resizeMode: 'contain' }}
+                style={{ borderWidth: 1, borderColor: '#000000', height: '65%', resizeMode: 'contain' }}
                 source={{ uri: route?.params?.signImagePath }}
               />
             </View>
@@ -86,10 +86,10 @@ const DocumentScreen = ({ navigation, route }) => {
             }}
             size="giant"
             style={{
-              backgroundColor: postReq.loading == false ? '#41d5fb' : '#e4e9f2',
-              borderColor: postReq.loading == false ? '#41d5fb' : '#e4e9f2',
+              backgroundColor: postReq.loading == false ? '#000000' : '#e4e9f2',
+              borderColor: postReq.loading == false ? '#000000' : '#e4e9f2',
               borderRadius: 10,
-              shadowColor: '#41d5fb',
+              shadowColor: '#000000',
               shadowOffset: {
                 width: 0,
                 height: 10,

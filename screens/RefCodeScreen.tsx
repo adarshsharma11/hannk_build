@@ -47,11 +47,11 @@ const RefCodeScreen = () => {
                     onPress={() => navigation.navigate("Signup", { refCode })}
                     size="large"
                     style={{
-                        backgroundColor: loading == false ? '#41d5fb' : '#e4e9f2',
-                        borderColor: loading == false ? '#41d5fb' : '#e4e9f2',
+                        backgroundColor: loading == false ? '#000000' : '#e4e9f2',
+                        borderColor: loading == false ? '#000000' : '#e4e9f2',
                         marginBottom: '5%',
                         borderRadius: 10,
-                        shadowColor: '#41d5fb',
+                        shadowColor: '#000000',
                         shadowOffset: {
                             width: 0,
                             height: 10,
@@ -84,7 +84,7 @@ const RefCodeScreen = () => {
                     {() => <Text style={{ fontFamily: AppFontBold, color: 'white', fontSize: 18 }}>{i18n.t(TRANSLATIONS_KEY.CANCEL_WORD).toString()}</Text>}
                 </Button>
                 <Layout style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', backgroundColor: '#00000000' }}>
-                    <Text onPress={() => navigation.navigate("Login")} style={{ color: '#41d5fb' }}>{i18n.t(TRANSLATIONS_KEY.FORGOT_BACK_TO_SIGN).toString()}</Text>
+                    <Text onPress={() => navigation.navigate("Login")} style={{ color: '#000000' }}>{i18n.t(TRANSLATIONS_KEY.FORGOT_BACK_TO_SIGN).toString()}</Text>
                 </Layout>
 
             </Layout>

@@ -12,8 +12,8 @@ const DocumentScreen = () => {
         <Layout>
           <Progress.Circle
             showsText={true}
-            textStyle={{ color: "#41d5fb" }}
-            color={"#41d5fb50"}
+            textStyle={{ color: "#000000" }}
+            color={"#00000050"}
             borderWidth={4}
             size={180}
             indeterminate={true}

@@ -268,7 +268,7 @@ export default function App({ navigation, route }) {
 
                 }}>
                   <View style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', borderColor: 'rgba(0,0,0,0.2)', borderRightWidth: 0 }}>
-                    <MaterialIcons name="location-on" style={{ color: '#41d5fb' }} size={24} />
+                    <MaterialIcons name="location-on" style={{ color: '#000000' }} size={24} />
                     <Text style={{ marginLeft: '5%', color: 'gray', fontFamily: AppFontRegular, fontSize: 12, textTransform: 'uppercase' }}>
                       {i18n.t(TRANSLATIONS_KEY.DETAILS_DIRECTION_MENU_OPTION).toString()}
                     </Text>
@@ -291,7 +291,7 @@ export default function App({ navigation, route }) {
                   Linking.openURL(`tel:${route.params.params.pickupLocationPhoneNumber}`)
                 }}>
                   <View style={{ height: '100%', borderColor: 'rgba(0,0,0,0.2)', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', }}>
-                    <MaterialIcons name="phone" style={{ color: '#41d5fb' }} size={24} />
+                    <MaterialIcons name="phone" style={{ color: '#000000' }} size={24} />
                     <Text style={{ textAlign: 'center', color: 'gray', fontFamily: AppFontRegular, fontSize: 12, textTransform: 'uppercase' }}>
                       {i18n.t(TRANSLATIONS_KEY.DETAILS_HELP_MENU_OPTION).toString()}
                     </Text>
@@ -318,7 +318,7 @@ export default function App({ navigation, route }) {
                   navigation.navigate('GdprScreen', { ...route.params.params })
                 }}>
                   <View style={{ height: '100%', borderColor: 'rgba(0,0,0,0.2)', borderRightWidth: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', }}>
-                    <MaterialIcons name="directions-car" style={{ color: cannotCollect ? '#41d5fb40' : '#41d5fb' }} size={24} />
+                    <MaterialIcons name="directions-car" style={{ color: cannotCollect ? '#00000040' : '#000000' }} size={24} />
                     <Text style={{ textAlign: 'center', color: 'gray', fontFamily: AppFontRegular, fontSize: 12, textTransform: 'uppercase' }}>
                       {i18n.t(TRANSLATIONS_KEY.DETAILS_COLLECT_MENU_OPTION).toString()}
                     </Text>

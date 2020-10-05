@@ -67,10 +67,10 @@ export default () => {
                                 title={`${equip.Equipment.Description} ${currentPrice ? `(${ResolveCurrencySymbol(found?.Charge.Taxamount.CurrencyCode)}${currentPrice})` : ''}`}
                                 replaceCheckbox={() => {
                                     const found = selectedExtras.find(i => i.Equipment.Description == equip.Equipment.Description)
-                                    return <View style={{ backgroundColor: found ? '#41d5fb' : 'white', borderColor: found ? 'white' : '#41d5fb', borderWidth: 1, borderRadius: 20, height: 35, width: 35, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                    return <View style={{ backgroundColor: found ? '#000000' : 'white', borderColor: found ? 'white' : '#000000', borderWidth: 1, borderRadius: 20, height: 35, width: 35, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                         {found ?
                                             <Text style={{ fontSize: 15, color: 'white' }}>{found.amount}</Text>
-                                            : <Text style={{ fontSize: 25, color: '#41d5fb' }} >+</Text>}
+                                            : <Text style={{ fontSize: 25, color: '#000000' }} >+</Text>}
                                     </View>
                                 }}
                                 onChange={() => {
@@ -86,8 +86,8 @@ export default () => {
                             onPress={() => navigation.navigate('Payment', { vehicle: route.params.vehicle })}
                             size="giant" style={{
                                 borderRadius: 10,
-                                backgroundColor: '#41d5fb',
-                                borderColor: '#41d5fb',
+                                backgroundColor: '#000000',
+                                borderColor: '#000000',
                                 paddingLeft: 20,
                                 paddingRight: 20,
                                 marginBottom: '2%'
@@ -130,7 +130,7 @@ export default () => {
                                 name="up"
                             />
                         </View>
-                        <Text style={{ color: '#41d5fb', fontSize: 18 }} onPress={() => {
+                        <Text style={{ color: '#000000', fontSize: 18 }} onPress={() => {
                             setAmountSelected(0)
                             setShowCounterModal(false)
                             if (!selectedEquip) return
@@ -167,7 +167,7 @@ export default () => {
                                     marginLeft: 'auto',
                                     width: '70%',
                                     height: 30,
-                                    borderColor: '#41d5fb',
+                                    borderColor: '#000000',
                                     borderWidth: item == amountSelected ? 1 : 0,
                                     borderRadius: 10
                                 }}>

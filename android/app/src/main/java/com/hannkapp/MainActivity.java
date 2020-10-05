@@ -1,4 +1,4 @@
-package com.anotherapp;
+package com.hannkapp;
 
 import com.facebook.react.ReactActivity;
 

@@ -84,8 +84,8 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                 <View style={{ backgroundColor: 'rgba(255,255,255,0.85)', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, zIndex: 4 }}>
                     <Progress.Circle
                         showsText={true}
-                        textStyle={{ color: "#41d5fb" }}
-                        color={"#41d5fb"}
+                        textStyle={{ color: "#000000" }}
+                        color={"#000000"}
                         borderWidth={4}
                         size={150}
                         indeterminate={true}
@@ -178,11 +178,11 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                         onPress={(e) => { handleSubmit() }}
                                         size="giant"
                                         style={{
-                                            backgroundColor: loading == false ? '#41d5fb' : '#e4e9f2',
-                                            borderColor: loading == false ? '#41d5fb' : '#e4e9f2',
+                                            backgroundColor: loading == false ? '#000000' : '#e4e9f2',
+                                            borderColor: loading == false ? '#000000' : '#e4e9f2',
                                             marginBottom: '15%',
                                             borderRadius: 10,
-                                            shadowColor: '#41d5fb',
+                                            shadowColor: '#000000',
                                             shadowOffset: {
                                                 width: 0,
                                                 height: 10,
@@ -255,7 +255,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                         <Text style={{ color: 'black' }}>
                             {i18n.t(TRANSLATIONS_KEY.LOGIN_DONT_HAVE_ACCOUNT).toString()}{' '}
                         </Text>
-                        <Text onPress={() => navigation.navigate('HasRefCodeScreen')} style={{ color: '#41d5fb' }}>
+                        <Text onPress={() => navigation.navigate('HasRefCodeScreen')} style={{ color: '#000000' }}>
                             {i18n.t(TRANSLATIONS_KEY.LOGIN_SIGN_UP).toString()}
                         </Text>
                     </Layout>

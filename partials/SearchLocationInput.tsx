@@ -66,13 +66,13 @@ const LocationSearchInput: React.FC<LocationSearchInputProps> = ({ hideReturnTog
       <Layout style={{ display: 'flex', flexDirection: 'row', zIndex: 6 }}>
         {returnSameLocation && (
           <Layout style={{ marginLeft: '2%',display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
-            <FontAwesomeIcon size={15} style={{ color: '#41d5fb' }} name="circle" />
+            <FontAwesomeIcon size={15} style={{ color: '#000000' }} name="circle" />
           </Layout>
         )}
 
         {!returnSameLocation && (
           <Layout style={{ marginLeft: '2%',display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
-            <FontAwesomeIcon size={15} style={{ color: '#41d5fb' }} name="circle" />
+            <FontAwesomeIcon size={15} style={{ color: '#000000' }} name="circle" />
             <Layout style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between' }}>
               <MaterialCommunityIcon style={{ marginBottom: '5%' }} size={4} name="rectangle" />
               <MaterialCommunityIcon style={{ marginBottom: '5%' }} size={4} name="rectangle" />
@@ -108,7 +108,7 @@ const LocationSearchInput: React.FC<LocationSearchInputProps> = ({ hideReturnTog
                 setPickupResults(null)
               }}>
                 <Layout style={{ display: 'flex', flexDirection: 'row', backgroundColor: "white",borderBottomColor: '#E4E9F2', borderBottomWidth: 1, paddingBottom: '3%', paddingTop: '3%' }}>
-                  <EvilIcon style={{ color: '#41D5FB' }} name="location" size={32} />
+                  <EvilIcon style={{ color: '#000000' }} name="location" size={32} />
                   <Text style={{ fontSize: 18 }}>{item.locationname}</Text>
                 </Layout>
               </TouchableOpacity>
@@ -139,7 +139,7 @@ const LocationSearchInput: React.FC<LocationSearchInputProps> = ({ hideReturnTog
                   setReturnResults(null)
                 }}>
                   <Layout style={{ display: 'flex', flexDirection: 'row', borderBottomColor: '#E4E9F2', borderBottomWidth: 1, paddingBottom: '3%', paddingTop: '3%' }}>
-                    <EvilIcon style={{ color: '#41D5FB' }} name="location" size={32} />
+                    <EvilIcon style={{ color: '#000000' }} name="location" size={32} />
                     <Text style={{ fontSize: 18 }}>{item.locationname}</Text>
                   </Layout>
                 </TouchableOpacity>

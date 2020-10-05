@@ -65,8 +65,8 @@ const DocumentScreen = ({ navigation }) => {
           <View style={{ backgroundColor: 'rgba(255,255,255,0.85)', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, zIndex: 4 }}>
             <Progress.Circle
               showsText={true}
-              textStyle={{ color: "#41d5fb" }}
-              color={"#41d5fb"}
+              textStyle={{ color: "#000000" }}
+              color={"#000000"}
               size={100}
               progress={uploadPercent / 100}
               indeterminate={uploadPercent == 0}
@@ -88,9 +88,9 @@ const DocumentScreen = ({ navigation }) => {
             <View style={{ display: 'flex', flexDirection: 'row', marginTop: '10%', }}>
               {Array(maxPhotosAmount).fill(1).map((_, idx) => {
                 return (
-                  <View style={{ marginLeft: '2%', borderWidth: 1, borderColor: pictures[idx] ? '#41d5fb' : 'white', backgroundColor: pictures[idx] ? 'white' : '#41d5fb', width: 40, height: 40, borderRadius: 40 / 2, display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
+                  <View style={{ marginLeft: '2%', borderWidth: 1, borderColor: pictures[idx] ? '#000000' : 'white', backgroundColor: pictures[idx] ? 'white' : '#000000', width: 40, height: 40, borderRadius: 40 / 2, display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
                     <Text style={{ color: 'white', textAlign: 'center', fontFamily: AppFontBold, fontSize: 20 }}>
-                      {!pictures[idx] ? idx + 1 : <MaterialIcons style={{ color: pictures[idx] ? '#41d5fb' : "white" }} size={24} name="check" />}
+                      {!pictures[idx] ? idx + 1 : <MaterialIcons style={{ color: pictures[idx] ? '#000000' : "white" }} size={24} name="check" />}
                     </Text>
                   </View>
                 );
@@ -116,7 +116,7 @@ const DocumentScreen = ({ navigation }) => {
                   }
                 });
               }}>
-                <View style={{ marginTop: '10%', backgroundColor: '#41d5fb', width: 100, height: 100, borderRadius: 100 / 2, display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
+                <View style={{ marginTop: '10%', backgroundColor: '#000000', width: 100, height: 100, borderRadius: 100 / 2, display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
                   <MaterialIcons style={{ color: 'white', alignSelf: 'center' }} size={50} name="camera-alt" />
                 </View>
               </TouchableOpacity>
@@ -154,10 +154,10 @@ const DocumentScreen = ({ navigation }) => {
               size="giant"
               style={{
                 width: '90%',
-                backgroundColor: !pictures[currentPicktureIndex] ? '#e4e9f2' : '#41d5fb',
-                borderColor: !pictures[currentPicktureIndex] ? '#e4e9f2' : '#41d5fb',
+                backgroundColor: !pictures[currentPicktureIndex] ? '#e4e9f2' : '#000000',
+                borderColor: !pictures[currentPicktureIndex] ? '#e4e9f2' : '#000000',
                 borderRadius: 10,
-                shadowColor: '#41d5fb',
+                shadowColor: '#000000',
                 shadowOffset: {
                   width: 0,
                   height: 10,

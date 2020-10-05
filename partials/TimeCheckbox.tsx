@@ -27,8 +27,8 @@ const TimeCheckbox: React.FC<TimeCheckboxProps> = ({ title, disabledStyling = fa
     }
 
     if (checked && disabledStyling == false) {
-        styles.color = '#41D5FB'
-        styles.textColor = '#41D5FB'
+        styles.color = '#000000'
+        styles.textColor = '#000000'
         styles.backgroundColor = 'white'
     }
 

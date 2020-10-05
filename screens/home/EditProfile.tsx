@@ -128,10 +128,10 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                             return (
                                 <>
                                     <TabView
-                                        indicatorStyle={{ backgroundColor: '#41d5fb' }}
+                                        indicatorStyle={{ backgroundColor: '#000000' }}
                                         selectedIndex={selectedIndex}
                                         onSelect={index => setSelectedIndex(index)}>
-                                        <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 0 ? '#41d5fb' : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.EDIT_PROFILE_PROFILE_TAB).toString()}</Text>} >
+                                        <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 0 ? '#000000' : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.EDIT_PROFILE_PROFILE_TAB).toString()}</Text>} >
                                             <>
                                                 <Input
                                                     disabled={profile?.socialmedia}
@@ -294,10 +294,10 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                     }}
                                                     size="giant"
                                                     style={{
-                                                        backgroundColor: loading == false ? '#41d5fb' : '#e4e9f2',
-                                                        borderColor: loading == false ? '#41d5fb' : '#e4e9f2',
+                                                        backgroundColor: loading == false ? '#000000' : '#e4e9f2',
+                                                        borderColor: loading == false ? '#000000' : '#e4e9f2',
                                                         borderRadius: 10,
-                                                        shadowColor: '#41d5fb',
+                                                        shadowColor: '#000000',
                                                         shadowOffset: {
                                                             width: 0,
                                                             height: 10,
@@ -314,7 +314,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                 </Button>
                                             </>
                                         </Tab>
-                                        <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 1 ? '#41d5fb' : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.EDIT_PROFILE_DOCUMENT_TAB).toString()}</Text>} >
+                                        <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 1 ? '#000000' : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.EDIT_PROFILE_DOCUMENT_TAB).toString()}</Text>} >
                                             <>
                                                 {profile?.passimage != "" ? (
                                                     <TimeCheckbox

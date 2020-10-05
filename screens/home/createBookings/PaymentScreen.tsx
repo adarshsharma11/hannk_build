@@ -125,10 +125,10 @@ export default () => {
                         </Layout>
                         <Layout style={{ padding: '5%' }}>
                             <TabView
-                                indicatorStyle={{ backgroundColor: '#41d5fb' }}
+                                indicatorStyle={{ backgroundColor: '#000000' }}
                                 selectedIndex={selectedIndex}
                                 onSelect={index => setSelectedIndex(index)}>
-                                <Tab style={{ paddingTop: '4%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontSize: 18, fontFamily: AppFontBold, color: selectedIndex == 0 ? '#41d5fb' : '#aeb1c3' }}>Paypal</Text>} >
+                                <Tab style={{ paddingTop: '4%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontSize: 18, fontFamily: AppFontBold, color: selectedIndex == 0 ? '#000000' : '#aeb1c3' }}>Paypal</Text>} >
                                     <View style={{ paddingTop: '10%', display: 'flex', alignItems: 'center' }}>
                                         <Image source={require('../../../image/paypal_logo.png')} />
                                         <Text style={{ fontSize: 20, textAlign: 'center', fontFamily: AppFontRegular }}>
@@ -148,13 +148,13 @@ export default () => {
                                                         <Text {...evaProps} style={{ fontFamily: AppFontRegular, fontSize: 16 }}>
                                                             {i18n.t(TRANSLATIONS_KEY.RIGHT_CARS_WORD).toString()}{' '}
                                                         </Text>
-                                                        <Text {...evaProps} onPress={() => navigation.navigate('TermsConditions')} style={{ fontFamily: AppFontRegular, color: '#41d5fb', fontSize: 16 }}>
+                                                        <Text {...evaProps} onPress={() => navigation.navigate('TermsConditions')} style={{ fontFamily: AppFontRegular, color: '#000000', fontSize: 16 }}>
                                                             {i18n.t(TRANSLATIONS_KEY.TERMS_CONDITIONS_WORD).toString()}
                                                         </Text>
                                                         <Text {...evaProps} style={{ fontFamily: AppFontRegular, fontSize: 16 }}>
                                                             {' '}{i18n.t(TRANSLATIONS_KEY.AND_WORD).toString()}{' '}
                                                         </Text>
-                                                        <Text {...evaProps} onPress={() => navigation.navigate('Policy')} style={{ fontFamily: AppFontRegular, color: '#41d5fb', fontSize: 16 }}>
+                                                        <Text {...evaProps} onPress={() => navigation.navigate('Policy')} style={{ fontFamily: AppFontRegular, color: '#000000', fontSize: 16 }}>
                                                             {i18n.t(TRANSLATIONS_KEY.PRIVACY_POLICY_WORD).toString()}.
                                                         </Text>
                                                     </View>
@@ -194,8 +194,8 @@ export default () => {
                                 size="giant" style={{
                                     borderRadius: 10,
                                     marginTop: '10%',
-                                    backgroundColor: termsAcepted ? '#41d5fb' : '#e4e9f2',
-                                    borderColor: termsAcepted ? '#41d5fb' : '#e4e9f2',
+                                    backgroundColor: termsAcepted ? '#000000' : '#e4e9f2',
+                                    borderColor: termsAcepted ? '#000000' : '#e4e9f2',
                                     paddingLeft: 20,
                                     paddingRight: 20,
                                     marginBottom: '2%'

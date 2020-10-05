@@ -33,7 +33,7 @@ import Svg, {
           <Path
             fillRule="evenodd"
             d="M180 315c6.627 0 12-5.373 12-12s-5.373-12-12-12-12 5.373-12 12 5.373 12 12 12z"
-            fill="#41D5FB"
+            fill="#000000"
           />
           <Path
             d="M180 315c6.627 0 12-5.373 12-12s-5.373-12-12-12-12 5.373-12 12 5.373 12 12 12z"
@@ -96,7 +96,7 @@ import Svg, {
           fillRule="evenodd"
           clipRule="evenodd"
           d="M43.2 720.533a4.667 4.667 0 11-9.333.001 4.667 4.667 0 019.333-.001zm-11.2 0a6.533 6.533 0 0010.446 5.233l1.96 1.961a.934.934 0 001.32-1.32l-1.96-1.961A6.533 6.533 0 1032 720.533z"
-          fill="#41D5FB"
+          fill="#000000"
         />
         <Mask
           id="prefix__b"
@@ -221,7 +221,7 @@ import Svg, {
           gradientUnits="userSpaceOnUse"
         >
           <Stop stopColor="#D8D8D8" stopOpacity={0.01} />
-          <Stop offset={1} stopColor="#41D5FB" />
+          <Stop offset={1} stopColor="#000000" />
         </LinearGradient>
         <ClipPath id="prefix__clip0">
           <Path fill="#fff" d="M0 0h375v812H0z" />

@@ -168,7 +168,7 @@ const DocumentScreen = () => {
               if (o.header) {
                 return (
                   <>
-                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#41d5fb', marginBottom: '2%' }}>
+                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#000000', marginBottom: '2%' }}>
                       <View style={{ padding: '3%' }}>
                         <View style={{ width: '100%' }}>
                           <Text style={{ fontSize: 18, textAlign: 'left', fontFamily: AppFontBold }}>{route.params.searchParams.pickUpLocation.locationname}</Text>
@@ -228,12 +228,12 @@ const DocumentScreen = () => {
           onPress={() => navigation.goBack()}
           size="medium"
           style={{
-            backgroundColor: '#41d5fb',
-            borderColor: '#41d5fb',
+            backgroundColor: '#000000',
+            borderColor: '#000000',
             width: '80%',
             marginBottom: '5%',
             borderRadius: 10,
-            shadowColor: '#41d5fb',
+            shadowColor: '#000000',
             shadowOffset: {
               width: 0,
               height: 10,
@@ -254,12 +254,12 @@ const DocumentScreen = () => {
           disabled={selectedIdx == -1 ? true : false}
           size="medium"
           style={{
-            backgroundColor: selectedIdx != -1 ? '#41d5fb' : '#e4e9f2',
-            borderColor: selectedIdx != -1 ? '#41d5fb' : '#e4e9f2',
+            backgroundColor: selectedIdx != -1 ? '#000000' : '#e4e9f2',
+            borderColor: selectedIdx != -1 ? '#000000' : '#e4e9f2',
             width: '80%',
             marginBottom: '5%',
             borderRadius: 10,
-            shadowColor: '#41d5fb',
+            shadowColor: '#000000',
             shadowOffset: {
               width: 0,
               height: 10,
@@ -292,7 +292,7 @@ const DocumentScreen = () => {
                 <Text style={{ fontSize: 18, color: '#33adcc', fontFamily: AppFontBold, marginBottom: '5%' }}>
                   {i18n.t(TRANSLATIONS_KEY.CAR_LIST_LOW_TO_HIGH_OPTION).toString()}
             </Text>
-                {sortState == "LowToHigh" && <MaterialCommunityIcons style={{ alignSelf: 'flex-start', color: '#41d5fb' }} name={"check"} size={24} />}
+                {sortState == "LowToHigh" && <MaterialCommunityIcons style={{ alignSelf: 'flex-start', color: '#000000' }} name={"check"} size={24} />}
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
@@ -303,7 +303,7 @@ const DocumentScreen = () => {
                 <Text style={{ fontSize: 18, color: '#33adcc', fontFamily: AppFontBold, marginBottom: '5%' }}>
                   {i18n.t(TRANSLATIONS_KEY.CAR_LIST_HIGH_TO_LOW_OPTION).toString()}
             </Text>
-                {sortState == "HighToLow" && <MaterialCommunityIcons style={{ alignSelf: 'flex-start', color: '#41d5fb' }} name={"check"} size={24} />}
+                {sortState == "HighToLow" && <MaterialCommunityIcons style={{ alignSelf: 'flex-start', color: '#000000' }} name={"check"} size={24} />}
               </View>
             </TouchableOpacity>
           </Layout>
@@ -349,10 +349,10 @@ const DocumentScreen = () => {
                       elevation: 2,
                     }}>
                     <View style={{ display: 'flex', flexDirection: 'row' }}>
-                      <Text style={{ textAlign: 'left', color: '#41d5fb', fontFamily: AppFontRegular }} category="h6">
+                      <Text style={{ textAlign: 'left', color: '#000000', fontFamily: AppFontRegular }} category="h6">
                         {i}
                       </Text>
-                      {transmissionFilters.includes(i) && <MaterialCommunityIcons style={{ marginLeft: '2%', color: '#41d5fb' }} name={"check"} size={24} />}
+                      {transmissionFilters.includes(i) && <MaterialCommunityIcons style={{ marginLeft: '2%', color: '#000000' }} name={"check"} size={24} />}
                     </View>
                   </Card>
                 );
@@ -383,10 +383,10 @@ const DocumentScreen = () => {
                       elevation: 2,
                     }}>
                     <View style={{ display: 'flex', flexDirection: 'row' }}>
-                      <Text style={{ textAlign: 'left', color: '#41d5fb', fontFamily: AppFontRegular }} category="h6">
+                      <Text style={{ textAlign: 'left', color: '#000000', fontFamily: AppFontRegular }} category="h6">
                         {i}
                       </Text>
-                      {typesFiter.includes(i) && <MaterialCommunityIcons style={{ marginLeft: '2%', color: '#41d5fb' }} name={"check"} size={24} />}
+                      {typesFiter.includes(i) && <MaterialCommunityIcons style={{ marginLeft: '2%', color: '#000000' }} name={"check"} size={24} />}
                     </View>
                   </Card>
                 );
@@ -400,10 +400,10 @@ const DocumentScreen = () => {
                 size="small"
                 style={{
                   width: '48%',
-                  backgroundColor: '#41d5fb',
-                  borderColor: '#41d5fb',
+                  backgroundColor: '#000000',
+                  borderColor: '#000000',
                   borderRadius: 10,
-                  shadowColor: '#41d5fb',
+                  shadowColor: '#000000',
                   shadowOffset: {
                     width: 0,
                     height: 10,
@@ -431,10 +431,10 @@ const DocumentScreen = () => {
                 size="small"
                 style={{
                   width: '48%',
-                  backgroundColor: '#41d5fb',
-                  borderColor: '#41d5fb',
+                  backgroundColor: '#000000',
+                  borderColor: '#000000',
                   borderRadius: 10,
-                  shadowColor: '#41d5fb',
+                  shadowColor: '#000000',
                   shadowOffset: {
                     width: 0,
                     height: 10,

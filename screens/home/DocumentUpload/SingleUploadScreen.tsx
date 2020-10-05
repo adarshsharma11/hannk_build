@@ -189,8 +189,8 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                         <View style={{ backgroundColor: 'white', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                             <Progress.Circle
                                                 showsText={true}
-                                                textStyle={{ color: "#41d5fb" }}
-                                                color={"#41d5fb"}
+                                                textStyle={{ color: "#000000" }}
+                                                color={"#000000"}
                                                 size={100}
                                                 progress={uploadPercent / 100}
                                                 indeterminate={uploadPercent == 0}
@@ -206,7 +206,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                         }}>
                                             <View style={{ backgroundColor: 'white', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 
-                                                <EntypoIcon style={{ marginRight: '5%', color: '#41d5fb' }} size={100} name="camera" />
+                                                <EntypoIcon style={{ marginRight: '5%', color: '#000000' }} size={100} name="camera" />
                                                 <Text style={{ color: 'black', textAlign: 'left', fontSize: 16, fontFamily: AppFontRegular }} category='s2'>
                                                     {i18n.t(TRANSLATIONS_KEY.PROFILE_VERIFICATION_ASK_FILE).toString()}
                                                 </Text>
@@ -358,10 +358,10 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                         }}
                                         size="giant"
                                         style={{
-                                            backgroundColor: getFilesReq.loading || saving ? '#e4e9f2' : '#41d5fb',
-                                            borderColor: getFilesReq.loading || saving ? '#e4e9f2' : '#41d5fb',
+                                            backgroundColor: getFilesReq.loading || saving ? '#e4e9f2' : '#000000',
+                                            borderColor: getFilesReq.loading || saving ? '#e4e9f2' : '#000000',
                                             borderRadius: 10,
-                                            shadowColor: '#41d5fb',
+                                            shadowColor: '#000000',
                                             shadowOffset: {
                                                 width: 0,
                                                 height: 10,
@@ -407,7 +407,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                     });
                                 }}>
                                     <View>
-                                        <EntypoIcon style={{ color: '#41d5fb' }} size={50} name="camera" />
+                                        <EntypoIcon style={{ color: '#000000' }} size={50} name="camera" />
                                         <Text style={{ textAlign: 'center', width: '100%', fontFamily: AppFontBold }}>
                                             {i18n.t(TRANSLATIONS_KEY.CAMERA_WORD).toString()}
                                         </Text>
@@ -430,7 +430,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                     });
                                 }}>
                                     <View>
-                                        <EntypoIcon style={{ color: '#41d5fb' }} size={50} name="folder-images" />
+                                        <EntypoIcon style={{ color: '#000000' }} size={50} name="folder-images" />
                                         <Text style={{ textAlign: 'center', width: '100%', fontFamily: AppFontBold }}>
                                             {i18n.t(TRANSLATIONS_KEY.GALLERY_WORD).toString()}
                                         </Text>

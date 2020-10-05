@@ -70,11 +70,11 @@ const DocumentScreen = () => {
           disabled={loading}
           accessoryRight={loading ? LoadingSpinner : undefined}
           style={{
-            backgroundColor: loading == false ? '#41d5fb' : '#e4e9f2',
-            borderColor: loading == false ? '#41d5fb' : '#e4e9f2',
+            backgroundColor: loading == false ? '#000000' : '#e4e9f2',
+            borderColor: loading == false ? '#000000' : '#e4e9f2',
             marginBottom: '15%',
             borderRadius: 10,
-            shadowColor: '#41d5fb',
+            shadowColor: '#000000',
             shadowOffset: {
               width: 0,
               height: 10,

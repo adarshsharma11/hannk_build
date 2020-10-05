@@ -8,7 +8,7 @@ function LocationIconComponent(props) {
         fillRule="evenodd"
         clipRule="evenodd"
         d="M113 226c62.408 0 113-50.592 113-113S175.408 0 113 0 0 50.592 0 113s50.592 113 113 113z"
-        fill="#41D5FB"
+        fill="#000000"
       />
       <Mask
         id="prefix__a"

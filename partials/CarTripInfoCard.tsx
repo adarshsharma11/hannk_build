@@ -75,7 +75,7 @@ const CarTripInfoCard: React.FC<TripCardProps> = (props) => {
           )}
           <Layout style={{ display: 'flex', flexDirection: 'row', paddingTop: '5%', paddingLeft: '5%', paddingRight: '5%', borderTopRightRadius: 16, borderTopLeftRadius: 16 }}>
             <Layout style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', marginRight: '5%' }}>
-              <FontAwesomeIcon size={15} style={{ color: '#41d5fb' }} name="circle" />
+              <FontAwesomeIcon size={15} style={{ color: '#000000' }} name="circle" />
               <Layout style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around' }}>
                 <MaterialCommunityIcon style={{ marginBottom: '15%' }} size={4} name="rectangle" />
                 <MaterialCommunityIcon style={{ marginBottom: '15%' }} size={4} name="rectangle" />
@@ -121,7 +121,7 @@ const CarTripInfoCard: React.FC<TripCardProps> = (props) => {
               </Button>
             )}
             {props.completed && (
-              <Button style={{ backgroundColor: '#41D5FB', borderColor: '#41D5FB', borderRadius: 10 }} size={'small'}>
+              <Button style={{ backgroundColor: '#000000', borderColor: '#000000', borderRadius: 10 }} size={'small'}>
                 {() => <Text style={{ color: 'white' }}>Generate Invoice</Text>}
               </Button>
             )}

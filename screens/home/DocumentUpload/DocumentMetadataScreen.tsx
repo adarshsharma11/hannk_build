@@ -189,10 +189,10 @@ const DocumentScreen = () => {
                   }}
                   size="giant"
                   style={{
-                    backgroundColor: buttonIsDisabled() ? '#e4e9f2': '#41d5fb',
-                    borderColor: buttonIsDisabled() ? '#e4e9f2' : '#41d5fb',
+                    backgroundColor: buttonIsDisabled() ? '#e4e9f2': '#000000',
+                    borderColor: buttonIsDisabled() ? '#e4e9f2' : '#000000',
                     borderRadius: 10,
-                    shadowColor: '#41d5fb',
+                    shadowColor: '#000000',
                     shadowOffset: {
                       width: 0,
                       height: 10,

@@ -21,11 +21,11 @@ const DocumentScreen = () => {
           onPress={() => navigation.navigate('VerifyPhone')}
           size="giant"
           style={{
-            backgroundColor: '#41d5fb',
-            borderColor: '#41d5fb',
+            backgroundColor: '#000000',
+            borderColor: '#000000',
             marginBottom: '15%',
             borderRadius: 10,
-            shadowColor: '#41d5fb',
+            shadowColor: '#000000',
             shadowOffset: {
               width: 0,
               height: 10,
@@ -39,7 +39,7 @@ const DocumentScreen = () => {
         <Layout style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', backgroundColor: '#00000000' }}>
           <Text onPress={() => {
             navigation.navigate('MyBookings')
-          }} style={{ textAlign: 'center', color: '#41d5fb' }}>Skip for now</Text>
+          }} style={{ textAlign: 'center', color: '#000000' }}>Skip for now</Text>
         </Layout>
 
       </Layout>

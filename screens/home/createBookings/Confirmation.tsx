@@ -85,8 +85,8 @@ export default () => {
                             }}
                             size="giant" style={{
                                 borderRadius: 10,
-                                backgroundColor: '#41d5fb',
-                                borderColor: '#41d5fb',
+                                backgroundColor: '#000000',
+                                borderColor: '#000000',
                                 paddingLeft: 20,
                                 paddingRight: 20,
                                 marginBottom: '2%'

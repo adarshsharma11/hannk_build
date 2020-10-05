@@ -322,13 +322,13 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                 currentPosition={currentPosition}
                                 labels={labels}
                                 customStyles={{
-                                    stepStrokeCurrentColor: '#41d5fb',
-                                    stepStrokeFinishedColor: '#41d5fb',
-                                    stepStrokeUnFinishedColor: '#41d5fb',
-                                    stepIndicatorUnFinishedColor: '#41d5fb',
+                                    stepStrokeCurrentColor: '#000000',
+                                    stepStrokeFinishedColor: '#000000',
+                                    stepStrokeUnFinishedColor: '#000000',
+                                    stepIndicatorUnFinishedColor: '#000000',
                                     separatorFinishedColor: '#7eaec4',
                                     separatorUnFinishedColor: '#dedede',
-                                    stepIndicatorFinishedColor: '#41d5fb',
+                                    stepIndicatorFinishedColor: '#000000',
                                     labelColor: '#999999',
                                     currentStepLabelColor: '#7eaec4',
                                 }}
@@ -500,8 +500,8 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                         <View style={{ backgroundColor: 'white', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                             <Progress.Circle
                                                 showsText={true}
-                                                textStyle={{ color: "#41d5fb" }}
-                                                color={"#41d5fb"}
+                                                textStyle={{ color: "#000000" }}
+                                                color={"#000000"}
                                                 size={100}
                                                 progress={uploadPercent / 100}
                                                 indeterminate={uploadPercent == 0}
@@ -518,7 +518,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                         }}>
                                             <View style={{ backgroundColor: 'white', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 
-                                                <EntypoIcon style={{ marginRight: '5%', color: '#41d5fb' }} size={100} name="camera" />
+                                                <EntypoIcon style={{ marginRight: '5%', color: '#000000' }} size={100} name="camera" />
                                                 <Text style={{ color: 'black', textAlign: 'left', fontSize: 16, fontFamily: AppFontRegular }} category='s2'>
                                                     {i18n.t(TRANSLATIONS_KEY.PROFILE_VERIFICATION_ASK_FILE).toString()}
                                                 </Text>
@@ -651,10 +651,10 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                 }}
                                 size="giant"
                                 style={{
-                                    backgroundColor: resolveFormState().disable || loading || sendFileReq.loading ? '#e4e9f2' : '#41d5fb',
-                                    borderColor: resolveFormState().disable || loading || sendFileReq.loading ? '#e4e9f2' : '#41d5fb',
+                                    backgroundColor: resolveFormState().disable || loading || sendFileReq.loading ? '#e4e9f2' : '#000000',
+                                    borderColor: resolveFormState().disable || loading || sendFileReq.loading ? '#e4e9f2' : '#000000',
                                     borderRadius: 10,
-                                    shadowColor: '#41d5fb',
+                                    shadowColor: '#000000',
                                     shadowOffset: {
                                         width: 0,
                                         height: 10,
@@ -709,7 +709,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                 }
                                             }}>
                                                 <View>
-                                                    <EntypoIcon style={{ color: '#41d5fb' }} size={50} name="camera" />
+                                                    <EntypoIcon style={{ color: '#000000' }} size={50} name="camera" />
                                                     <Text style={{ textAlign: 'center', width: '100%', fontFamily: AppFontBold }}>
                                                         {i18n.t(TRANSLATIONS_KEY.CAMERA_WORD).toString()}
                                                     </Text>
@@ -743,7 +743,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                 }
                                             }}>
                                                 <View>
-                                                    <EntypoIcon style={{ color: '#41d5fb' }} size={50} name="folder-images" />
+                                                    <EntypoIcon style={{ color: '#000000' }} size={50} name="folder-images" />
                                                     <Text style={{ textAlign: 'center', width: '100%', fontFamily: AppFontBold }}>
                                                         {i18n.t(TRANSLATIONS_KEY.GALLERY_WORD).toString()}
                                                     </Text>

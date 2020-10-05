@@ -108,7 +108,7 @@ export default () => {
                             <Text style={{ color: 'black' }}>
                                 {i18n.t(TRANSLATIONS_KEY.REGISTER_HAVE_ACCOUNT).toString()}
                             </Text>
-                            <Text onPress={() => navigation.navigate('Login')} style={{ color: '#41d5fb' }}>
+                            <Text onPress={() => navigation.navigate('Login')} style={{ color: '#000000' }}>
                                 {i18n.t(TRANSLATIONS_KEY.REGISTER_LOG_IN).toString()}
                             </Text>
                         </Layout>
@@ -260,11 +260,11 @@ export default () => {
                                         size="giant"
                                         style={{
                                             marginTop: '10%',
-                                            backgroundColor: loading == false ? '#41d5fb' : '#e4e9f2',
-                                            borderColor: loading == false ? '#41d5fb' : '#e4e9f2',
+                                            backgroundColor: loading == false ? '#000000' : '#e4e9f2',
+                                            borderColor: loading == false ? '#000000' : '#e4e9f2',
                                             marginBottom: '10%',
                                             borderRadius: 10,
-                                            shadowColor: '#41d5fb',
+                                            shadowColor: '#000000',
                                             shadowOffset: {
                                                 width: 0,
                                                 height: 10,
@@ -311,9 +311,9 @@ export default () => {
 
                     <Layout style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: '5%', flexWrap: 'wrap' }}>
                         <Text style={{ fontFamily: AppFontRegular, color: 'black' }}>{i18n.t(TRANSLATIONS_KEY.REGISTER_BY_CLICK_YOU_ACCEPT).toString()}</Text>
-                        <Text style={{ fontFamily: AppFontRegular, color: '#41d5fb' }}>{i18n.t(TRANSLATIONS_KEY.REGISTER_TERM_COND).toString()} </Text>
+                        <Text style={{ fontFamily: AppFontRegular, color: '#000000' }}>{i18n.t(TRANSLATIONS_KEY.REGISTER_TERM_COND).toString()} </Text>
                         <Text style={{ fontFamily: AppFontRegular, color: 'black' }}>{i18n.t(TRANSLATIONS_KEY.REGISTER_AS_WELL).toString()} </Text>
-                        <Text style={{ fontFamily: AppFontRegular, color: '#41d5fb' }}>{i18n.t(TRANSLATIONS_KEY.REGISTER_PRIVACY).toString()}</Text>
+                        <Text style={{ fontFamily: AppFontRegular, color: '#000000' }}>{i18n.t(TRANSLATIONS_KEY.REGISTER_PRIVACY).toString()}</Text>
                     </Layout>
                 </Layout>
             </ScrollView>

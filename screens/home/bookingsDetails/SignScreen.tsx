@@ -68,8 +68,8 @@ const DocumentScreen = ({ navigation }) => {
                         signRef.current?.saveImage()
                     }}
                     style={{
-                        backgroundColor: isClean == false ? '#41d5fb' : '#e4e9f2',
-                        borderColor: isClean == false ? '#41d5fb' : '#e4e9f2',
+                        backgroundColor: isClean == false ? '#000000' : '#e4e9f2',
+                        borderColor: isClean == false ? '#000000' : '#e4e9f2',
                     }}>{i18n.t(TRANSLATIONS_KEY.CONFIRM_WORD).toString()}</Button>
             </View>
             </>

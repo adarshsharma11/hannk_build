@@ -159,8 +159,8 @@ const DocumentScreen = () => {
               onPress={(e) => navigation.navigate("CreateBooking")}
               size="small"
               style={{
-                backgroundColor: '#41d5fb',
-                borderColor: '#41d5fb',
+                backgroundColor: '#000000',
+                borderColor: '#000000',
                 borderRadius: 10,
               }}>
               {() => <Text style={{ fontFamily: AppFontBold, color: 'white', fontSize: 16 }}>{i18n.t(TRANSLATIONS_KEY.CREATE_BTN_TEXT).toString()}</Text>}
@@ -170,10 +170,10 @@ const DocumentScreen = () => {
 
         <Layout style={{ flex: 1 }}>
           <TabView
-            indicatorStyle={{ backgroundColor: '#41d5fb' }}
+            indicatorStyle={{ backgroundColor: '#000000' }}
             selectedIndex={selectedIndex}
             onSelect={index => setSelectedIndex(index)}>
-            <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 0 ? '#41d5fb' : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.ACTIVE_TAB_TXT).toString()}</Text>} >
+            <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 0 ? '#000000' : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.ACTIVE_TAB_TXT).toString()}</Text>} >
               <Layout style={{ height: '86%' }}>
                 {loading && (
                   <Layout style={{ display: 'flex', justifyContent: 'center', alignItems: "center" }}>
@@ -196,7 +196,7 @@ const DocumentScreen = () => {
 
               </Layout>
             </Tab>
-            <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 1 ? '#41d5fb' : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.UPCOMING_TAB_TXT).toString()}</Text>} >
+            <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 1 ? '#000000' : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.UPCOMING_TAB_TXT).toString()}</Text>} >
               <Layout style={{ height: '96%' }}>
                 {loading && (
                   <Layout style={{ display: 'flex', justifyContent: 'center', alignItems: "center" }}>
@@ -220,7 +220,7 @@ const DocumentScreen = () => {
               </Layout>
             </Tab>
 
-            <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 2 ? '#41d5fb' : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.COMPLETED_TAB_TXT).toString()}</Text>} >
+            <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 2 ? '#000000' : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.COMPLETED_TAB_TXT).toString()}</Text>} >
               <Layout style={{ height: '96%' }}>
                 {loading && (
                   <Layout style={{ display: 'flex', justifyContent: 'center', alignItems: "center" }}>

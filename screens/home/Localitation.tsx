@@ -127,11 +127,11 @@ const DocumentScreen = () => {
                 onPress={(e) => { GPSState.requestAuthorization(GPSState.AUTHORIZED_WHENINUSE) }}
                 size="giant"
                 style={{
-                  backgroundColor: '#41d5fb',
-                  borderColor: '#41d5fb',
+                  backgroundColor: '#000000',
+                  borderColor: '#000000',
                   marginBottom: '15%',
                   borderRadius: 10,
-                  shadowColor: '#41d5fb',
+                  shadowColor: '#000000',
                   shadowOffset: {
                     width: 0,
                     height: 10,
@@ -146,7 +146,7 @@ const DocumentScreen = () => {
             </>
           }
 
-          <Text onPress={() => navigation.navigate('MyBookings')} style={{ color: '#41d5fb' }}>Skip for now</Text>
+          <Text onPress={() => navigation.navigate('MyBookings')} style={{ color: '#000000' }}>Skip for now</Text>
 
 
           {/*{isLocationEnabled ? (
@@ -162,11 +162,11 @@ const DocumentScreen = () => {
                   }}
                   size="giant"
                   style={{
-                    backgroundColor: '#41d5fb',
-                    borderColor: '#41d5fb',
+                    backgroundColor: '#000000',
+                    borderColor: '#000000',
                     marginBottom: '15%',
                     borderRadius: 10,
-                    shadowColor: '#41d5fb',
+                    shadowColor: '#000000',
                     shadowOffset: {
                       width: 0,
                       height: 10,

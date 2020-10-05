@@ -131,7 +131,7 @@ const DrawerItem = ({ navigation, name, iconName, screenName, iconSize, resetHis
                 }
             }}
         >
-            <MaterialCommunityIcon style={{ marginLeft: '8%', marginRight: '4%', color: '#41d5fb', fontSize: iconSize || 25 }} name={iconName} />
+            <MaterialCommunityIcon style={{ marginLeft: '8%', marginRight: '4%', color: '#000000', fontSize: iconSize || 25 }} name={iconName} />
             <Text style={styles.menuItemText}>{name}</Text>
         </TouchableOpacity>
     );

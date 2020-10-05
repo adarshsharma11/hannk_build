@@ -30,11 +30,11 @@ const HasRefCodeScreen = () => {
           onPress={() => navigation.navigate("RefCode")}
           size="large"
           style={{
-            backgroundColor: '#41d5fb',
-            borderColor: '#41d5fb',
+            backgroundColor: '#000000',
+            borderColor: '#000000',
             marginBottom: '5%',
             borderRadius: 10,
-            shadowColor: '#41d5fb',
+            shadowColor: '#000000',
             shadowOffset: {
               width: 0,
               height: 10,
@@ -65,7 +65,7 @@ const HasRefCodeScreen = () => {
           {() => <Text style={{ fontFamily: AppFontBold, color: 'white', fontSize: 18 }}>{i18n.t(TRANSLATIONS_KEY.NO_WORD).toString()}</Text>}
         </Button>
         <Layout style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', backgroundColor: '#00000000' }}>
-          <Text onPress={() => navigation.navigate("Login")} style={{ color: '#41d5fb' }}>{i18n.t(TRANSLATIONS_KEY.FORGOT_BACK_TO_SIGN).toString()}</Text>
+          <Text onPress={() => navigation.navigate("Login")} style={{ color: '#000000' }}>{i18n.t(TRANSLATIONS_KEY.FORGOT_BACK_TO_SIGN).toString()}</Text>
         </Layout>
 
       </Layout>

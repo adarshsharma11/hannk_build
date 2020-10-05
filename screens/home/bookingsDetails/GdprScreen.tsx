@@ -57,8 +57,8 @@ const GdprScreen = () => {
                     <View style={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <Progress.Circle
                             showsText={true}
-                            textStyle={{ color: "#41d5fb" }}
-                            color={"#41d5fb"}
+                            textStyle={{ color: "#000000" }}
+                            color={"#000000"}
                             borderWidth={4}
                             size={150}
                             indeterminate={true}
