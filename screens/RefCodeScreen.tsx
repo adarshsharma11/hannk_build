@@ -47,8 +47,8 @@ const RefCodeScreen = () => {
                     onPress={() => navigation.navigate("Signup", { refCode })}
                     size="large"
                     style={{
-                        backgroundColor: loading == false ? '#000000' : '#e4e9f2',
-                        borderColor: loading == false ? '#000000' : '#e4e9f2',
+                        backgroundColor: loading == false ? '#000000' : '#000000',
+                        borderColor: loading == false ? '#000000' : '#000000',
                         marginBottom: '5%',
                         borderRadius: 10,
                         shadowColor: '#000000',

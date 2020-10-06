@@ -45,12 +45,12 @@ export default () => {
     const [asCompany, setAsCompany] = useState(false);
     const phoneInput = useRef<ReactNativePhoneInput<typeof TextInput> | null>(null);
     const [{ data, loading, error }, doRegister] = useAxios({
-        url: `${GRCGDS_BACKEND}/user/register`,
+        url: `${GRCGDS_BACKEND}`,
         method: 'POST'
     }, { manual: true })
 
     const [loginReq, doLogin] = useAxios({
-        url: `${GRCGDS_BACKEND}/user/login`,
+        url: `${GRCGDS_BACKEND}`,
         method: 'POST'
     }, { manual: true })
 
@@ -61,7 +61,7 @@ export default () => {
 
     const renderInputIcon: RenderProp<Partial<ImageProps>> = (props) => (
         <TouchableWithoutFeedback onPress={toggleSecureEntry}>
-            <Icon style={{ color: secureTextEntry ? '#e4e9f2' : 'black' }} name={secureTextEntry ? 'eye' : 'eye-slash'} size={30} />
+            <Icon style={{ color: secureTextEntry ? '#000000' : 'black' }} name={secureTextEntry ? 'eye' : 'eye-slash'} size={30} />
         </TouchableWithoutFeedback>
     );
 
@@ -260,8 +260,8 @@ export default () => {
                                         size="giant"
                                         style={{
                                             marginTop: '10%',
-                                            backgroundColor: loading == false ? '#000000' : '#e4e9f2',
-                                            borderColor: loading == false ? '#000000' : '#e4e9f2',
+                                            backgroundColor: loading == false ? '#000000' : '#000000',
+                                            borderColor: loading == false ? '#000000' : '#000000',
                                             marginBottom: '10%',
                                             borderRadius: 10,
                                             shadowColor: '#000000',

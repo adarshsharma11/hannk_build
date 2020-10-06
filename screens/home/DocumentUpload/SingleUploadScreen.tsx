@@ -269,7 +269,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                                 controlStyle={{
                                                     backgroundColor: 'white',
                                                     borderRadius: 10,
-                                                    borderColor: errors.expDate && touched.expDate ? '#ffa5bc' : '#E4E9F2'
+                                                    borderColor: errors.expDate && touched.expDate ? '#ffa5bc' : '#000000'
                                                 }}
                                                 placeholder={() => <Text style={{ padding: '1.5%', paddingLeft: '4%', color: errors.expDate && touched.expDate ? '#ffa5bc' : '#8F9BB3' }}>{errors.expDate && touched.expDate ? errors.expDate : 'Expire Date'}</Text>}
                                                 date={values?.expDate?.toDate()}
@@ -292,7 +292,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                             {errors.docNumber && touched.docNumber && <ErrorLabel style={{ marginLeft: '5%', alignSelf: 'flex-start' }} text={errors.docNumber} />}
                                             <Layout style={{ marginBottom: '1%', width: '90%' }}>
                                                 <TouchableOpacity onPress={() => setShowCountryModal(true)}>
-                                                    <View style={{ width: '100%', borderWidth: 1, borderColor: errors.fileCountry && touched.fileCountry ? '#ffa5bc' : '#E4E9F2', borderRadius: 10 }}>
+                                                    <View style={{ width: '100%', borderWidth: 1, borderColor: errors.fileCountry && touched.fileCountry ? '#ffa5bc' : '#000000', borderRadius: 10 }}>
                                                         {errors.fileCountry && touched.fileCountry && !currentCountryObj && (
                                                             <Text style={{ color: '#ffa5bc', padding: '3.5%', marginLeft: '3.5%' }}>
                                                                 {errors.fileCountry}
@@ -314,7 +314,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                                     <CountryPicker
                                                         containerButtonStyle={{
                                                             borderWidth: 1,
-                                                            borderColor: errors.expDate && errors.expDate ? '#ffa5bc' : '#E4E9F2',
+                                                            borderColor: errors.expDate && errors.expDate ? '#ffa5bc' : '#000000',
                                                             padding: '3%',
                                                             borderRadius: 10,
                                                             width: 350,
@@ -358,8 +358,8 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                         }}
                                         size="giant"
                                         style={{
-                                            backgroundColor: getFilesReq.loading || saving ? '#e4e9f2' : '#000000',
-                                            borderColor: getFilesReq.loading || saving ? '#e4e9f2' : '#000000',
+                                            backgroundColor: getFilesReq.loading || saving ? '#000000' : '#000000',
+                                            borderColor: getFilesReq.loading || saving ? '#000000' : '#000000',
                                             borderRadius: 10,
                                             shadowColor: '#000000',
                                             shadowOffset: {

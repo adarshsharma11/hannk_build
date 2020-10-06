@@ -16,7 +16,7 @@ const DocumentScreen = () => {
   const navigation = useNavigation();
 
   const [{ data, loading, error }, getKeys] = useAxios({
-    url: `${GRCGDS_BACKEND}/public/keyRings`,
+    url: `${GRCGDS_BACKEND}`,
   }, { manual: true })
 
   return (

@@ -153,9 +153,9 @@ android {
         }
         release {
             storeFile file('RC.keystore')
-            storePassword MYAPP_UPLOAD_STORE_PASSWORD
-            keyAlias MYAPP_UPLOAD_KEY_ALIAS
-            keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+            storePassword "android"
+            keyAlias "android"
+            keyPassword "android"
         }
     }
     buildTypes {

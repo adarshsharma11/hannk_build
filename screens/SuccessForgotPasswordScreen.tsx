@@ -50,8 +50,8 @@ const DocumentScreen = () => {
           disabled={loading}
           accessoryRight={loading ? LoadingSpinner : undefined}
           style={{
-            backgroundColor: loading == false ? '#000000' : '#e4e9f2',
-            borderColor: loading == false ? '#000000' : '#e4e9f2',
+            backgroundColor: loading == false ? '#000000' : '#000000',
+            borderColor: loading == false ? '#000000' : '#000000',
             marginBottom: '15%',
             borderRadius: 10,
             shadowColor: '#000000',

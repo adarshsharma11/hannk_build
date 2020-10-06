@@ -154,8 +154,8 @@ const DocumentScreen = ({ navigation }) => {
               size="giant"
               style={{
                 width: '90%',
-                backgroundColor: !pictures[currentPicktureIndex] ? '#e4e9f2' : '#000000',
-                borderColor: !pictures[currentPicktureIndex] ? '#e4e9f2' : '#000000',
+                backgroundColor: !pictures[currentPicktureIndex] ? '#000000' : '#000000',
+                borderColor: !pictures[currentPicktureIndex] ? '#000000' : '#000000',
                 borderRadius: 10,
                 shadowColor: '#000000',
                 shadowOffset: {

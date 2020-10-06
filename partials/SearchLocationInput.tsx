@@ -85,7 +85,7 @@ const LocationSearchInput: React.FC<LocationSearchInputProps> = ({ hideReturnTog
         )}
         <Layout style={{ display: 'flex', flexDirection: 'column', width: '85%', marginLeft: '1%' }}>
           <Autocomplete
-            style={{ color: '#000000', fontFamily: AppFontBold, padding: '3%',fontSize: 16, width: '100%', borderColor: 'white', borderBottomColor: '#E4E9F2', borderBottomWidth: 1 }}
+            style={{ color: '#000000', fontFamily: AppFontBold, padding: '3%',fontSize: 16, width: '100%', borderColor: 'white', borderBottomColor: '#000000', borderBottomWidth: 1 }}
             containerStyle={{ width: '100%' }}
             inputContainerStyle={{ width: '100%', borderColor: 'white', borderBottomColor: 'black', borderBottomWidth: 1 }}
             listStyle={{ borderColor: 'white' }}
@@ -107,7 +107,7 @@ const LocationSearchInput: React.FC<LocationSearchInputProps> = ({ hideReturnTog
                 setOrigin(item)
                 setPickupResults(null)
               }}>
-                <Layout style={{ display: 'flex', flexDirection: 'row', backgroundColor: "white",borderBottomColor: '#E4E9F2', borderBottomWidth: 1, paddingBottom: '3%', paddingTop: '3%' }}>
+                <Layout style={{ display: 'flex', flexDirection: 'row', backgroundColor: "white",borderBottomColor: '#000000', borderBottomWidth: 1, paddingBottom: '3%', paddingTop: '3%' }}>
                   <EvilIcon style={{ color: '#000000' }} name="location" size={32} />
                   <Text style={{ fontSize: 18 }}>{item.locationname}</Text>
                 </Layout>
@@ -116,7 +116,7 @@ const LocationSearchInput: React.FC<LocationSearchInputProps> = ({ hideReturnTog
           />
           {!returnSameLocation && (
             <Autocomplete
-              style={{ color: '#000000', fontFamily: AppFontBold, padding: '3%',fontSize: 16, width: '100%', borderColor: 'white', borderBottomColor: '#E4E9F2', borderBottomWidth: 1 }}
+              style={{ color: '#000000', fontFamily: AppFontBold, padding: '3%',fontSize: 16, width: '100%', borderColor: 'white', borderBottomColor: '#000000', borderBottomWidth: 1 }}
               containerStyle={{ width: '100%' }}
               inputContainerStyle={{ width: '100%', borderColor: 'white', borderBottomColor: 'black', borderBottomWidth: 1 }}
               listStyle={{ borderColor: 'white' }}
@@ -138,7 +138,7 @@ const LocationSearchInput: React.FC<LocationSearchInputProps> = ({ hideReturnTog
                   setReturn(item)
                   setReturnResults(null)
                 }}>
-                  <Layout style={{ display: 'flex', flexDirection: 'row', borderBottomColor: '#E4E9F2', borderBottomWidth: 1, paddingBottom: '3%', paddingTop: '3%' }}>
+                  <Layout style={{ display: 'flex', flexDirection: 'row', borderBottomColor: '#000000', borderBottomWidth: 1, paddingBottom: '3%', paddingTop: '3%' }}>
                     <EvilIcon style={{ color: '#000000' }} name="location" size={32} />
                     <Text style={{ fontSize: 18 }}>{item.locationname}</Text>
                   </Layout>

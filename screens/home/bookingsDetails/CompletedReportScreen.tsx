@@ -86,8 +86,8 @@ const DocumentScreen = ({ navigation, route }) => {
             }}
             size="giant"
             style={{
-              backgroundColor: postReq.loading == false ? '#000000' : '#e4e9f2',
-              borderColor: postReq.loading == false ? '#000000' : '#e4e9f2',
+              backgroundColor: postReq.loading == false ? '#000000' : '#000000',
+              borderColor: postReq.loading == false ? '#000000' : '#000000',
               borderRadius: 10,
               shadowColor: '#000000',
               shadowOffset: {

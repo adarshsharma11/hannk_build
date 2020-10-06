@@ -168,7 +168,7 @@ const DocumentScreen = () => {
               if (o.header) {
                 return (
                   <>
-                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#000000', marginBottom: '2%' }}>
+                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#00000050', marginBottom: '2%' }}>
                       <View style={{ padding: '3%' }}>
                         <View style={{ width: '100%' }}>
                           <Text style={{ fontSize: 18, textAlign: 'left', fontFamily: AppFontBold }}>{route.params.searchParams.pickUpLocation.locationname}</Text>
@@ -254,8 +254,8 @@ const DocumentScreen = () => {
           disabled={selectedIdx == -1 ? true : false}
           size="medium"
           style={{
-            backgroundColor: selectedIdx != -1 ? '#000000' : '#e4e9f2',
-            borderColor: selectedIdx != -1 ? '#000000' : '#e4e9f2',
+            backgroundColor: selectedIdx != -1 ? '#00000050' : '#000000',
+            borderColor: selectedIdx != -1 ? '#000000' : '#000000',
             width: '80%',
             marginBottom: '5%',
             borderRadius: 10,

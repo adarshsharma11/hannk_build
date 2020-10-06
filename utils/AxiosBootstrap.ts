@@ -17,6 +17,7 @@ axiosInstance.interceptors.request.use(
     //config.data = JSON.parse(encrypt(config.data))
 
     console.log(config.url)
+    console.log(config.headers.Auth)
 
     return config;
   }

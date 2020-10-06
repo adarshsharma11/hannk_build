@@ -337,8 +337,8 @@ export default () => {
                                 })
                         }} size="giant" style={{
                             borderRadius: 10,
-                            backgroundColor: (originLocation != null && inmediatePickup != null) && loading == false ? '#000000' : '#e4e9f2',
-                            borderColor: (originLocation != null && inmediatePickup != null) && loading == false ? '#000000' : '#e4e9f2',
+                            backgroundColor: (originLocation != null && inmediatePickup != null) && loading == false ? '#000000' : '#000000',
+                            borderColor: (originLocation != null && inmediatePickup != null) && loading == false ? '#000000' : '#000000',
                             paddingLeft: 20,
                             paddingRight: 20,
                             marginBottom: '2%'

@@ -34,7 +34,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
     const { i18n } = useTranslation();
 
     const [{ data, loading, error }, doLogin] = useAxios({
-        url: `${GRCGDS_BACKEND}/user/login`,
+        url: `${GRCGDS_BACKEND}`,
         method: 'POST'
     }, { manual: true })
 
@@ -47,7 +47,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
 
     const renderInputIcon: RenderProp<Partial<ImageProps>> = (props) => (
         <TouchableWithoutFeedback onPress={toggleSecureEntry}>
-            <Icon style={{ color: secureTextEntry ? '#e4e9f2' : 'black' }} name={secureTextEntry ? 'eye' : 'eye-slash'} size={30} />
+            <Icon style={{ color: secureTextEntry ? '#000000' : 'black' }} name={secureTextEntry ? 'eye' : 'eye-slash'} size={30} />
         </TouchableWithoutFeedback>
     );
 
@@ -171,15 +171,15 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                         accessoryRight={renderInputIcon}
                                         caption={errors.password && touched.password ? () => <ErrorLabel text={errors.password} /> : undefined}
                                     />
-                                    <Text onPress={() => navigation.navigate("ForgotPassword")} style={{ fontSize: 15, textAlign: 'right', color: '#70dffb', marginBottom: '6%' }} category='s2'> Forgot your password? </Text>
+                                    <Text onPress={() => navigation.navigate("ForgotPassword")} style={{ fontSize: 15, textAlign: 'right', color: '#000000', opacity: 0.8, marginBottom: '6%' }} category='s2'> Forgot your password? </Text>
                                     <Button
                                         accessoryRight={loading ? LoadingSpinner : undefined}
                                         disabled={loading}
                                         onPress={(e) => { handleSubmit() }}
                                         size="giant"
                                         style={{
-                                            backgroundColor: loading == false ? '#000000' : '#e4e9f2',
-                                            borderColor: loading == false ? '#000000' : '#e4e9f2',
+                                            backgroundColor: loading == false ? '#000000' : '#000000',
+                                            borderColor: loading == false ? '#000000' : '#000000',
                                             marginBottom: '15%',
                                             borderRadius: 10,
                                             shadowColor: '#000000',

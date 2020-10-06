@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../utils/i18n';
 
 const hightLightStyles = {
-    backgroundColor: '#000000',
+    backgroundColor: '#00000050',
     priceColor: 'white'
 }
 

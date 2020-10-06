@@ -194,8 +194,8 @@ export default () => {
                                 size="giant" style={{
                                     borderRadius: 10,
                                     marginTop: '10%',
-                                    backgroundColor: termsAcepted ? '#000000' : '#e4e9f2',
-                                    borderColor: termsAcepted ? '#000000' : '#e4e9f2',
+                                    backgroundColor: termsAcepted ? '#000000' : '#000000',
+                                    borderColor: termsAcepted ? '#000000' : '#000000',
                                     paddingLeft: 20,
                                     paddingRight: 20,
                                     marginBottom: '2%'

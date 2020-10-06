@@ -92,9 +92,10 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
         }, [route])
     );
 
-    useEffectSkipInitialRender(() => {
+    useFocusEffect(() => {
         async function resolveCurrentStep() {
             console.log('resolving resolveCurrentStep')
+            console.log('hasAllFiles', hasAllFiles)
             if (hasAllFiles) {
                 setCurrentPosition(4)
             }
@@ -113,7 +114,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
             }
     
             const isApple = await isAppleLogin()
-            if (!hasFullProfile && isApple == false) {
+            if (!hasFullProfile && isApple == false && Platform.OS == "android") {
                 setCurrentPosition(0)
             }
         }
@@ -329,8 +330,9 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                     separatorFinishedColor: '#7eaec4',
                                     separatorUnFinishedColor: '#dedede',
                                     stepIndicatorFinishedColor: '#000000',
-                                    labelColor: '#999999',
+                                    labelColor: '#ffffff',
                                     currentStepLabelColor: '#7eaec4',
+                                    stepIndicatorLabelFinishedColor: "#00000080"
                                 }}
                             />
                             {currentPosition == 0 && (
@@ -379,7 +381,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                             {i18n.t(TRANSLATIONS_KEY.PROFILE_VERIFICATION_COUNTRY_TAG).toString()}
                                         </Text>
                                         <CountryPicker
-                                            containerButtonStyle={{ borderWidth: 1, borderColor: '#E4E9F2', padding: '2%', borderRadius: 10 }}
+                                            containerButtonStyle={{ borderWidth: 1, borderColor: '#000000', padding: '2%', borderRadius: 10 }}
                                             countryCode={values.countryCode.toUpperCase()}
                                             withFilter={true}
                                             withFlagButton={true}
@@ -556,7 +558,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                         controlStyle={{
                                                             backgroundColor: 'white',
                                                             borderRadius: 10,
-                                                            borderColor: errors.expDate && touched.expDate ? '#ffa5bc' : '#E4E9F2'
+                                                            borderColor: errors.expDate && touched.expDate ? '#ffa5bc' : '#000000'
                                                         }}
                                                         min={new Date()}
                                                         max={moment().startOf('year').add(100, 'y').toDate()}
@@ -577,7 +579,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                         value={values.docNumber}
                                                         onChangeText={handleChange('docNumber')}
                                                         placeholderTextColor={errors.docNumber && touched.docNumber ? '#ffa5bc' : '#8F9BB3'}
-                                                        style={{ backgroundColor: '#ffffff', borderRadius: 10, marginBottom: '1%', width: "90%" }}
+                                                        style={{ borderColor: '#000000',backgroundColor: '#ffffff', borderRadius: 10, marginBottom: '1%', width: "90%" }}
                                                         size="large"
                                                         onBlur={() => setFieldTouched('docNumber')}
                                                         placeholder={i18n.t(TRANSLATIONS_KEY.PROFILE_VERIFICATION_DOCUMENT_NUMBER_PLACEHOLDER).toString()}
@@ -589,7 +591,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                     </Text>
                                                     <Layout style={{ marginBottom: '1%', width: '90%' }}>
                                                         <TouchableOpacity onPress={() => setShowCountryModal(true)}>
-                                                            <View style={{ width: '100%', borderWidth: 1, borderColor: errors.fileCountry && touched.fileCountry ? '#ffa5bc' : '#E4E9F2', borderRadius: 10 }}>
+                                                            <View style={{ width: '100%', borderWidth: 1, borderColor: errors.fileCountry && touched.fileCountry ? '#ffa5bc' : '#000000', borderRadius: 10 }}>
                                                                 {errors.fileCountry && touched.fileCountry && (
                                                                     <Text style={{ color: '#ffa5bc', padding: '3.5%', marginLeft: '3.5%' }}>
                                                                         {i18n.t(TRANSLATIONS_KEY.PROFILE_VERIFICATION_FILE_COUNTRY_PLACEHOLDER).toString()}
@@ -612,7 +614,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                             <CountryPicker
                                                                 containerButtonStyle={{
                                                                     borderWidth: 1,
-                                                                    borderColor: errors.expDate && errors.expDate ? '#ffa5bc' : '#E4E9F2',
+                                                                    borderColor: errors.expDate && errors.expDate ? '#ffa5bc' : '#000000',
                                                                     padding: '3%',
                                                                     borderRadius: 10,
                                                                     width: 350,
@@ -651,8 +653,8 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                 }}
                                 size="giant"
                                 style={{
-                                    backgroundColor: resolveFormState().disable || loading || sendFileReq.loading ? '#e4e9f2' : '#000000',
-                                    borderColor: resolveFormState().disable || loading || sendFileReq.loading ? '#e4e9f2' : '#000000',
+                                    backgroundColor: resolveFormState().disable || loading || sendFileReq.loading ? '#000000' : '#000000',
+                                    borderColor: resolveFormState().disable || loading || sendFileReq.loading ? '#000000' : '#000000',
                                     borderRadius: 10,
                                     shadowColor: '#000000',
                                     shadowOffset: {

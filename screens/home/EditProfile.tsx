@@ -175,7 +175,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                         {i18n.t(TRANSLATIONS_KEY.EDIT_PROFILE_COUNTRY_TAG).toString()}
                                                     </Text>
                                                     <CountryPicker
-                                                        containerButtonStyle={{ borderWidth: 1, borderColor: '#E4E9F2', padding: '2%', borderRadius: 10 }}
+                                                        containerButtonStyle={{ borderWidth: 1, borderColor: '#000000', padding: '2%', borderRadius: 10 }}
                                                         countryCode={values.countryCode.toUpperCase()}
                                                         withFilter={true}
                                                         withFlagButton={true}
@@ -294,8 +294,8 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                     }}
                                                     size="giant"
                                                     style={{
-                                                        backgroundColor: loading == false ? '#000000' : '#e4e9f2',
-                                                        borderColor: loading == false ? '#000000' : '#e4e9f2',
+                                                        backgroundColor: loading == false ? '#000000' : '#000000',
+                                                        borderColor: loading == false ? '#000000' : '#000000',
                                                         borderRadius: 10,
                                                         shadowColor: '#000000',
                                                         shadowOffset: {

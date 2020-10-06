@@ -83,7 +83,7 @@ export default () => {
   j.components.Input.appearances.default.variantGroups.status.basic.backgroundColor = "white"
 
   j.components.Toggle.appearances.default.variantGroups.status.basic.backgroundColor = "white"
-  j.components.Toggle.appearances.default.variantGroups.status.basic.borderColor = "#E4E9F2"
+  j.components.Toggle.appearances.default.variantGroups.status.basic.borderColor = "#00000080"
   j.components.Toggle.appearances.default.variantGroups.status.basic.state.checked.backgroundColor = "#000000"
   j.components.Toggle.appearances.default.variantGroups.status.basic.state.checked.borderColor = "#000000"
   j.components.Toggle.appearances.default.variantGroups.status.basic.state.checked.iconTintColor = "#000000"
@@ -98,7 +98,7 @@ export default () => {
   j.components.CheckBox.appearances.default.mapping.height = 25
   j.components.CheckBox.appearances.default.mapping.borderWidth = 2
   j.components.CheckBox.appearances.default.variantGroups.status.basic.backgroundColor = "white"
-  j.components.CheckBox.appearances.default.variantGroups.status.basic.borderColor = "#E4E9F2"
+  j.components.CheckBox.appearances.default.variantGroups.status.basic.borderColor = "#000000"
   j.components.CheckBox.appearances.default.variantGroups.status.basic.state.checked.backgroundColor = "#000000"
   j.components.CheckBox.appearances.default.variantGroups.status.basic.state.checked.borderColor = "#000000"
   j.components.CheckBox.appearances.default.variantGroups.status.basic.state.focused.borderColor = "#000000"
