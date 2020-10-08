@@ -85,8 +85,8 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
 
     useFocusEffect(
         React.useCallback(() => {
-            console.log("params useFocusEffect",route?.params)
-            if (route?.params?.forceStep) { 
+            console.log("params useFocusEffect", route?.params)
+            if (route?.params?.forceStep) {
                 setCurrentPosition(route?.params?.forceStep)
             }
         }, [route])
@@ -103,7 +103,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                 setCurrentPosition(3)
                 setCurrentFileType(FileTypeEnum.selfi)
             }
-    
+
             if (profile?.drimage == "") {
                 setCurrentPosition(2)
                 setCurrentFileType(FileTypeEnum.driving_license)
@@ -112,7 +112,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                 setCurrentPosition(1)
                 setCurrentFileType(FileTypeEnum.passport)
             }
-    
+
             const isApple = await isAppleLogin()
             if (!hasFullProfile && isApple == false && Platform.OS == "android") {
                 setCurrentPosition(0)
@@ -213,53 +213,58 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
 
                 }}
                 onSubmit={(values, { resetForm }) => {
-                    if (currentPosition == 0 && !hasFullProfile) {
-                        if (!values.mobilecode) values.mobilecode = '+1';
-                        if (!values.mobilenumber) values.mobilecode = '';
+                    if (currentPosition == 0) {
+                        if (!hasFullProfile) {
+                            if (!values.mobilecode) values.mobilecode = '+1';
+                            if (!values.mobilenumber) values.mobilecode = '';
 
-                        doLogin({ data: { ...values, module_name: "EDIT_PROFILE" } })
-                            .then((res) => {
-                                dispatchGlobalState({ type: 'token', state: res.data.token })
-                                dispatchGlobalState({ type: 'profile', state: res.data })
-                                resetForm({ touched: {}, errors: {} })
-                                if (res.data.socialmedia != 0 && res.data.vphone == 0) {
-                                    navigation.dispatch(
-                                        CommonActions.reset({
-                                            index: 0,
-                                            routes: [
-                                                {
-                                                    name: 'Opt',
-                                                    params: {
-                                                        onSuccess: () => {
-                                                            navigation.navigate('Home', { screen: "ProfileVerification", params: { forceStep: 1 } })
-                                                        },
-                                                        onLater: () => {
-                                                            dispatchGlobalState({ type: 'logout' })
-                                                            navigation.dispatch(
-                                                                CommonActions.reset({
-                                                                    index: 0,
-                                                                    routes: [{ name: 'Login' }],
-                                                                })
-                                                            )
-                                                        },
-                                                        onUnbackpress: () => {
-                                                            dispatchGlobalState({ type: 'logout' })
-                                                            navigation.dispatch(
-                                                                CommonActions.reset({
-                                                                    index: 0,
-                                                                    routes: [{ name: 'Login' }],
-                                                                })
-                                                            )
+                            doLogin({ data: { ...values, module_name: "EDIT_PROFILE" } })
+                                .then((res) => {
+                                    dispatchGlobalState({ type: 'token', state: res.data.token })
+                                    dispatchGlobalState({ type: 'profile', state: res.data })
+                                    resetForm({ touched: {}, errors: {} })
+                                    if (res.data.socialmedia != 0 && res.data.vphone == 0) {
+                                        navigation.dispatch(
+                                            CommonActions.reset({
+                                                index: 0,
+                                                routes: [
+                                                    {
+                                                        name: 'Opt',
+                                                        params: {
+                                                            onSuccess: () => {
+                                                                navigation.navigate('Home', { screen: "ProfileVerification", params: { forceStep: 1 } })
+                                                            },
+                                                            onLater: () => {
+                                                                dispatchGlobalState({ type: 'logout' })
+                                                                navigation.dispatch(
+                                                                    CommonActions.reset({
+                                                                        index: 0,
+                                                                        routes: [{ name: 'Login' }],
+                                                                    })
+                                                                )
+                                                            },
+                                                            onUnbackpress: () => {
+                                                                dispatchGlobalState({ type: 'logout' })
+                                                                navigation.dispatch(
+                                                                    CommonActions.reset({
+                                                                        index: 0,
+                                                                        routes: [{ name: 'Login' }],
+                                                                    })
+                                                                )
+                                                            }
                                                         }
-                                                    }
-                                                },
-                                            ],
-                                        })
-                                    );
-                                }
-                                setCurrentPosition(1)
-                            })
-                            .catch(err => console.log(err))
+                                                    },
+                                                ],
+                                            })
+                                        );
+                                    }
+                                    setCurrentPosition(1)
+                                })
+                                .catch(err => console.log(err))
+                        } else {
+                            setCurrentPosition(1)
+                        }
+
                         return
                     }
 
@@ -299,18 +304,18 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
 
 
                         sendFile({ data })
-                        .then(r => {
-                            console.log("sendFile",r.data)
-                            dispatchGlobalState({ type: 'profile', state: r.data })
-                            dispatchFileState({ type: Actions.RESET, state: {} })
-                            setCurrentPosition(p => {
-                                resetForm({ touched: {}, errors: {} })
-                                console.log(`to step ${p + 1}`)
-                                return p + 1
+                            .then(r => {
+                                console.log("sendFile", r.data)
+                                dispatchGlobalState({ type: 'profile', state: r.data })
+                                dispatchFileState({ type: Actions.RESET, state: {} })
+                                setCurrentPosition(p => {
+                                    resetForm({ touched: {}, errors: {} })
+                                    console.log(`to step ${p + 1}`)
+                                    return p + 1
+                                })
+                                setUploadPercent(0)
                             })
-                            setUploadPercent(0)
-                        })
-                        .catch(r => console.log(r))
+                            .catch(r => console.log(r))
 
                         return
                     }
@@ -579,7 +584,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                         value={values.docNumber}
                                                         onChangeText={handleChange('docNumber')}
                                                         placeholderTextColor={errors.docNumber && touched.docNumber ? '#ffa5bc' : '#8F9BB3'}
-                                                        style={{ borderColor: '#000000',backgroundColor: '#ffffff', borderRadius: 10, marginBottom: '1%', width: "90%" }}
+                                                        style={{ borderColor: '#000000', backgroundColor: '#ffffff', borderRadius: 10, marginBottom: '1%', width: "90%" }}
                                                         size="large"
                                                         onBlur={() => setFieldTouched('docNumber')}
                                                         placeholder={i18n.t(TRANSLATIONS_KEY.PROFILE_VERIFICATION_DOCUMENT_NUMBER_PLACEHOLDER).toString()}
@@ -645,7 +650,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
 
                             <Button
                                 accessoryRight={loading ? LoadingSpinner : undefined}
-                                disabled={loading || sendFileReq.loading || resolveFormState().disable }
+                                disabled={loading || sendFileReq.loading || resolveFormState().disable}
                                 onPress={(e) => {
                                     handleSubmit()
                                     const cb = resolveFormState().cb
