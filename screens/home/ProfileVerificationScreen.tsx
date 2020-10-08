@@ -137,7 +137,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
             return { btnTxt: i18n.t(TRANSLATIONS_KEY.SAVE_NEXT_WORD), disable: false }
         }
 
-        if (currentPosition == 0 && !hasFullProfile) {
+        if (currentPosition == 0 && (!hasFullProfile || !hasAllFiles)) {
             return { btnTxt: i18n.t(TRANSLATIONS_KEY.SAVE_NEXT_WORD), disable: false }
         }
 
