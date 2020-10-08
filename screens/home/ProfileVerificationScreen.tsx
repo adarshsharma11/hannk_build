@@ -125,11 +125,11 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
 
 
     const resolveFormState = () => {
-        console.log('resolving resolveFormState')
+        console.log('resolving resolveFormState', currentPosition, hasFullProfile, hasAllFiles, currentPosition)
         if (currentPosition == 4) {
             return { btnTxt: i18n.t(TRANSLATIONS_KEY.OK_WORD), disable: false, cb: () => navigation.navigate("Home", { screen: "MyBookings" }) }
         }
-        if (currentPosition == 0 && hasFullProfile) {
+        if (currentPosition == 0 && hasFullProfile && hasAllFiles) {
             return { btnTxt: i18n.t(TRANSLATIONS_KEY.NEXT_WORD), disable: false }
         }
 
@@ -300,7 +300,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
 
                         sendFile({ data })
                         .then(r => {
-                            console.log(r.data)
+                            console.log("sendFile",r.data)
                             dispatchGlobalState({ type: 'profile', state: r.data })
                             dispatchFileState({ type: Actions.RESET, state: {} })
                             setCurrentPosition(p => {

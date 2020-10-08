@@ -23,6 +23,7 @@
 		70D568A7A3C84ADF9D7F5535 /* VINCHAND_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7D4AD9CFBE44211A8B559B7 /* VINCHAND_bold.ttf */; };
 		77C54C2A59EF79B8D79DBB2B /* libPods-AnotherApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 381D1C8494C4329400B70DEB /* libPods-AnotherApp-tvOSTests.a */; };
 		7B08B514782A4FA4BE0E6926 /* Oswald-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B476511AFC4B4599A0AE94BD /* Oswald-VariableFont_wght.ttf */; };
+		84F6E6A9252FA6F400DB4135 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6E6A8252FA6F400DB4135 /* File.swift */; };
 		CB4B71CCB2823C9501E3ABEA /* libPods-AnotherApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6456529A5ECB5DF2B6949BCA /* libPods-AnotherApp-tvOS.a */; };
 		E21BD03F91F6317F6F3D0E1D /* libPods-AnotherApp-AnotherAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96CD1DDD091FC5A3F3AD8CD0 /* libPods-AnotherApp-AnotherAppTests.a */; };
 		E2930C86AE6EDD3EE5E1A1B5 /* libPods-AnotherApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC8A6B2C7FB86F11C52728B /* libPods-AnotherApp.a */; };
@@ -75,6 +76,8 @@
 		6D8B09AD28574DE0A945AE38 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = ../assets/fonts/SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		6F366B8577034E1AB90581BB /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = ../assets/fonts/FontAwesome5_Brands.ttf; sourceTree = "<group>"; };
 		7528B96FBFD5B3AC92838E94 /* Pods-AnotherApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnotherApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-AnotherApp-tvOSTests/Pods-AnotherApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		84F6E6A7252FA6F300DB4135 /* AnotherApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AnotherApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		84F6E6A8252FA6F400DB4135 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		84FE0F2F4444431A974A5D94 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = ../assets/fonts/Feather.ttf; sourceTree = "<group>"; };
 		8DABD3F6178A8C5AA67FE3A9 /* Pods-AnotherApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnotherApp-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-AnotherApp-tvOSTests/Pods-AnotherApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		917F0FD0A79F449DA0DA9BDD /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = ../assets/fonts/MaterialIcons.ttf; sourceTree = "<group>"; };
@@ -220,6 +223,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				84F6E6A8252FA6F400DB4135 /* File.swift */,
 				13B07FAE1A68108700A75B9A /* AnotherApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* AnotherAppTests */,
@@ -227,6 +231,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				62027F54793C4A7DBC7C60EF /* Resources */,
 				B608B95F63F3A0A45AB48F18 /* Pods */,
+				84F6E6A7252FA6F300DB4135 /* AnotherApp-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -358,7 +363,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = JUB8HYPVK9;
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1220;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -747,6 +752,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				84F6E6A9252FA6F400DB4135 /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -800,6 +806,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6D68305C855CA800F681661D /* Pods-AnotherApp-AnotherAppTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -823,6 +830,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 06C90B715382D8DF09CC794A /* Pods-AnotherApp-AnotherAppTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = AnotherAppTests/Info.plist;
@@ -861,8 +869,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.right.car;
+				PRODUCT_BUNDLE_IDENTIFIER = io.hannk.app;
 				PRODUCT_NAME = AnotherApp;
+				SWIFT_OBJC_BRIDGING_HEADER = "AnotherApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -886,8 +895,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.right.car;
+				PRODUCT_BUNDLE_IDENTIFIER = io.hannk.app;
 				PRODUCT_NAME = AnotherApp;
+				SWIFT_OBJC_BRIDGING_HEADER = "AnotherApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
