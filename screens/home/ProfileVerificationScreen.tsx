@@ -213,6 +213,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
 
                 }}
                 onSubmit={(values, { resetForm }) => {
+                    console.log("onSubmit", currentPosition)
                     if (currentPosition == 0) {
                         if (!hasFullProfile) {
                             if (!values.mobilecode) values.mobilecode = '+1';
@@ -658,8 +659,8 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                 }}
                                 size="giant"
                                 style={{
-                                    backgroundColor: resolveFormState().disable || loading || sendFileReq.loading ? '#000000' : '#000000',
-                                    borderColor: resolveFormState().disable || loading || sendFileReq.loading ? '#000000' : '#000000',
+                                    backgroundColor: resolveFormState().disable || loading || sendFileReq.loading ? '#00000050' : '#000000',
+                                    borderColor: resolveFormState().disable || loading || sendFileReq.loading ? '#00000050' : '#000000',
                                     borderRadius: 10,
                                     shadowColor: '#000000',
                                     shadowOffset: {
