@@ -92,7 +92,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
         }, [route])
     );
 
-    useFocusEffect(() => {
+    useEffectSkipInitialRender(() => {
         async function resolveCurrentStep() {
             console.log('resolving resolveCurrentStep')
             console.log('hasAllFiles', hasAllFiles)
