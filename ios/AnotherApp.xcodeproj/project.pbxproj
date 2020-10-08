@@ -357,7 +357,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = LXL54684RS;
+						DevelopmentTeam = JUB8HYPVK9;
 						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -846,8 +846,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = AnotherApp/AnotherAppDebug.entitlements;
-				CURRENT_PROJECT_VERSION = 11;
-				DEVELOPMENT_TEAM = LXL54684RS;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JUB8HYPVK9;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -855,7 +855,7 @@
 				);
 				INFOPLIST_FILE = AnotherApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.11;
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -876,11 +876,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = AnotherApp/AnotherAppRelease.entitlements;
-				CURRENT_PROJECT_VERSION = 11;
-				DEVELOPMENT_TEAM = LXL54684RS;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JUB8HYPVK9;
 				INFOPLIST_FILE = AnotherApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.11;
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
