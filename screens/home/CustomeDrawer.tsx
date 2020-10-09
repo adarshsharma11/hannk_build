@@ -19,6 +19,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import { AppFontRegular } from "../../constants/fonts";
 import i18n, { TRANSLATIONS_KEY } from "../../utils/i18n";
 import { CommonActions, useNavigationState } from "@react-navigation/native";
+import { SELFIE_URL } from "../../constants/FilePaths";
 
 const menuData = [
     { name: i18n.t(TRANSLATIONS_KEY.MENU_ITEM_MY_PROFILE), screenName: "EditProfile", iconName: 'account', key: 'sdwwe' },
@@ -72,7 +73,7 @@ const DrawerMenu = ({ navigation }: { navigation: any }) => {
                         {profile?.selfiurl != "" && (
                             <Avatar
                                 style={{ width: 125, height: 125, }}
-                                source={{ uri: `https://www.right-cars.com/uploads/selfi/${profile?.selfiurl}` }}
+                                source={{ uri: `${SELFIE_URL}${profile?.selfiurl}` }}
                             />
                         )}
                     </Layout>

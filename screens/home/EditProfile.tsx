@@ -24,6 +24,7 @@ import { AppFontBold, AppFontRegular } from '../../constants/fonts'
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../../utils/i18n';
 import moment from 'moment';
+import { DRIVER_LICENCE_URL, PASSPORT_URL, SELFIE_URL } from '../../constants/FilePaths';
 
 export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScreenProps>) => {
     const { i18n } = useTranslation();
@@ -339,7 +340,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                             return (
                                                                 <Image
                                                                     style={{ width: 50, height: 50, borderRadius: 25, marginRight: '5%' }}
-                                                                    source={{ uri: `https://www.right-cars.com/uploads/pass/${profile?.passimage}` }}
+                                                                    source={{ uri: `${PASSPORT_URL}${profile?.passimage}` }}
                                                                 />
                                                             );
                                                         }}
@@ -371,7 +372,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                         onClick={() => {
                                                             navigation.navigate("SingleUpload", {
                                                                 fileType: FileTypeEnum.selfi,
-                                                                fileToShow: `https://www.right-cars.com/uploads/selfi/${profile?.selfiurl}`,
+                                                                fileToShow: `${SELFIE_URL}${profile?.selfiurl}`,
                                                             })
                                                         }}
                                                         nonEditable={true}
@@ -379,7 +380,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                             return (
                                                                 <Image
                                                                     style={{ width: 50, height: 50, borderRadius: 25, marginRight: '5%' }}
-                                                                    source={{ uri: `https://www.right-cars.com/uploads/selfi/${profile?.selfiurl}` }}
+                                                                    source={{ uri: `${SELFIE_URL}${profile?.selfiurl}` }}
                                                                 />
                                                             );
                                                         }}
@@ -420,7 +421,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                             return (
                                                                 <Image
                                                                     style={{ width: 50, height: 50, borderRadius: 25, marginRight: '5%' }}
-                                                                    source={{ uri: `https://www.right-cars.com/uploads/drlic/${profile?.drimage}` }}
+                                                                    source={{ uri: `${DRIVER_LICENCE_URL}${profile?.drimage}` }}
                                                                 />
                                                             );
                                                         }}

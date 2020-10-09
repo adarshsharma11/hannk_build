@@ -23,6 +23,7 @@ import i18n, { TRANSLATIONS_KEY } from '../../../utils/i18n';
 import { composeInitialProps } from 'react-i18next';
 import ErrorLabel from '../../../partials/ErrorLabel';
 import LoadingSpinner from '../../../partials/LoadingSpinner';
+import { DRIVER_LICENCE_URL, PASSPORT_URL, SELFIE_URL } from '../../../constants/FilePaths';
 
 const DATE_FORMAT = 'MMM DD,YYYY'
 const formatDateService = new NativeDateService('en', { format: DATE_FORMAT });
@@ -69,13 +70,13 @@ const DocumentScreen = ({ route, navigation }: Props) => {
     useFocusEffect(
         React.useCallback(() => {
             if (route.params.fileType == FileTypeEnum.passport) {
-                setFileToShow(`https://www.right-cars.com/uploads/pass/${profile?.passimage}`)
+                setFileToShow(`${PASSPORT_URL}${profile?.passimage}`)
             }
             if (route.params.fileType == FileTypeEnum.driving_license) {
-                setFileToShow(`https://www.right-cars.com/uploads/drlic/${profile?.drimage}`)
+                setFileToShow(`${DRIVER_LICENCE_URL}${profile?.drimage}`)
             }
             if (route.params.fileType == FileTypeEnum.selfi) {
-                setFileToShow(`https://www.right-cars.com/uploads/selfi/${profile?.selfiurl}`)
+                setFileToShow(`${SELFIE_URL}${profile?.selfiurl}`)
             }
             triggerChange(p => !p)
             getAllCountries(FlagType.FLAT)
@@ -154,13 +155,13 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                         sendFile({ data })
                             .then(r => {
                                 if (route.params.fileType == FileTypeEnum.passport) {
-                                    setFileToShow(`https://www.right-cars.com/uploads/pass/${r.data?.passimage}`)
+                                    setFileToShow(`${PASSPORT_URL}${r.data?.passimage}`)
                                 }
                                 if (route.params.fileType == FileTypeEnum.driving_license) {
-                                    setFileToShow(`https://www.right-cars.com/uploads/drlic/${r.data?.drimage}`)
+                                    setFileToShow(`${DRIVER_LICENCE_URL}${r.data?.drimage}`)
                                 }
                                 if (route.params.fileType == FileTypeEnum.selfi) {
-                                    setFileToShow(`https://www.right-cars.com/uploads/selfi/${r.data?.selfiurl}`)
+                                    setFileToShow(`${SELFIE_URL}${r.data?.selfiurl}`)
                                 }
                                 dispatchGlobalState({ type: 'profile', state: r.data })
                                 dispatchFileState({ type: Actions.RESET, state: {} })

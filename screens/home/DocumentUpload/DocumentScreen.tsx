@@ -11,6 +11,7 @@ import BackButton from '../../../partials/BackButton';
 import { FileTypeEnum, dispatchFileState, useDocumentState, Actions } from './DocumentState';
 import { useGlobalState } from '../../../state';
 import { AppFontBold } from '../../../constants/fonts'
+import { DRIVER_LICENCE_URL, PASSPORT_URL, SELFIE_URL } from '../../../constants/FilePaths';
 
 const DocumentScreen = () => {
   const navigation = useNavigation();
@@ -80,14 +81,14 @@ const DocumentScreen = () => {
                   month: profile?.passmonth,
                   day: profile?.passday,
                   image: profile?.passimage,
-                  fullUrl: `https://www.right-cars.com/uploads/pass/${profile?.passimage}`
+                  fullUrl: `${PASSPORT_URL}${profile?.passimage}`
                 })
               }}>
 
                 <Image
-                  key={`https://www.right-cars.com/uploads/pass/${profile?.passimage}`}
+                  key={`${PASSPORT_URL}${profile?.passimage}`}
                   style={{ width: 180, height: 250 }}
-                  source={{ uri: `https://www.right-cars.com/uploads/pass/${profile?.passimage}`, cache: 'reload' }}
+                  source={{ uri: `${PASSPORT_URL}${profile?.passimage}`, cache: 'reload' }}
                 />
               </TouchableWithoutFeedback>
             );
@@ -102,14 +103,14 @@ const DocumentScreen = () => {
                   month: profile?.drmonth,
                   day: profile?.drday,
                   image: profile?.drimage,
-                  fullUrl: `https://www.right-cars.com/uploads/drlic/${profile?.drimage}`
+                  fullUrl: `${DRIVER_LICENCE_URL}${profile?.drimage}`
                 })
               }}>
 
                 <Image
-                  key={`https://www.right-cars.com/uploads/drlic/${profile?.drimage}`}
+                  key={`${DRIVER_LICENCE_URL}${profile?.drimage}`}
                   style={{ width: 180, height: 250 }}
-                  source={{ uri: `https://www.right-cars.com/uploads/drlic/${profile?.drimage}`, cache: 'reload' }}
+                  source={{ uri: `${DRIVER_LICENCE_URL}${profile?.drimage}`, cache: 'reload' }}
                 />
               </TouchableWithoutFeedback>
             );
@@ -121,14 +122,14 @@ const DocumentScreen = () => {
                 navigation.navigate("DocumentMetadata", {
                   fileType: type.id,
                   image: profile?.selfiurl,
-                  fullUrl: `https://www.right-cars.com/uploads/selfi/${profile?.selfiurl}`
+                  fullUrl: `${SELFIE_URL}${profile?.selfiurl}`
                 })
               }}>
 
                 <Image
-                  key={`https://www.right-cars.com/uploads/selfi/${profile?.selfiurl}`}
+                  key={`${SELFIE_URL}${profile?.selfiurl}`}
                   style={{ width: 180, height: 250 }}
-                  source={{ uri: `https://www.right-cars.com/uploads/selfi/${profile?.selfiurl}`, cache: 'reload' }}
+                  source={{ uri: `${SELFIE_URL}${profile?.selfiurl}`, cache: 'reload' }}
                 />
               </TouchableWithoutFeedback>
             );
