@@ -120,6 +120,9 @@ export default () => {
   j.components.CheckBox.appearances.default.variantGroups.status.control.state["checked.active"].borderColor = "#000000"
   j.components.CheckBox.appearances.default.variantGroups.status.control.state.checked.iconTintColor = "white"
 
+  j.components.Spinner.appearances.default.variantGroups.status.basic.borderColor = "#000000"
+  j.components.Spinner.appearances.default.variantGroups.status.primary.borderColor = "#000000"
+
   j.components.Card.appearances.outline.mapping.bodyPaddingVertical = 8
 
   if (error) {

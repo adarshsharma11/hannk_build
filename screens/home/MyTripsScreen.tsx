@@ -67,22 +67,6 @@ const DocumentScreen = () => {
     }, [])
   );
 
-  const [locationReq, doSearch] = useAxios({
-    url: `http://grcgds.com/mobileapp/index.php`,
-    params: { module_name: 'LOCATION_SEARCH' }
-  })
-
-  useEffect(() => {
-    if (locationReq.data) {
-      try {
-        const jsonStringData = JSON.stringify(locationReq.data);
-        AsyncStorage.setItem('locationsData', jsonStringData)
-      } catch (error) {
-        console.log('We fail to save location data: ' + error.toString())
-      }
-    }
-  }, [locationReq.loading]);
-
   useEffect(() => {
     setTimeout(() => {
       const sortedBookings = parsedResponse.sort(function (left, right) {

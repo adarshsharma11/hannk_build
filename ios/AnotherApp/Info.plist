@@ -60,15 +60,15 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Allow Right Cars to access your camera and gallery photos? This allows you to take pictures of your documents and upload to our platform which are required to use this app. It also allows you to take car damage pictures when you collect the vehicle.</string>
+	<string>Allow Hannk App to access your camera and gallery photos? This allows you to take pictures of your documents and upload to our platform which are required to use this app. It also allows you to take car damage pictures when you collect the vehicle.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Allow Right Cars to access your location while you are using the app? This allows us to identify your current location and in case you book immediate pickup we can lookup your location and pick you up form your current location.</string>
+	<string>Allow Hannk App to access your location while you are using the app? This allows us to identify your current location and in case you book immediate pickup we can lookup your location and pick you up form your current location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow Right Cars to access your location while you are using the app? This allows us to identify your current location and in case you book immediate pickup we can lookup your location and pick you up form your current location.</string>
+	<string>Allow Hannk App to access your location while you are using the app? This allows us to identify your current location and in case you book immediate pickup we can lookup your location and pick you up form your current location.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Allow Right Cars to access your camera and gallery photos? This allows you to take pictures of your documents and upload to our platform which are required to use this app. It also allows you to take car damage pictures when you collect the vehicle.</string>
+	<string>Allow Hannk App to access your camera and gallery photos? This allows you to take pictures of your documents and upload to our platform which are required to use this app. It also allows you to take car damage pictures when you collect the vehicle.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow Right Cars to access your camera and gallery photos? This allows you to take pictures of your documents and upload to our platform which are required to use this app. It also allows you to take car damage pictures when you collect the vehicle.</string>
+	<string>Allow Hannk App to access your camera and gallery photos? This allows you to take pictures of your documents and upload to our platform which are required to use this app. It also allows you to take car damage pictures when you collect the vehicle.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
