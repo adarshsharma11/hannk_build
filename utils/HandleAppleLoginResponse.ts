@@ -8,6 +8,7 @@ import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import JwtDecode from 'jwt-decode';
 
+
 export const HandleAppleLoginResponse = async () => {
     try {
         // performs login request
@@ -19,21 +20,20 @@ export const HandleAppleLoginResponse = async () => {
             ],
         });
 
-        if (appleAuthRequestResponse['realUserStatus'] && appleAuthRequestResponse.identityToken) {
+        if (appleAuthRequestResponse['realUserStatus']) {
             console.log(appleAuthRequestResponse)
             await AsyncStorage.setItem('appleLogin', "true")
 
             if (appleAuthRequestResponse.email){
                 await AsyncStorage.setItem('appleEmail', appleAuthRequestResponse.email)
+            } else if (appleAuthRequestResponse.identityToken) {
+                const decodedData = JwtDecode(appleAuthRequestResponse.identityToken)
+                //@ts-expect-error
+                appleAuthRequestResponse.email = decodedData.email
             } else if (await AsyncStorage.getItem('appleEmail')) {
                 appleAuthRequestResponse.email = await AsyncStorage.getItem('appleEmail')
             }
-            const data = {
-                module_name: "LOGIN_WITH_APPLE",
-                email: appleAuthRequestResponse.email
-            }
-            const decodedData = JwtDecode(appleAuthRequestResponse.identityToken)
-            return decodedData
+            return appleAuthRequestResponse
         } else {
             throw new Error("Could not login")
         }
