@@ -22,7 +22,7 @@ export const handleUserData = async (response: LoginResult, refCode?: string) =>
     return axiosInstance({
         url: `${GRCGDS_BACKEND}`,
         method: 'POST',
-        data: {token: access.accessToken, module_name: 'LOGIN_WITH_FACEBOOK', refCode }
+        data: {token: access.accessToken, module_name: 'LOGIN_WITH_SIMPLE_FACEBOOK', refCode, mobileApp: 'HannkApp' }
     })
         .then((res) => {
             dispatchGlobalState({ type: 'token', state: res.data.token })
