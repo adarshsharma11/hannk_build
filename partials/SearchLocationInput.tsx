@@ -12,6 +12,7 @@ import { GrcgdsLocation } from '../types';
 import { AppFontBold, AppFontRegular } from '../constants/fonts'
 import { TRANSLATIONS_KEY } from '../utils/i18n';
 import { useTranslation } from 'react-i18next';
+import { GRCGDS_BACKEND } from 'react-native-dotenv';
 
 export type LocationSearchInputProps = {
   pickupLocation?: { [k: string]: any } | null
@@ -37,7 +38,7 @@ const LocationSearchInput: React.FC<LocationSearchInputProps> = ({ hideReturnTog
   const [returnInputText, setReturnInputText] = useState<string>('');
 
   const [locationReq, doSearch] = useAxios({
-    url: `http://grcgds.com/mobileapp/index.php`,
+    url: GRCGDS_BACKEND,
     params: { module_name: 'LOCATION_SEARCH' }
   }, { manual: true })
 
