@@ -11,6 +11,12 @@ const RCDatePicker: React.FC<{ onChange: (dateTime: Date) => void, isVisible: bo
         if (isVisible == true) setSteps(1)
     }, [isVisible])
 
+    useEffect(() => {
+        if (date) {
+            setDate(dateValue)
+        }
+    }, [dateValue])
+
     if (Platform.OS == "ios") {
         return (
             <DateTimePickerModal
