@@ -14,6 +14,7 @@ import { AppFontBold, AppFontRegular } from '../../constants/fonts'
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../../utils/i18n';
 import { resetBookingCreationState } from './createBookings/CreateBookingState';
+import { APP_BRAND_COLOR } from '../../constants/Colors';
 
 const DocumentScreen = () => {
   const navigation = useNavigation();
@@ -28,7 +29,8 @@ const DocumentScreen = () => {
   const [completedTrips, setCompletedTrips] = useState(null);
 
   const [{ loading }, refetch] = useAxios({
-    url: `http://grcgds.com/mobileapp/index.php?module_name=GET_BOOKINGS`,
+    url: GRCGDS_BACKEND,
+    params: { module_name: "GET_BOOKINGS"},
     method: 'GET',
   }, { manual: true })
 
@@ -43,7 +45,7 @@ const DocumentScreen = () => {
             return {
               currencyCode: storedData?.currency_code,
               image_preview_url: storedData?.veh_picture ? storedData?.veh_picture : 'https://carimages.rent.it/EN/1539285845928.png',
-              leftImageUri: '../image/rightcars.png',
+              leftImageUri: '../image/hannkicon.png',
               keyLess: false,
               "tripDate": moment.utc(moment.unix(i.unixPTime)),
               "pickupLocation": i.pLocation,
@@ -86,7 +88,7 @@ const DocumentScreen = () => {
       setUpcommingTrips(upcomming)
 
       const completed = sortedBookings ? sortedBookings.filter(booking => {
-        return booking.dropoffTime.isBefore(moment()) || booking.reservationStatus == 'Cancelled' || booking.reservationStatus == 'Completed'
+        return booking.dropoffTime.isAfter(moment()) || booking.reservationStatus == 'Cancelled' || booking.reservationStatus == 'Completed'
       }) : null
 
       setCompletedTrips(completed)
@@ -97,6 +99,10 @@ const DocumentScreen = () => {
     try {
       AsyncStorage.getItem('myBookings')
         .then(jsonStringData => {
+          if (!jsonStringData) {
+            //@ts-expect-error
+            setCompletedTrips([])
+          }
           const parsedValues = JSON.parse(jsonStringData).map(i => {
           
             return {
@@ -143,8 +149,8 @@ const DocumentScreen = () => {
               onPress={(e) => navigation.navigate("CreateBooking")}
               size="small"
               style={{
-                backgroundColor: '#000000',
-                borderColor: '#000000',
+                backgroundColor: APP_BRAND_COLOR,
+                borderColor: APP_BRAND_COLOR,
                 borderRadius: 10,
               }}>
               {() => <Text style={{ fontFamily: AppFontBold, color: 'white', fontSize: 16 }}>{i18n.t(TRANSLATIONS_KEY.CREATE_BTN_TEXT).toString()}</Text>}
@@ -154,10 +160,10 @@ const DocumentScreen = () => {
 
         <Layout style={{ flex: 1 }}>
           <TabView
-            indicatorStyle={{ backgroundColor: '#000000' }}
+            indicatorStyle={{ backgroundColor: APP_BRAND_COLOR }}
             selectedIndex={selectedIndex}
             onSelect={index => setSelectedIndex(index)}>
-            <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 0 ? '#000000' : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.ACTIVE_TAB_TXT).toString()}</Text>} >
+            <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 0 ? APP_BRAND_COLOR : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.ACTIVE_TAB_TXT).toString()}</Text>} >
               <Layout style={{ height: '86%' }}>
                 {loading && (
                   <Layout style={{ display: 'flex', justifyContent: 'center', alignItems: "center" }}>
@@ -180,7 +186,7 @@ const DocumentScreen = () => {
 
               </Layout>
             </Tab>
-            <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 1 ? '#000000' : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.UPCOMING_TAB_TXT).toString()}</Text>} >
+            <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 1 ? APP_BRAND_COLOR : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.UPCOMING_TAB_TXT).toString()}</Text>} >
               <Layout style={{ height: '96%' }}>
                 {loading && (
                   <Layout style={{ display: 'flex', justifyContent: 'center', alignItems: "center" }}>
@@ -204,7 +210,7 @@ const DocumentScreen = () => {
               </Layout>
             </Tab>
 
-            <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 2 ? '#000000' : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.COMPLETED_TAB_TXT).toString()}</Text>} >
+            <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 2 ? APP_BRAND_COLOR : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.COMPLETED_TAB_TXT).toString()}</Text>} >
               <Layout style={{ height: '96%' }}>
                 {loading && (
                   <Layout style={{ display: 'flex', justifyContent: 'center', alignItems: "center" }}>

@@ -31,6 +31,7 @@ import { TRANSLATIONS_KEY } from '../../utils/i18n';
 import AsyncStorage from '@react-native-community/async-storage';
 import isAppleLogin from '../../utils/isAppleLogin';
 import useEffectSkipInitialRender from '../../utils/UseEffectSkipInitialRender';
+import { APP_BRAND_COLOR } from '../../constants/Colors';
 
 const DATE_FORMAT = 'MMM DD,YYYY'
 const formatDateService = new NativeDateService('en', { format: DATE_FORMAT });
@@ -120,7 +121,6 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
         }
 
         resolveCurrentStep()
-
     }, [currentPosition])
 
 
@@ -329,15 +329,15 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                 currentPosition={currentPosition}
                                 labels={labels}
                                 customStyles={{
-                                    stepStrokeCurrentColor: '#000000',
-                                    stepStrokeFinishedColor: '#000000',
-                                    stepStrokeUnFinishedColor: '#000000',
-                                    stepIndicatorUnFinishedColor: '#000000',
-                                    separatorFinishedColor: '#7eaec4',
+                                    stepStrokeCurrentColor: APP_BRAND_COLOR,
+                                    stepStrokeFinishedColor: APP_BRAND_COLOR,
+                                    stepStrokeUnFinishedColor: APP_BRAND_COLOR,
+                                    stepIndicatorUnFinishedColor: APP_BRAND_COLOR,
+                                    separatorFinishedColor: `${APP_BRAND_COLOR}50`,
                                     separatorUnFinishedColor: '#dedede',
-                                    stepIndicatorFinishedColor: '#000000',
+                                    stepIndicatorFinishedColor: APP_BRAND_COLOR,
                                     labelColor: '#ffffff',
-                                    currentStepLabelColor: '#7eaec4',
+                                    currentStepLabelColor: `${APP_BRAND_COLOR}50`,
                                     stepIndicatorLabelFinishedColor: "#00000080"
                                 }}
                             />
@@ -387,7 +387,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                             {i18n.t(TRANSLATIONS_KEY.PROFILE_VERIFICATION_COUNTRY_TAG).toString()}
                                         </Text>
                                         <CountryPicker
-                                            containerButtonStyle={{ borderWidth: 1, borderColor: '#000000', padding: '2%', borderRadius: 10 }}
+                                            containerButtonStyle={{ borderWidth: 1, borderColor: APP_BRAND_COLOR, padding: '2%', borderRadius: 10 }}
                                             countryCode={values.countryCode.toUpperCase()}
                                             withFilter={true}
                                             withFlagButton={true}
@@ -508,8 +508,8 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                         <View style={{ backgroundColor: 'white', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                             <Progress.Circle
                                                 showsText={true}
-                                                textStyle={{ color: "#000000" }}
-                                                color={"#000000"}
+                                                textStyle={{ color: APP_BRAND_COLOR }}
+                                                color={APP_BRAND_COLOR}
                                                 size={100}
                                                 progress={uploadPercent / 100}
                                                 indeterminate={uploadPercent == 0}
@@ -526,7 +526,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                         }}>
                                             <View style={{ backgroundColor: 'white', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 
-                                                <EntypoIcon style={{ marginRight: '5%', color: '#000000' }} size={100} name="camera" />
+                                                <EntypoIcon style={{ marginRight: '5%', color: APP_BRAND_COLOR }} size={100} name="camera" />
                                                 <Text style={{ color: 'black', textAlign: 'left', fontSize: 16, fontFamily: AppFontRegular }} category='s2'>
                                                     {i18n.t(TRANSLATIONS_KEY.PROFILE_VERIFICATION_ASK_FILE).toString()}
                                                 </Text>
@@ -564,7 +564,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                         controlStyle={{
                                                             backgroundColor: 'white',
                                                             borderRadius: 10,
-                                                            borderColor: errors.expDate && touched.expDate ? '#ffa5bc' : '#000000'
+                                                            borderColor: errors.expDate && touched.expDate ? '#ffa5bc' : APP_BRAND_COLOR
                                                         }}
                                                         min={new Date()}
                                                         max={moment().startOf('year').add(100, 'y').toDate()}
@@ -585,7 +585,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                         value={values.docNumber}
                                                         onChangeText={handleChange('docNumber')}
                                                         placeholderTextColor={errors.docNumber && touched.docNumber ? '#ffa5bc' : '#8F9BB3'}
-                                                        style={{ borderColor: '#000000', backgroundColor: '#ffffff', borderRadius: 10, marginBottom: '1%', width: "90%" }}
+                                                        style={{ borderColor: APP_BRAND_COLOR, backgroundColor: '#ffffff', borderRadius: 10, marginBottom: '1%', width: "90%" }}
                                                         size="large"
                                                         onBlur={() => setFieldTouched('docNumber')}
                                                         placeholder={i18n.t(TRANSLATIONS_KEY.PROFILE_VERIFICATION_DOCUMENT_NUMBER_PLACEHOLDER).toString()}
@@ -597,7 +597,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                     </Text>
                                                     <Layout style={{ marginBottom: '1%', width: '90%' }}>
                                                         <TouchableOpacity onPress={() => setShowCountryModal(true)}>
-                                                            <View style={{ width: '100%', borderWidth: 1, borderColor: errors.fileCountry && touched.fileCountry ? '#ffa5bc' : '#000000', borderRadius: 10 }}>
+                                                            <View style={{ width: '100%', borderWidth: 1, borderColor: errors.fileCountry && touched.fileCountry ? '#ffa5bc' : APP_BRAND_COLOR, borderRadius: 10 }}>
                                                                 {errors.fileCountry && touched.fileCountry && (
                                                                     <Text style={{ color: '#ffa5bc', padding: '3.5%', marginLeft: '3.5%' }}>
                                                                         {i18n.t(TRANSLATIONS_KEY.PROFILE_VERIFICATION_FILE_COUNTRY_PLACEHOLDER).toString()}
@@ -659,10 +659,10 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                 }}
                                 size="giant"
                                 style={{
-                                    backgroundColor: resolveFormState().disable || loading || sendFileReq.loading ? '#00000050' : '#000000',
-                                    borderColor: resolveFormState().disable || loading || sendFileReq.loading ? '#00000050' : '#000000',
+                                    backgroundColor: resolveFormState().disable || loading || sendFileReq.loading ? `${APP_BRAND_COLOR}50` : APP_BRAND_COLOR,
+                                    borderColor: resolveFormState().disable || loading || sendFileReq.loading ? `${APP_BRAND_COLOR}50` : APP_BRAND_COLOR,
                                     borderRadius: 10,
-                                    shadowColor: '#000000',
+                                    shadowColor: APP_BRAND_COLOR,
                                     shadowOffset: {
                                         width: 0,
                                         height: 10,
@@ -717,7 +717,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                 }
                                             }}>
                                                 <View>
-                                                    <EntypoIcon style={{ color: '#000000' }} size={50} name="camera" />
+                                                    <EntypoIcon style={{ color: APP_BRAND_COLOR }} size={50} name="camera" />
                                                     <Text style={{ textAlign: 'center', width: '100%', fontFamily: AppFontBold }}>
                                                         {i18n.t(TRANSLATIONS_KEY.CAMERA_WORD).toString()}
                                                     </Text>
@@ -751,7 +751,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                 }
                                             }}>
                                                 <View>
-                                                    <EntypoIcon style={{ color: '#000000' }} size={50} name="folder-images" />
+                                                    <EntypoIcon style={{ color: APP_BRAND_COLOR }} size={50} name="folder-images" />
                                                     <Text style={{ textAlign: 'center', width: '100%', fontFamily: AppFontBold }}>
                                                         {i18n.t(TRANSLATIONS_KEY.GALLERY_WORD).toString()}
                                                     </Text>

@@ -10,6 +10,8 @@ import { AppFontBold, AppFontRegular } from '../../../constants/fonts'
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../../../utils/i18n';
 import { useGlobalState } from '../../../state';
+import { APP_BRAND_COLOR } from '../../../constants/Colors';
+import { GRCGDS_BACKEND } from 'react-native-dotenv';
 
 const useSimpleAxios = makeUseAxios({})
 
@@ -20,13 +22,13 @@ const DocumentScreen = ({ navigation, route }) => {
   const [token] = useGlobalState("token")
 
   const [postReq, post] = useSimpleAxios({
-    url: `http://grcgds.com/mobileapp/index.php`,
+    url: GRCGDS_BACKEND,
     method: 'POST',
     headers: { Auth: `Bearer ${token}` },
   }, { manual: true })
 
   const [sendFileReq, sendFile] = useAxios({
-    url: `http://grcgds.com/mobileapp/index.php`,
+    url: GRCGDS_BACKEND,
     method: 'POST',
     validateStatus: () => true,
     onUploadProgress: (e) => {
@@ -47,7 +49,7 @@ const DocumentScreen = ({ navigation, route }) => {
 
             <View>
               <Image
-                style={{ borderWidth: 1, borderColor: '#000000', height: '65%', resizeMode: 'contain' }}
+                style={{ borderWidth: 1, borderColor: APP_BRAND_COLOR, height: '65%', resizeMode: 'contain' }}
                 source={{ uri: route?.params?.signImagePath }}
               />
             </View>
@@ -86,10 +88,10 @@ const DocumentScreen = ({ navigation, route }) => {
             }}
             size="giant"
             style={{
-              backgroundColor: postReq.loading == false ? '#000000' : '#000000',
-              borderColor: postReq.loading == false ? '#000000' : '#000000',
+              backgroundColor: postReq.loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
+              borderColor: postReq.loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
               borderRadius: 10,
-              shadowColor: '#000000',
+              shadowColor: APP_BRAND_COLOR,
               shadowOffset: {
                 width: 0,
                 height: 10,

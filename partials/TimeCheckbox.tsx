@@ -3,6 +3,7 @@ import { Text, CheckBox, Layout } from '@ui-kitten/components';
 import { ViewStyle, View, TextStyle } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { AppFontBold, AppFontRegular } from '../constants/fonts'
+import { APP_BRAND_COLOR } from '../constants/Colors';
 
 export type TimeCheckboxProps = {
     title: string
@@ -27,8 +28,8 @@ const TimeCheckbox: React.FC<TimeCheckboxProps> = ({ title, disabledStyling = fa
     }
 
     if (checked && disabledStyling == false) {
-        styles.color = '#000000'
-        styles.textColor = '#000000'
+        styles.color = APP_BRAND_COLOR
+        styles.textColor = APP_BRAND_COLOR
         styles.backgroundColor = 'white'
     }
 

@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import ResolveCurrencySymbol from '../utils/ResolveCurrencySymbol';
 import Decimal from 'decimal.js';
 import { AppFontBold, AppFontRegular } from '../constants/fonts'
+import { APP_BRAND_COLOR } from '../constants/Colors';
 
 export type TripCardProps = {
   pickupLocation: string
@@ -45,7 +46,7 @@ const CarTripInfoCard: React.FC<TripCardProps> = (props) => {
         {props.leftImageUri && (
           <Image
             style={{ width: 50, height: 50 }}
-            source={require('../image/rightcars.png')}
+            source={require('../image/hannkicon.png')}
           />
         )}
 
@@ -75,7 +76,7 @@ const CarTripInfoCard: React.FC<TripCardProps> = (props) => {
           )}
           <Layout style={{ display: 'flex', flexDirection: 'row', paddingTop: '5%', paddingLeft: '5%', paddingRight: '5%', borderTopRightRadius: 16, borderTopLeftRadius: 16 }}>
             <Layout style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', marginRight: '5%' }}>
-              <FontAwesomeIcon size={15} style={{ color: '#000000' }} name="circle" />
+              <FontAwesomeIcon size={15} style={{ color: APP_BRAND_COLOR }} name="circle" />
               <Layout style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around' }}>
                 <MaterialCommunityIcon style={{ marginBottom: '15%' }} size={4} name="rectangle" />
                 <MaterialCommunityIcon style={{ marginBottom: '15%' }} size={4} name="rectangle" />
@@ -121,7 +122,7 @@ const CarTripInfoCard: React.FC<TripCardProps> = (props) => {
               </Button>
             )}
             {props.completed && (
-              <Button style={{ backgroundColor: '#000000', borderColor: '#000000', borderRadius: 10 }} size={'small'}>
+              <Button style={{ backgroundColor: APP_BRAND_COLOR, borderColor: APP_BRAND_COLOR, borderRadius: 10 }} size={'small'}>
                 {() => <Text style={{ color: 'white' }}>Generate Invoice</Text>}
               </Button>
             )}

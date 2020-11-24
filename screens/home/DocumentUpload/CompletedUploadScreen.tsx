@@ -17,6 +17,7 @@ import { useGlobalState, dispatchGlobalState } from '../../../state';
 import { StackScreenProps } from '@react-navigation/stack';
 import { LoginScreenProps } from '../../../types';
 import { AppFontBold, AppFontRegular } from '../../../constants/fonts'
+import { APP_BRAND_COLOR } from '../../../constants/Colors';
 
 const DATE_FORMAT = 'MMM DD,YYYY'
 const formatDateService = new NativeDateService('en', { format: DATE_FORMAT });
@@ -96,10 +97,10 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                     }}
                                     size="giant"
                                     style={{
-                                        backgroundColor: '#000000',
-                                        borderColor: '#000000',
+                                        backgroundColor: APP_BRAND_COLOR,
+                                        borderColor: APP_BRAND_COLOR,
                                         borderRadius: 10,
-                                        shadowColor: '#000000',
+                                        shadowColor: APP_BRAND_COLOR,
                                         shadowOffset: {
                                             width: 0,
                                             height: 10,

@@ -5,6 +5,7 @@ import { GRCGDS_BACKEND } from "react-native-dotenv"
 import { axiosInstance } from "./AxiosBootstrap"
 
 export const handlePermissionPromt = (result: LoginResult) => {
+    console.log(result)
     if (result.isCancelled) {
         throw new Error("Login cancelled");
     }

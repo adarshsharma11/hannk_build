@@ -14,6 +14,7 @@ import moment from 'moment';
 import useAxios from 'axios-hooks'
 import { useGlobalState, dispatchGlobalState } from '../../../state';
 import { AppFontBold, AppFontRegular } from '../../../constants/fonts'
+import { APP_BRAND_COLOR } from '../../../constants/Colors';
 
 const DATE_FORMAT = 'MMM DD,YYYY'
 const formatDateService = new NativeDateService('en', { format: DATE_FORMAT });
@@ -189,10 +190,10 @@ const DocumentScreen = () => {
                   }}
                   size="giant"
                   style={{
-                    backgroundColor: buttonIsDisabled() ? '#000000': '#000000',
-                    borderColor: buttonIsDisabled() ? '#000000' : '#000000',
+                    backgroundColor: buttonIsDisabled() ? APP_BRAND_COLOR: `${APP_BRAND_COLOR}50`,
+                    borderColor: buttonIsDisabled() ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
                     borderRadius: 10,
-                    shadowColor: '#000000',
+                    shadowColor: APP_BRAND_COLOR,
                     shadowOffset: {
                       width: 0,
                       height: 10,

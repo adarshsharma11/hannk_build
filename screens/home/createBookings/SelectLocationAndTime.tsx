@@ -16,17 +16,18 @@ import SystemSetting from 'react-native-system-setting'
 import useAxios from 'axios-hooks'
 import moment from 'moment';
 import LoadingSpinner from '../../../partials/LoadingSpinner';
-import { VehicleResponse } from '../../../types/SearchVehicleResponse';
+import { VehAvailCore, VehicleResponse, VehSearch } from '../../../types/SearchVehicleResponse';
 import MenuButton from '../../../partials/MenuButton';
 import { checkMultiple, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
 import { AppFontBold, AppFontRegular } from '../../../constants/fonts'
 import Orientation, { OrientationType } from 'react-native-orientation-locker';
 import { useTranslation } from 'react-i18next';
+import { HannkSuggestionInput, HannkDatePicker, HannkTimePicker } from 'hannk-mobile-common';
 import { TRANSLATIONS_KEY } from '../../../utils/i18n';
 import BackButton from '../../../partials/BackButton';
-import RCDatePicker from '../../../partials/RCDatePicker';
 import { setHours, getHours, addHours, isAfter, setMinutes, getMinutes } from 'date-fns'
-import RCTimePicker from '../../../partials/RCTimePicker';
+import { APP_BRAND_COLOR } from '../../../constants/Colors';
+import { GRCGDS_BACKEND } from 'react-native-dotenv';
 
 const DATE_FORMAT = "DD MMM YYYY"
 
@@ -48,8 +49,8 @@ export default () => {
     const [showReturnTimepicker, setShowReturnTimepicker] = useState(false);
 
 
-    const [{ data, loading, error }, doSearch] = useAxios<VehicleResponse>({
-        url: `http://grcgds.com/mobileapp/index.php/SEARCH_VEHICLE`,
+    const [{ data, loading, error }, doSearch] = useAxios<VehAvailCore[]>({
+        url: GRCGDS_BACKEND,
         method: 'GET',
         validateStatus: () => true
     }, { manual: true })
@@ -195,7 +196,10 @@ export default () => {
                             })
                         }}
                     />
-                    <LocationSearchInput
+                    <HannkSuggestionInput
+                        NEW_BOOKING_ENTER_ORIGIN_PLACEHOLDER={i18n.t(TRANSLATIONS_KEY.NEW_BOOKING_ENTER_ORIGIN_PLACEHOLDER).toString()}
+                        NEW_BOOKING_RETURN_DESTINATION_PLACEHOLDER={i18n.t(TRANSLATIONS_KEY.NEW_BOOKING_RETURN_DESTINATION_PLACEHOLDER).toString()}
+                        NEW_BOOKING_RETURN_ON_SAME_LOCATION_TAG={i18n.t(TRANSLATIONS_KEY.NEW_BOOKING_RETURN_ON_SAME_LOCATION_TAG).toString()}
                         hideReturnToggle={inmediatePickup == false}
                         pickupLocation={originLocation}
                         returnLocation={returnLocation}
@@ -223,7 +227,7 @@ export default () => {
                                     </View>
                                 </TouchableOpacity>
                             </View>
-                            <RCDatePicker
+                            <HannkDatePicker
                                 onChange={(d) => {
                                     if (inmediatePickup) {
                                         const nowPlus24Hours = addHours(new Date(), 24)
@@ -241,7 +245,7 @@ export default () => {
                                 date={departureTime}
                                 isVisible={showDepartureDatepicker}
                             />
-                            <RCTimePicker
+                            <HannkTimePicker
                                 date={departureTime}
                                 onChange={(d) => {
                                     setDepartureTime(setMinutes(setHours(departureTime, getHours(d)), getMinutes(d)))
@@ -265,7 +269,7 @@ export default () => {
                                     </View>
                                 </TouchableOpacity>
                             </View>
-                            <RCDatePicker
+                            <HannkDatePicker
                                 onChange={(d) => {
                                     setReturnTime(setMinutes(setHours(d, getHours(returnTime)), getMinutes(d)))
                                     setShowReturnDatepicker(false)
@@ -273,7 +277,7 @@ export default () => {
                                 date={returnTime}
                                 isVisible={showReturnDatepicker}
                             />
-                            <RCTimePicker
+                            <HannkTimePicker
                                 date={returnTime}
                                 onChange={(d) => {
                                     setReturnTime(setMinutes(setHours(returnTime, getHours(d)), getMinutes(d)))
@@ -310,14 +314,13 @@ export default () => {
                                 }
                             })
                                 .then(res => {
-                                    if (res.data.VehAvailRSCore.VehVendorAvails.length == 0) {
+                                    if (res.data.length == 0) {
                                         navigation.navigate("NoResult");
                                     } else {
                                         navigation.navigate(
                                             'CarsList',
                                             {
-                                                cars: res.data.VehAvailRSCore.VehVendorAvails,
-                                                metadata: res.data.VehAvailRSCore.VehRentalCore,
+                                                cars: res.data,
                                                 searchParams: {
                                                     pickUpDate: moment(departureTime),
                                                     pickUpTime: moment(departureTime),
@@ -337,8 +340,8 @@ export default () => {
                                 })
                         }} size="giant" style={{
                             borderRadius: 10,
-                            backgroundColor: (originLocation != null && inmediatePickup != null) && loading == false ? '#000000' : '#000000',
-                            borderColor: (originLocation != null && inmediatePickup != null) && loading == false ? '#000000' : '#000000',
+                            backgroundColor: (originLocation != null && inmediatePickup != null) && loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
+                            borderColor: (originLocation != null && inmediatePickup != null) && loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
                             paddingLeft: 20,
                             paddingRight: 20,
                             marginBottom: '2%'

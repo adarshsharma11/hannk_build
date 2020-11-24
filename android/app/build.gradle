@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.hannkapp"
+        applicationId "com.hankapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -198,6 +198,8 @@ dependencies {
     compile (name:'tacs-1.3.2', ext:'aar')
     compile (name:'ble-2.14.2', ext:'aar')
     compile (name:'api-2.2.4', ext:'aar')
+
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:4.+"
 
     implementation "androidx.core:core-ktx:+"
     implementation 'com.facebook.soloader:soloader:0.9.0+'

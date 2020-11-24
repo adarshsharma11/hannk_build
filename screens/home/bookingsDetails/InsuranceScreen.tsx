@@ -12,6 +12,7 @@ import { AppFontRegular } from '../../../constants/fonts';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../../../utils/i18n';
 import * as Progress from 'react-native-progress';
+import { APP_BRAND_COLOR } from '../../../constants/Colors';
 const xml2js = require('react-native-xml2js');
 
 const InsuranceScreen = () => {
@@ -55,8 +56,8 @@ const InsuranceScreen = () => {
                         <View style={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
                             <Progress.Circle
                                 showsText={true}
-                                textStyle={{ color: "#000000" }}
-                                color={"#000000"}
+                                textStyle={{ color: APP_BRAND_COLOR }}
+                                color={APP_BRAND_COLOR}
                                 borderWidth={4}
                                 size={150}
                                 indeterminate={true}

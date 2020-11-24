@@ -25,6 +25,7 @@ import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../../utils/i18n';
 import moment from 'moment';
 import { DRIVER_LICENCE_URL, PASSPORT_URL, SELFIE_URL } from '../../constants/FilePaths';
+import { APP_BRAND_COLOR } from '../../constants/Colors';
 
 export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScreenProps>) => {
     const { i18n } = useTranslation();
@@ -39,9 +40,9 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
     const hasAllFiles = userHasAllFiles(profile || {})
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [asCompany, setAsCompany] = useState(false);
-    const [selfie, setSelfie] = useState<null | {[k :string] : any} | boolean>(null);
-    const [driverLicence, setDriverLicence] = useState<null | {[k :string] : any} | boolean>(null);
-    const [passport, setPassport] = useState<null | {[k :string] : any} | boolean>(null);
+    const [selfie, setSelfie] = useState<null | { [k: string]: any } | boolean>(null);
+    const [driverLicence, setDriverLicence] = useState<null | { [k: string]: any } | boolean>(null);
+    const [passport, setPassport] = useState<null | { [k: string]: any } | boolean>(null);
 
     const formRef = useRef()
 
@@ -129,10 +130,10 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                             return (
                                 <>
                                     <TabView
-                                        indicatorStyle={{ backgroundColor: '#000000' }}
+                                        indicatorStyle={{ backgroundColor: APP_BRAND_COLOR }}
                                         selectedIndex={selectedIndex}
                                         onSelect={index => setSelectedIndex(index)}>
-                                        <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 0 ? '#000000' : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.EDIT_PROFILE_PROFILE_TAB).toString()}</Text>} >
+                                        <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 0 ? APP_BRAND_COLOR : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.EDIT_PROFILE_PROFILE_TAB).toString()}</Text>} >
                                             <>
                                                 <Input
                                                     disabled={profile?.socialmedia}
@@ -295,10 +296,10 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                     }}
                                                     size="giant"
                                                     style={{
-                                                        backgroundColor: loading == false ? '#000000' : '#000000',
-                                                        borderColor: loading == false ? '#000000' : '#000000',
+                                                        backgroundColor: loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
+                                                        borderColor: loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
                                                         borderRadius: 10,
-                                                        shadowColor: '#000000',
+                                                        shadowColor: APP_BRAND_COLOR,
                                                         shadowOffset: {
                                                             width: 0,
                                                             height: 10,
@@ -309,143 +310,135 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                                     }}>
                                                     {() => {
                                                         return <Text style={{ fontFamily: AppFontBold, color: loading ? "#ACB1C0" : 'white', fontSize: 18 }}>
-                                                            {hasFullProfile && !hasAllFiles ? "Next" : 'Save'}
+                                                            {hasFullProfile && !hasAllFiles ? i18n.t(TRANSLATIONS_KEY.NEXT_WORD).toString() : i18n.t(TRANSLATIONS_KEY.SAVE_WORD).toString()}
                                                         </Text>
                                                     }}
                                                 </Button>
                                             </>
                                         </Tab>
-                                        <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 1 ? '#000000' : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.EDIT_PROFILE_DOCUMENT_TAB).toString()}</Text>} >
+                                        <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 1 ? APP_BRAND_COLOR : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.EDIT_PROFILE_DOCUMENT_TAB).toString()}</Text>} >
                                             <>
-                                                {profile?.passimage != "" ? (
-                                                    <TimeCheckbox
-                                                        replaceCheckbox={() => {
-                                                            return <MaterialCommunityIcon size={24} name="file-document-edit" />
-                                                        }}
-                                                        onClick={() => {
-                                                            if (profile?.vpass == 0) {
-                                                                navigation.navigate("SingleUpload", {
-                                                                    fileType: FileTypeEnum.passport,
-                                                                    fileToShow: `${profile.passimage}`,
-                                                                    day: profile?.passday,
-                                                                    month: profile?.passmonth,
-                                                                    year: profile?.passyear,
-                                                                    docNumber: profile?.passport,
-                                                                    docCountry: profile?.passcountry,
-                                                                })
-                                                            }
-                                                        }}
-                                                        nonEditable={true}
-                                                        accessoryRight={(style) => {
-                                                            return (
-                                                                <Image
-                                                                    style={{ width: 50, height: 50, borderRadius: 25, marginRight: '5%' }}
-                                                                    source={{ uri: `${PASSPORT_URL}${profile?.passimage}` }}
-                                                                />
-                                                            );
-                                                        }}
-                                                        subTitle={profile?.passimage ? () => {
-                                                            return (
-                                                                <FileMetadata
-                                                                    docNum={profile?.passport}
-                                                                    docCountry={profile?.passcountry}
-                                                                    day={profile?.passday}
-                                                                    month={profile?.passmonth}
-                                                                    year={profile?.passyear}
-                                                                />
-                                                            );
-                                                        } : undefined}
-                                                        defaultChecked={profile?.vself == 1}
-                                                        style={{ marginBottom: '5%' }}
-                                                        title={i18n.t(TRANSLATIONS_KEY.EDIT_PROFILE_PASSPORT_TAG).toString()}
-                                                        onChange={() => {
-
-                                                        }}
-                                                    />
-                                                ) : null}
-
-                                                {profile?.selfiurl != "" ? (
-                                                    <TimeCheckbox
-                                                        replaceCheckbox={() => {
-                                                            return <MaterialCommunityIcon size={24} name="file-document-edit" />
-                                                        }}
-                                                        onClick={() => {
+                                                <TimeCheckbox
+                                                    replaceCheckbox={() => {
+                                                        return <MaterialCommunityIcon size={24} name="file-document-edit" />
+                                                    }}
+                                                    onClick={() => {
+                                                        if (profile?.vpass == 0) {
                                                             navigation.navigate("SingleUpload", {
-                                                                fileType: FileTypeEnum.selfi,
-                                                                fileToShow: `${SELFIE_URL}${profile?.selfiurl}`,
+                                                                fileType: FileTypeEnum.passport,
+                                                                fileToShow: `${profile.passimage}`,
+                                                                day: profile?.passday,
+                                                                month: profile?.passmonth,
+                                                                year: profile?.passyear,
+                                                                docNumber: profile?.passport,
+                                                                docCountry: profile?.passcountry,
                                                             })
-                                                        }}
-                                                        nonEditable={true}
-                                                        accessoryRight={(style) => {
-                                                            return (
-                                                                <Image
-                                                                    style={{ width: 50, height: 50, borderRadius: 25, marginRight: '5%' }}
-                                                                    source={{ uri: `${SELFIE_URL}${profile?.selfiurl}` }}
-                                                                />
-                                                            );
-                                                        }}
-                                                        subTitle={profile?.passimage ? () => {
-                                                            return (
-                                                                <FileMetadata />
-                                                            );
-                                                        } : undefined}
-                                                        defaultChecked={profile?.vpass == 1}
-                                                        style={{ marginBottom: '5%' }}
-                                                        title={i18n.t(TRANSLATIONS_KEY.EDIT_PROFILE_SELFI_TAG).toString()}
-                                                        onChange={() => {
+                                                        }
+                                                    }}
+                                                    nonEditable={true}
+                                                    accessoryRight={(style) => {
+                                                        return (
+                                                            <Image
+                                                                style={{ width: 50, height: 50, borderRadius: 25, marginRight: '5%' }}
+                                                                source={{ uri: `${PASSPORT_URL}${profile?.passimage}` }}
+                                                            />
+                                                        );
+                                                    }}
+                                                    subTitle={profile?.passimage ? () => {
+                                                        return (
+                                                            <FileMetadata
+                                                                docNum={profile?.passport}
+                                                                docCountry={profile?.passcountry}
+                                                                day={profile?.passday}
+                                                                month={profile?.passmonth}
+                                                                year={profile?.passyear}
+                                                            />
+                                                        );
+                                                    } : undefined}
+                                                    defaultChecked={profile?.vself == 1}
+                                                    style={{ marginBottom: '5%' }}
+                                                    title={i18n.t(TRANSLATIONS_KEY.EDIT_PROFILE_PASSPORT_TAG).toString()}
+                                                    onChange={() => {
 
-                                                        }}
-                                                    />
-                                                ) : null}
+                                                    }}
+                                                />
 
-                                                {profile?.drimage != "" ? (
-                                                    <TimeCheckbox
-                                                        replaceCheckbox={() => {
-                                                            return <MaterialCommunityIcon size={24} name="file-document-edit" />
-                                                        }}
-                                                        onClick={() => {
-                                                            if (profile?.vdr == 0) {
-                                                                navigation.navigate("SingleUpload", {
-                                                                    fileType: FileTypeEnum.driving_license,
-                                                                    fileToShow: `${profile.drimage}`,
-                                                                    day: profile?.drday,
-                                                                    month: profile?.drmonth,
-                                                                    year: profile?.dryear,
-                                                                    docNumber: profile?.drlic,
-                                                                    docCountry: profile?.drcountry,
-                                                                })
-                                                            }
-                                                        }}
-                                                        nonEditable={true}
-                                                        accessoryRight={(style) => {
-                                                            return (
-                                                                <Image
-                                                                    style={{ width: 50, height: 50, borderRadius: 25, marginRight: '5%' }}
-                                                                    source={{ uri: `${DRIVER_LICENCE_URL}${profile?.drimage}` }}
-                                                                />
-                                                            );
-                                                        }}
-                                                        subTitle={profile?.passimage ? () => {
-                                                            return (
-                                                                <FileMetadata
-                                                                    docNum={profile?.drlic}
-                                                                    docCountry={profile?.drcountry}
-                                                                    day={profile?.drday}
-                                                                    month={profile?.drmonth}
-                                                                    year={profile?.dryear}
-                                                                />
-                                                            );
-                                                        } : undefined}
-                                                        defaultChecked={profile?.vdr == 1}
-                                                        style={{ marginBottom: '5%' }}
-                                                        title={i18n.t(TRANSLATIONS_KEY.EDIT_PROFILE_DRIVER_LICENSE_TAG).toString()}
-                                                        onChange={() => {
+                                                <TimeCheckbox
+                                                    replaceCheckbox={() => {
+                                                        return <MaterialCommunityIcon size={24} name="file-document-edit" />
+                                                    }}
+                                                    onClick={() => {
+                                                        navigation.navigate("SingleUpload", {
+                                                            fileType: FileTypeEnum.selfi,
+                                                            fileToShow: `${SELFIE_URL}${profile?.selfiurl}`,
+                                                        })
+                                                    }}
+                                                    nonEditable={true}
+                                                    accessoryRight={(style) => {
+                                                        return (
+                                                            <Image
+                                                                style={{ width: 50, height: 50, borderRadius: 25, marginRight: '5%' }}
+                                                                source={{ uri: `${SELFIE_URL}${profile?.selfiurl}` }}
+                                                            />
+                                                        );
+                                                    }}
+                                                    subTitle={profile?.passimage ? () => {
+                                                        return (
+                                                            <FileMetadata />
+                                                        );
+                                                    } : undefined}
+                                                    defaultChecked={profile?.vpass == 1}
+                                                    style={{ marginBottom: '5%' }}
+                                                    title={i18n.t(TRANSLATIONS_KEY.EDIT_PROFILE_SELFI_TAG).toString()}
+                                                    onChange={() => {
 
-                                                        }}
-                                                    />
-                                                ) : null}
+                                                    }}
+                                                />
 
-                                                {profile?.passimage == "" && profile?.selfiurl == "" && profile?.drimage == "" && <Text style={{ textAlign: 'center', fontSize: 18, marginTop: '10%' }}>No files uploaded</Text>}
+                                                <TimeCheckbox
+                                                    replaceCheckbox={() => {
+                                                        return <MaterialCommunityIcon size={24} name="file-document-edit" />
+                                                    }}
+                                                    onClick={() => {
+                                                        if (profile?.vdr == 0) {
+                                                            navigation.navigate("SingleUpload", {
+                                                                fileType: FileTypeEnum.driving_license,
+                                                                fileToShow: `${profile.drimage}`,
+                                                                day: profile?.drday,
+                                                                month: profile?.drmonth,
+                                                                year: profile?.dryear,
+                                                                docNumber: profile?.drlic,
+                                                                docCountry: profile?.drcountry,
+                                                            })
+                                                        }
+                                                    }}
+                                                    nonEditable={true}
+                                                    accessoryRight={(style) => {
+                                                        return (
+                                                            <Image
+                                                                style={{ width: 50, height: 50, borderRadius: 25, marginRight: '5%' }}
+                                                                source={{ uri: `${DRIVER_LICENCE_URL}${profile?.drimage}` }}
+                                                            />
+                                                        );
+                                                    }}
+                                                    subTitle={profile?.passimage ? () => {
+                                                        return (
+                                                            <FileMetadata
+                                                                docNum={profile?.drlic}
+                                                                docCountry={profile?.drcountry}
+                                                                day={profile?.drday}
+                                                                month={profile?.drmonth}
+                                                                year={profile?.dryear}
+                                                            />
+                                                        );
+                                                    } : undefined}
+                                                    defaultChecked={profile?.vdr == 1}
+                                                    style={{ marginBottom: '5%' }}
+                                                    title={i18n.t(TRANSLATIONS_KEY.EDIT_PROFILE_DRIVER_LICENSE_TAG).toString()}
+                                                    onChange={() => {
+
+                                                    }}
+                                                />
 
                                             </>
                                         </Tab>
@@ -467,26 +460,26 @@ const FileMetadata: React.FC<Props> = ({ docNum, docCountry, day, month, year })
     return (
         <>
             <Layout style={{ marginBottom: '3%', display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                <View >
-                    {day && <Text style={{ textAlign: 'left', fontFamily: AppFontBold }} category="s1">
+                <View>
+                    {day != undefined && day != null && typeof day == "string" && day.length > 1 && <Text style={{ textAlign: 'left', fontFamily: AppFontBold }} category="s1">
                         Expiry
                     </Text>}
-                    {docNum && <Text style={{ textAlign: 'left', fontFamily: AppFontBold }} category="s1">
+                    {docNum != undefined && docNum != null && typeof docNum == "string" && docNum.length > 1 && <Text style={{ textAlign: 'left', fontFamily: AppFontBold }} category="s1">
                         Document Number
                     </Text>}
-                    {docCountry && <Text style={{ textAlign: 'left', fontFamily: AppFontBold }} category="s1">
+                    {docCountry != undefined && docCountry != null && typeof docCountry == "string" && docCountry.length > 1 && <Text style={{ textAlign: 'left', fontFamily: AppFontBold }} category="s1">
                         Issuing Country
                     </Text>}
                 </View>
 
                 <View style={{ marginLeft: '5%', display: 'flex', justifyContent: 'center' }}>
-                    {day && <Text style={{ fontFamily: AppFontRegular, fontSize: 16 }}>
+                    {day != undefined && day != null && typeof day == "string" && day.length > 1 && <Text style={{ fontFamily: AppFontRegular, fontSize: 16 }}>
                         {moment(`${day}-${month}-${year}`, "DD-MM-YYYY").format('D MMM YYYY')}
                     </Text>}
-                    {docNum && <Text style={{ fontFamily: AppFontRegular, fontSize: 16 }}>
+                    {docNum != undefined && docNum != null && typeof docNum == "string" && docNum.length > 1 && <Text style={{ fontFamily: AppFontRegular, fontSize: 16 }}>
                         {docNum}
                     </Text>}
-                    {docCountry && <Text style={{ fontFamily: AppFontRegular, fontSize: 16 }}>
+                    {docCountry != undefined && docCountry != null && typeof docCountry == "string" && docCountry.length > 1 && <Text style={{ fontFamily: AppFontRegular, fontSize: 16 }}>
                         {docCountry}
                     </Text>}
                 </View>

@@ -6,6 +6,11 @@ import { useCreateBookingState } from './CreateBookingState';
 import moment from 'moment';
 import { dispatchGlobalState, useGlobalState } from '../../../state';
 import { SafeAreaView } from 'react-native';
+import { GRCGDS_BACKEND } from 'react-native-dotenv';
+import { getPaypalUrls } from '../../../utils/PaypalUrls';
+import { UsePaypal } from 'hannk-mobile-common';
+var qs = require('qs');
+var UrlParser = require('url-parse');
 
 const WebViewScreen = () => {
     const navigation = useNavigation()
@@ -21,27 +26,26 @@ const WebViewScreen = () => {
     const [, setExtras] = useCreateBookingState("extras");
     const [, setVehicle] = useCreateBookingState("vehicle");
     const [, setInmediatePickup] = useCreateBookingState("inmediatePickup");
+    const [paypalClientId] = useGlobalState("paypalClientId");
+    const [paypalSecretKey] = useGlobalState("paypalSecretKey");
 
-
-    const [profile] = useGlobalState('profile');
-
+    const urls = getPaypalUrls("DEV")
+    const { capturePaymentForToken } = UsePaypal({ paypalClientId, paypalSecretKey, paypalPaymentUrl: urls.PAYPAL_CAPTURE_URL, paypalTokenUrl: urls.PAYPAL_TOKEN_URL })
 
     const [extras] = useCreateBookingState("extras");
     const [vehicle] = useCreateBookingState("vehicle");
 
-    const [navigatedToSuccess, setNavigatedToSuccess] = useState(0);
-    const [postDone, setPostDone] = useState(false);
+    const [postCalled, setPostCalled] = useState(false);
 
     const [{ loading, error }, postCreation] = useAxios({
-        url: `http://grcgds.com/mobileapp/index.php`,
+        url: GRCGDS_BACKEND,
         method: 'POST',
     }, { manual: true })
 
-    useEffect(() => {
-        console.log("postDone", postDone)
-        console.log("navigatedToSuccess", navigatedToSuccess)
-        if (navigatedToSuccess == 0) return
-        if (postDone) return
+    const savePayment = (params: { token: string }) => {
+        console.log("postCalled", postCalled)
+        setPostCalled(true)
+        if (postCalled) return
         if (loading) return
 
         const data = {
@@ -51,34 +55,41 @@ const WebViewScreen = () => {
             dropoff_time: moment(returnTime).format("HH:mm"),
             pickup_location: originLocation?.internalcode,
             dropoff_location: returnLocation?.internalcode,
-            veh_id: vehicle?.VehID,
-            veh_name: vehicle?.Vehicle.VehMakeModel.Name,
-            veh_picture: vehicle?.Vehicle.VehMakeModel.PictureURL,
-            currency_code: route.params.transactions[0].amount.currency,
+            pickupFullAddress: originLocation?.locationname,
+            dropoffFullAddress: returnLocation?.locationname,
+            veh_id: vehicle?.VehAvailCore.VehID,
+            veh_name: vehicle?.VehAvailCore.Vehicle.VehMakeModel.Name,
+            veh_picture: vehicle?.VehAvailCore.Vehicle.VehMakeModel.PictureURL,
+            currency_code: route.params.purchase_units[0].amount.currency_code,
             paypalPaymentId: route.params.paypalPaymentId,
-            total_price: route.params.transactions[0].amount.total,
+            total_price: route.params.purchase_units[0].amount.value,
             equipment: extras.map(i => {
                 return {
-                    vendorEquipID: i.Equipment.vendorEquipID,
-                    Description: i.Equipment.Description,
-                    CurrencyCode: i.Charge.Taxamount.CurrencyCode,
+                    vendorEquipID: i.PricedEquip.Equipment.vendorEquipID,
+                    Description: i.PricedEquip.Equipment.Description,
+                    CurrencyCode: i.PricedEquip.Charge.Taxamounts.Taxamount.CurrencyCode,
                     amount: i.amount,
-                    price: i.Charge.Amount,
+                    price: i.PricedEquip.Charge.Amount,
                 }
             }),
             module_name: "CREATE_BOOKING"
         }
-        postCreation({ data })
-            .then((res) => {
-                console.log("postCreation", res.data);
-                setReservationNumber(res.data.VehSegmentCore.ConfID.Resnumber)
-                dispatchGlobalState({ type: 'saveBooking', state: { ...data, reservationNumber: res.data.VehSegmentCore.ConfID.Resnumber } })
+
+        capturePaymentForToken(params.token, route.params.paypalJson)
+            .then(() => {
+                return postCreation({ data })
+            })
+            .then((postCreationResponse) => {
+                console.log("postCreation", postCreationResponse.data);
+                setReservationNumber(postCreationResponse.data.VehSegmentCore.ConfID.Resnumber)
+                dispatchGlobalState({ type: 'saveBooking', state: { ...data, reservationNumber: postCreationResponse.data.VehSegmentCore.ConfID.Resnumber } })
 
                 navigation.navigate("Confirmation")
-                setPostDone(true)
             })
             .catch((err) => {
-                console.log(err)
+                console.log("postCreationerr", err);
+                console.log("postCreationerr data", err?.response?.data);
+
                 dispatchGlobalState({ type: 'error', state: "We could not create your booking!" });
 
                 navigation.dispatch(
@@ -89,7 +100,7 @@ const WebViewScreen = () => {
                         ],
                     })
                 );
-                setPostDone(true)
+                setPostCalled(false)
                 setDepartureTime(moment().set({ hour: 10, minutes: 30, second: 0, millisecond: 0 }).toDate());
                 setReturnTime(moment().set({ hour: 10, minutes: 30, second: 0, millisecond: 0 }).toDate());
                 setOriginLocation(null)
@@ -99,11 +110,10 @@ const WebViewScreen = () => {
                 setVehicle(null)
                 setInmediatePickup(false);
             })
-
-    }, [navigatedToSuccess]);
+    }
 
     return (
-        <SafeAreaView style={{ flex: 1}}>
+        <SafeAreaView style={{ flex: 1 }}>
             <WebView
                 ref={ref => (webview.current = ref)}
                 source={{ uri: route.params.url }}
@@ -114,8 +124,11 @@ const WebViewScreen = () => {
                     // handle certain doctypes
                     console.log('webview', url)
                     console.log('includes', url.includes('PAYMENT_CANCELLED'))
+                    const parsed = new UrlParser(url)
+                    const urlParams = qs.parse(parsed.query.substring(1))
+                    console.log(urlParams)
                     if (url.includes('PAYMENT_SUCCESS')) {
-                        setNavigatedToSuccess(p => p + 1)
+                        savePayment({ token: urlParams.token })
                     }
                     if (url.includes('PAYMENT_CANCELLED')) {
                         navigation.dispatch(

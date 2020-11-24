@@ -11,6 +11,7 @@ import MenuButton from '../../../partials/MenuButton';
 import { AppFontRegular } from '../../../constants/fonts';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../../../utils/i18n';
+import { APP_BRAND_COLOR } from '../../../constants/Colors';
 
 
 const DocumentScreen = ({ navigation }) => {
@@ -68,8 +69,8 @@ const DocumentScreen = ({ navigation }) => {
                         signRef.current?.saveImage()
                     }}
                     style={{
-                        backgroundColor: isClean == false ? '#000000' : '#000000',
-                        borderColor: isClean == false ? '#000000' : '#000000',
+                        backgroundColor: isClean == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
+                        borderColor: isClean == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
                     }}>{i18n.t(TRANSLATIONS_KEY.CONFIRM_WORD).toString()}</Button>
             </View>
             </>

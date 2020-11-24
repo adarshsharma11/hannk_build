@@ -10,6 +10,7 @@
     "test": "jest",
     "lint": "eslint .",
     "android:log": "adb logcat com.anotherapp:D *:W",
+    "updateCommon": "npm install anshumanpandey/hannk-mobile-common#master",
     "build:debug": "react-native run-android --variant=release"
   },
   "dependencies": {
@@ -42,6 +43,7 @@
     "form-data": "^3.0.0",
     "formik": "^2.1.4",
     "fuzzy-search": "^3.2.1",
+    "hannk-mobile-common": "github:anshumanpandey/hannk-mobile-common#master",
     "hybrid-crypto-js": "^0.2.2",
     "i18next": "^19.5.6",
     "jsencrypt": "^3.0.0-rc.1",
@@ -81,6 +83,7 @@
     "react-native-render-html": "^4.2.2",
     "react-native-safe-area-context": "^1.0.0",
     "react-native-screens": "^2.7.0",
+    "react-native-share": "^4.1.0",
     "react-native-signature-capture": "^0.4.10",
     "react-native-smooth-picker": "^1.1.2",
     "react-native-splash-screen": "^3.2.0",
@@ -91,7 +94,8 @@
     "react-native-webview": "^9.4.0",
     "react-native-xml2js": "^1.0.3",
     "recyclerlistview": "^3.0.0",
-    "rn-fetch-blob": "^0.12.0"
+    "rn-fetch-blob": "^0.12.0",
+    "url-parse": "^1.4.7"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

@@ -4,7 +4,7 @@ import DocumentPicker, { DocumentPickerResponse } from 'react-native-document-pi
 import { TouchableWithoutFeedback, ScrollView, TouchableHighlight } from 'react-native-gesture-handler';
 import { GRCGDS_BACKEND } from 'react-native-dotenv'
 import ImagePicker, { ImagePickerResponse } from 'react-native-image-picker';
-import { Image, SafeAreaView, View, TouchableOpacity, Platform } from 'react-native';
+import { Image, SafeAreaView, View, TouchableOpacity, Platform, Alert } from 'react-native';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import { dispatchFileState, FileTypeEnum, useDocumentState, Actions } from './DocumentState';
 import { Formik, FormikProps } from 'formik';
@@ -24,6 +24,7 @@ import { composeInitialProps } from 'react-i18next';
 import ErrorLabel from '../../../partials/ErrorLabel';
 import LoadingSpinner from '../../../partials/LoadingSpinner';
 import { DRIVER_LICENCE_URL, PASSPORT_URL, SELFIE_URL } from '../../../constants/FilePaths';
+import { APP_BRAND_COLOR } from '../../../constants/Colors';
 
 const DATE_FORMAT = 'MMM DD,YYYY'
 const formatDateService = new NativeDateService('en', { format: DATE_FORMAT });
@@ -42,6 +43,7 @@ type Props = StackScreenProps<LoginScreenProps, 'SingleUpload'>;
 const DocumentScreen = ({ route, navigation }: Props) => {
     const [change, triggerChange] = useState(true);
     const [saving, setSaving] = useState(false);
+    const [initialValues, setInitialValues] = useState({});
     const [fileToShow, setFileToShow] = useState<string | null>(null);
     const [showCountryModal, setShowCountryModal] = useState(false);
     const [currentCountryObj, setCurrentCountryObj] = useState<any>({});
@@ -61,11 +63,14 @@ const DocumentScreen = ({ route, navigation }: Props) => {
         }
     }, { manual: true })
 
-    const initialValues = {
-        docNumber: route.params?.docNumber,
-        fileCountry: route.params?.docCountry,
-        expDate: moment(`${route.params.year}-${route.params.month}-${route.params.day}`, 'YYYY-MM-DD')
-    }
+    useFocusEffect(
+        React.useCallback(() => {
+            setInitialValues({
+                docNumber: route.params?.docNumber,
+                fileCountry: route.params?.docCountry,
+                expDate: (!route.params.year || !route.params.month || !route.params.month) ? moment() : moment(`${route.params.year}-${route.params.month}-${route.params.day}`, 'YYYY-MM-DD')
+            })
+    }, []))
 
     useFocusEffect(
         React.useCallback(() => {
@@ -107,7 +112,28 @@ const DocumentScreen = ({ route, navigation }: Props) => {
         }
 
         return { btnTxt: 'Save', canGoNext: false, disabled: true }
+    }
 
+    const buttonIsDisabled = () => {
+        if (getFilesReq.loading) return true
+        if (route.params.fileType == "Selfie") {
+            return dictionary.get(FileTypeEnum.selfi) == undefined
+        } else {
+            if (!formikRef.current?.values.docNumber || !formikRef.current?.values.fileCountry || !formikRef.current?.values.expDate){
+                return true
+            }
+
+            console.log("formikRef.current?.values.fileCountry", formikRef.current?.values.fileCountry)
+            console.log("initialValues.fileCountry", initialValues.fileCountry)
+
+            if (
+                (formikRef.current?.values.docNumber && formikRef.current?.values.docNumber != initialValues.docNumber) ||
+                (formikRef.current?.values.fileCountry && formikRef.current?.values.fileCountry != initialValues.fileCountry) ||
+                (formikRef.current?.values.expDate && formikRef.current?.values.expDate != initialValues.expDate)
+            ) {
+                return false
+            }
+        }
     }
 
     return (
@@ -168,6 +194,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                 triggerChange(p => !p)
                                 setUploadPercent(0)
                                 setSaving(false)
+                                navigation.goBack()
                             })
                             .catch(r => console.log(r))
 
@@ -190,8 +217,8 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                         <View style={{ backgroundColor: 'white', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                             <Progress.Circle
                                                 showsText={true}
-                                                textStyle={{ color: "#000000" }}
-                                                color={"#000000"}
+                                                textStyle={{ color: APP_BRAND_COLOR }}
+                                                color={APP_BRAND_COLOR}
                                                 size={100}
                                                 progress={uploadPercent / 100}
                                                 indeterminate={uploadPercent == 0}
@@ -207,7 +234,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                         }}>
                                             <View style={{ backgroundColor: 'white', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 
-                                                <EntypoIcon style={{ marginRight: '5%', color: '#000000' }} size={100} name="camera" />
+                                                <EntypoIcon style={{ marginRight: '5%', color: APP_BRAND_COLOR }} size={100} name="camera" />
                                                 <Text style={{ color: 'black', textAlign: 'left', fontSize: 16, fontFamily: AppFontRegular }} category='s2'>
                                                     {i18n.t(TRANSLATIONS_KEY.PROFILE_VERIFICATION_ASK_FILE).toString()}
                                                 </Text>
@@ -272,6 +299,8 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                                     borderRadius: 10,
                                                     borderColor: errors.expDate && touched.expDate ? '#ffa5bc' : '#000000'
                                                 }}
+                                                min={new Date()}
+                                                max={moment().startOf('year').add(100, 'y').toDate()}
                                                 placeholder={() => <Text style={{ padding: '1.5%', paddingLeft: '4%', color: errors.expDate && touched.expDate ? '#ffa5bc' : '#8F9BB3' }}>{errors.expDate && touched.expDate ? errors.expDate : 'Expire Date'}</Text>}
                                                 date={values?.expDate?.toDate()}
                                                 title={(d) => moment(d)?.format(DATE_FORMAT)}
@@ -344,7 +373,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
 
                                 <Layout style={{ paddingTop: '2%' }}>
                                     <Button
-                                        disabled={getFilesReq.loading || saving}
+                                        disabled={buttonIsDisabled()}
                                         accessoryRight={getFilesReq.loading || saving ? LoadingSpinner : undefined}
                                         onPress={() => {
                                             const currentState = currenButtonState()
@@ -359,10 +388,10 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                         }}
                                         size="giant"
                                         style={{
-                                            backgroundColor: getFilesReq.loading || saving ? '#000000' : '#000000',
-                                            borderColor: getFilesReq.loading || saving ? '#000000' : '#000000',
+                                            backgroundColor: buttonIsDisabled() ? `${APP_BRAND_COLOR}50` : APP_BRAND_COLOR,
+                                            borderColor: buttonIsDisabled() ? `${APP_BRAND_COLOR}50` : APP_BRAND_COLOR,
                                             borderRadius: 10,
-                                            shadowColor: '#000000',
+                                            shadowColor: APP_BRAND_COLOR,
                                             shadowOffset: {
                                                 width: 0,
                                                 height: 10,
@@ -398,6 +427,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                         if (response.didCancel) {
                                             console.log('User cancelled image picker');
                                         } else if (response.error) {
+                                            Alert.alert("",response.error);
                                             console.log('ImagePicker Error: ', response.error);
                                         } else if (response.customButton) {
                                             console.log('User tapped custom button: ', response.customButton);
@@ -408,7 +438,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                     });
                                 }}>
                                     <View>
-                                        <EntypoIcon style={{ color: '#000000' }} size={50} name="camera" />
+                                        <EntypoIcon style={{ color: APP_BRAND_COLOR }} size={50} name="camera" />
                                         <Text style={{ textAlign: 'center', width: '100%', fontFamily: AppFontBold }}>
                                             {i18n.t(TRANSLATIONS_KEY.CAMERA_WORD).toString()}
                                         </Text>
@@ -421,6 +451,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                         if (response.didCancel) {
                                             console.log('User cancelled image picker');
                                         } else if (response.error) {
+                                            Alert.alert("",response.error);
                                             console.log('ImagePicker Error: ', response.error);
                                         } else if (response.customButton) {
                                             console.log('User tapped custom button: ', response.customButton);
@@ -431,7 +462,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                     });
                                 }}>
                                     <View>
-                                        <EntypoIcon style={{ color: '#000000' }} size={50} name="folder-images" />
+                                        <EntypoIcon style={{ color: APP_BRAND_COLOR }} size={50} name="folder-images" />
                                         <Text style={{ textAlign: 'center', width: '100%', fontFamily: AppFontBold }}>
                                             {i18n.t(TRANSLATIONS_KEY.GALLERY_WORD).toString()}
                                         </Text>
@@ -440,7 +471,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                             </View>
                             <Text onPress={() => setShowCounterModal(false)} style={{ textAlign: 'center', width: '100%', fontFamily: AppFontBold }}>
                                 Cancel
-                                        </Text>
+                            </Text>
                         </View>
                     </Layout>
                 </Modal>

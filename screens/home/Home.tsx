@@ -33,12 +33,14 @@ import useAxios from 'axios-hooks'
 import isAppleLogin from '../../utils/isAppleLogin';
 import useEffectSkipInitialRender from '../../utils/UseEffectSkipInitialRender';
 import isAppleUser from '../../utils/isAppleUser';
+import ShareCodeScreen from './ShareCode';
 
 
 const Drawer = createDrawerNavigator();
 
-let screens: any[] = [ { name: 'ProfileVerification', screen: <Drawer.Screen name="ProfileVerification" component={ProfileVerificationScreen} /> } ]
+let screens: any[] = [ { name: "CompletedUpload", screen: <Drawer.Screen name="CompletedUpload" component={CompletedUploadScreen} /> } ]
 const allScreens = [
+    { name: 'ShareCode', screen: <Drawer.Screen name="ShareCode" component={ShareCodeScreen} /> },
     { name: 'CreateBooking', screen: <Drawer.Screen name="CreateBooking" component={SelectLocation} /> },
     { name: 'Location', screen: <Drawer.Screen name="Location" component={LocalitationScreen} /> },
     { name: 'Reservation', screen: <Drawer.Screen name="Reservation" component={ReservationScreen} /> },
@@ -64,9 +66,6 @@ export default ({ navigation }: StackScreenProps<LoginScreenProps>) => {
     }, { manual: true })
 
     if (screens.length == 1) {
-        screens = [
-            { name: "CompletedUpload", screen: <Drawer.Screen name="CompletedUpload" component={CompletedUploadScreen} /> },
-        ]
 
         const hasAllFiles = userHasAllFiles(profile || {})
         const hasFullProfile = userHasFullProfile(profile || {})
@@ -75,12 +74,8 @@ export default ({ navigation }: StackScreenProps<LoginScreenProps>) => {
         console.log('hasAllFiles', hasAllFiles)
         console.log('isAppleUser', isAppleUser(profile))
 
-        if ((hasFullProfile && hasAllFiles) || (hasAllFiles && isAppleUser(profile))) {
-            screens.push(...allScreens)
-            screens.unshift({ name: 'MyBookings', screen: <Drawer.Screen name="MyBookings" component={MyTripsScreens} /> })
-        } else {
-            screens = [ { name: 'ProfileVerification', screen: <Drawer.Screen name="ProfileVerification" component={ProfileVerificationScreen} /> } ]
-        }
+        screens.push(...allScreens)
+        screens.unshift({ name: 'MyBookings', screen: <Drawer.Screen name="MyBookings" component={MyTripsScreens} /> })
     }
 
     useEffect(() => {
@@ -119,26 +114,6 @@ export default ({ navigation }: StackScreenProps<LoginScreenProps>) => {
             }
         }
         checkPhone()
-    }, [profile])
-
-    useEffectSkipInitialRender(() => {
-        async function checkFullProfile() {
-            const isApple = await isAppleLogin()
-            const hasAllFiles = userHasAllFiles(profile || {})
-            const hasFullProfile = userHasFullProfile(profile || {})
-
-            if (profile === null) {
-                screens = [{ name: 'ProfileVerification', screen: <Drawer.Screen name="ProfileVerification" component={ProfileVerificationScreen} /> }]
-            } else if ((hasFullProfile && hasAllFiles && isApple == false) || (hasAllFiles && isApple == true)) {
-                screens = [{ name: 'MyBookings', screen: <Drawer.Screen name="MyBookings" component={MyTripsScreens} /> }, ...allScreens]
-            } else {
-                screens = [
-                    { name: 'ProfileVerification', screen: <Drawer.Screen name="ProfileVerification" component={ProfileVerificationScreen} /> },
-                    { name: "CompletedUpload", screen: <Drawer.Screen name="CompletedUpload" component={CompletedUploadScreen} /> },
-                ]
-            }
-        }
-        checkFullProfile()
     }, [profile])
 
     return (

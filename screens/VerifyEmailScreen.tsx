@@ -10,6 +10,7 @@ import BackButton from '../partials/BackButton';
 import { AppFontBold } from '../constants/fonts'
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../utils/i18n';
+import { APP_BRAND_COLOR } from '../constants/Colors';
 
 const DocumentScreen = () => {
   const [profile] = useGlobalState('profile');
@@ -53,6 +54,30 @@ const DocumentScreen = () => {
 
         <Button
           onPress={() => {
+            navigation.navigate('Login')
+          }}
+          size="giant"
+          disabled={loading}
+          accessoryRight={loading ? LoadingSpinner : undefined}
+          style={{
+            backgroundColor: loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
+            borderColor: loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
+            marginBottom: '15%',
+            borderRadius: 10,
+            shadowColor: APP_BRAND_COLOR,
+            shadowOffset: {
+              width: 0,
+              height: 10,
+            },
+            shadowOpacity: 0.51,
+            shadowRadius: 13.16,
+            elevation: 10,
+          }}>
+          {() => <Text style={{ color: 'white', fontFamily: AppFontBold, fontSize: 18 }}>{i18n.t(TRANSLATIONS_KEY.VERIFY_EMAIL_GO_TO_LOGIN).toString()}</Text>}
+        </Button>
+
+        <Button
+          onPress={() => {
             doVerify({
               url: GRCGDS_BACKEND,
               data: {
@@ -70,11 +95,11 @@ const DocumentScreen = () => {
           disabled={loading}
           accessoryRight={loading ? LoadingSpinner : undefined}
           style={{
-            backgroundColor: loading == false ? '#000000' : '#000000',
-            borderColor: loading == false ? '#000000' : '#000000',
+            backgroundColor: loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
+            borderColor: loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
             marginBottom: '15%',
             borderRadius: 10,
-            shadowColor: '#000000',
+            shadowColor: APP_BRAND_COLOR,
             shadowOffset: {
               width: 0,
               height: 10,

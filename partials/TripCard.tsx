@@ -8,6 +8,7 @@ import ResolveCurrencySymbol from '../utils/ResolveCurrencySymbol';
 import { AppFontBold, AppFontRegular } from '../constants/fonts'
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../utils/i18n';
+import { APP_BRAND_COLOR } from '../constants/Colors';
 
 export type TripCardProps = {
   pickupLocation: string
@@ -52,7 +53,7 @@ const TripCard: React.FC<TripCardProps> = (props) => {
           {props.leftImageUri ? (
             <Image
               style={{ width: 50, height: 50 }}
-              source={require('../image/rightcars.png')}
+              source={require('../image/hannkicon.png')}
             />
           ) : null}
         </Layout>
@@ -79,7 +80,7 @@ const TripCard: React.FC<TripCardProps> = (props) => {
             )}
             <Layout style={{ display: 'flex', flexDirection: 'row' }}>
               <Layout style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', marginRight: '5%' }}>
-                <FontAwesomeIcon size={15} style={{ color: '#000000' }} name="circle" />
+                <FontAwesomeIcon size={15} style={{ color: APP_BRAND_COLOR }} name="circle" />
                 <Layout style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around' }}>
                   <MaterialCommunityIcon style={{ marginBottom: '15%' }} size={4} name="rectangle" />
                   <MaterialCommunityIcon style={{ marginBottom: '15%' }} size={4} name="rectangle" />
@@ -136,7 +137,7 @@ const TripCard: React.FC<TripCardProps> = (props) => {
                 </Button>
               )}
               {props.completed && (
-                <Button style={{ backgroundColor: '#000000', borderColor: '#000000', borderRadius: 10 }} size={'small'}>
+                <Button style={{ backgroundColor: APP_BRAND_COLOR, borderColor: APP_BRAND_COLOR, borderRadius: 10 }} size={'small'}>
                   {() => <Text style={{ color: 'white' }}>Generate Invoice</Text>}
                 </Button>
               )}

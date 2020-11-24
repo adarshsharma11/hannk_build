@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../../../utils/i18n';
 
 
-export default () => {
+const KeyedReservation =  () => {
     const { i18n } = useTranslation();
     const route = useRoute();
     const returnAddressString = `${route.params.pLocationAddress.addressName.replace(/ /g, '+')}${route.params.pLocationAddress.CountryName.Name}`
@@ -111,3 +111,5 @@ export default () => {
         </SafeAreaView>
     )
 };
+
+export default KeyedReservation

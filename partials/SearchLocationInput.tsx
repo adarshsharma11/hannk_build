@@ -12,7 +12,7 @@ import { GrcgdsLocation } from '../types';
 import { AppFontBold, AppFontRegular } from '../constants/fonts'
 import { TRANSLATIONS_KEY } from '../utils/i18n';
 import { useTranslation } from 'react-i18next';
-import { GRCGDS_BACKEND } from 'react-native-dotenv';
+import { APP_BRAND_COLOR } from '../constants/Colors';
 
 export type LocationSearchInputProps = {
   pickupLocation?: { [k: string]: any } | null
@@ -38,7 +38,7 @@ const LocationSearchInput: React.FC<LocationSearchInputProps> = ({ hideReturnTog
   const [returnInputText, setReturnInputText] = useState<string>('');
 
   const [locationReq, doSearch] = useAxios({
-    url: GRCGDS_BACKEND,
+    url: `http://grcgds.com/mobileapp/index.php`,
     params: { module_name: 'LOCATION_SEARCH' }
   }, { manual: true })
 
@@ -63,13 +63,13 @@ const LocationSearchInput: React.FC<LocationSearchInputProps> = ({ hideReturnTog
       <Layout style={{ display: 'flex', flexDirection: 'row', zIndex: 6 }}>
         {returnSameLocation && (
           <Layout style={{ marginLeft: '2%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
-            <FontAwesomeIcon size={15} style={{ color: '#000000' }} name="circle" />
+            <FontAwesomeIcon size={15} style={{ color: APP_BRAND_COLOR }} name="circle" />
           </Layout>
         )}
 
         {!returnSameLocation && (
           <Layout style={{ marginLeft: '2%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
-            <FontAwesomeIcon size={15} style={{ color: '#000000' }} name="circle" />
+            <FontAwesomeIcon size={15} style={{ color: APP_BRAND_COLOR }} name="circle" />
             <Layout style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between' }}>
               <MaterialCommunityIcon style={{ marginBottom: '5%' }} size={4} name="rectangle" />
               <MaterialCommunityIcon style={{ marginBottom: '5%' }} size={4} name="rectangle" />
@@ -109,8 +109,8 @@ const LocationSearchInput: React.FC<LocationSearchInputProps> = ({ hideReturnTog
                     setOrigin(item)
                     setPickupResults(null)
                   }}>
-                    <Layout style={{ display: 'flex', flexDirection: 'row', backgroundColor: "white", borderBottomColor: '#000000', borderBottomWidth: 1, paddingBottom: '3%', paddingTop: '3%' }}>
-                      <EvilIcon style={{ color: '#000000' }} name="location" size={32} />
+                    <Layout style={{ display: 'flex', flexDirection: 'row', backgroundColor: "white", borderBottomColor: APP_BRAND_COLOR, borderBottomWidth: 1, paddingBottom: '3%', paddingTop: '3%' }}>
+                      <EvilIcon style={{ color: APP_BRAND_COLOR }} name="location" size={32} />
                       <Text style={{ fontSize: 18 }}>{item.locationname}</Text>
                     </Layout>
                   </TouchableOpacity>
@@ -149,8 +149,8 @@ const LocationSearchInput: React.FC<LocationSearchInputProps> = ({ hideReturnTog
                     setReturn(item)
                     setReturnResults(null)
                   }}>
-                    <Layout style={{ display: 'flex', flexDirection: 'row', borderBottomColor: '#000000', borderBottomWidth: 1, paddingBottom: '3%', paddingTop: '3%' }}>
-                      <EvilIcon style={{ color: '#000000' }} name="location" size={32} />
+                    <Layout style={{ display: 'flex', flexDirection: 'row', borderBottomColor: APP_BRAND_COLOR, borderBottomWidth: 1, paddingBottom: '3%', paddingTop: '3%' }}>
+                      <EvilIcon style={{ color: APP_BRAND_COLOR }} name="location" size={32} />
                       <Text style={{ fontSize: 18 }}>{item.locationname}</Text>
                     </Layout>
                   </TouchableOpacity>

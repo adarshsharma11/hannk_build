@@ -14,6 +14,7 @@ import { useCarDetailState } from './detailsState';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../../../utils/i18n';
 import { useRoute } from '@react-navigation/native';
+import { APP_BRAND_COLOR } from '../../../constants/Colors';
 
 const imageArr = []
 
@@ -65,8 +66,8 @@ const DocumentScreen = ({ navigation }) => {
           <View style={{ backgroundColor: 'rgba(255,255,255,0.85)', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, zIndex: 4 }}>
             <Progress.Circle
               showsText={true}
-              textStyle={{ color: "#000000" }}
-              color={"#000000"}
+              textStyle={{ color: APP_BRAND_COLOR }}
+              color={APP_BRAND_COLOR}
               size={100}
               progress={uploadPercent / 100}
               indeterminate={uploadPercent == 0}
@@ -88,9 +89,9 @@ const DocumentScreen = ({ navigation }) => {
             <View style={{ display: 'flex', flexDirection: 'row', marginTop: '10%', }}>
               {Array(maxPhotosAmount).fill(1).map((_, idx) => {
                 return (
-                  <View style={{ marginLeft: '2%', borderWidth: 1, borderColor: pictures[idx] ? '#000000' : 'white', backgroundColor: pictures[idx] ? 'white' : '#000000', width: 40, height: 40, borderRadius: 40 / 2, display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
+                  <View style={{ marginLeft: '2%', borderWidth: 1, borderColor: pictures[idx] ? APP_BRAND_COLOR : 'white', backgroundColor: pictures[idx] ? 'white' : APP_BRAND_COLOR, width: 40, height: 40, borderRadius: 40 / 2, display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
                     <Text style={{ color: 'white', textAlign: 'center', fontFamily: AppFontBold, fontSize: 20 }}>
-                      {!pictures[idx] ? idx + 1 : <MaterialIcons style={{ color: pictures[idx] ? '#000000' : "white" }} size={24} name="check" />}
+                      {!pictures[idx] ? idx + 1 : <MaterialIcons style={{ color: pictures[idx] ? APP_BRAND_COLOR : "white" }} size={24} name="check" />}
                     </Text>
                   </View>
                 );
@@ -116,7 +117,7 @@ const DocumentScreen = ({ navigation }) => {
                   }
                 });
               }}>
-                <View style={{ marginTop: '10%', backgroundColor: '#000000', width: 100, height: 100, borderRadius: 100 / 2, display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
+                <View style={{ marginTop: '10%', backgroundColor: APP_BRAND_COLOR, width: 100, height: 100, borderRadius: 100 / 2, display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
                   <MaterialIcons style={{ color: 'white', alignSelf: 'center' }} size={50} name="camera-alt" />
                 </View>
               </TouchableOpacity>
@@ -154,10 +155,10 @@ const DocumentScreen = ({ navigation }) => {
               size="giant"
               style={{
                 width: '90%',
-                backgroundColor: !pictures[currentPicktureIndex] ? '#000000' : '#000000',
-                borderColor: !pictures[currentPicktureIndex] ? '#000000' : '#000000',
+                backgroundColor: !pictures[currentPicktureIndex] ? `${APP_BRAND_COLOR}50` : APP_BRAND_COLOR,
+                borderColor: !pictures[currentPicktureIndex] ? `${APP_BRAND_COLOR}50` : APP_BRAND_COLOR,
                 borderRadius: 10,
-                shadowColor: '#000000',
+                shadowColor: APP_BRAND_COLOR,
                 shadowOffset: {
                   width: 0,
                   height: 10,

@@ -15,6 +15,7 @@ import { GRCGDS_BACKEND } from 'react-native-dotenv';
 import * as Progress from 'react-native-progress';
 const xml2js = require('react-native-xml2js');
 import HTML from 'react-native-render-html';
+import { APP_BRAND_COLOR } from '../../../constants/Colors';
 
 const InsuranceScreen = () => {
     const { params } = useRoute<any>();
@@ -58,8 +59,8 @@ const InsuranceScreen = () => {
                         <View style={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
                             <Progress.Circle
                                 showsText={true}
-                                textStyle={{ color: "#000000" }}
-                                color={"#000000"}
+                                textStyle={{ color: APP_BRAND_COLOR }}
+                                color={APP_BRAND_COLOR}
                                 borderWidth={4}
                                 size={150}
                                 indeterminate={true}
