@@ -23,6 +23,7 @@ import { SELFIE_URL } from "../../constants/FilePaths";
 import { APP_BRAND_COLOR } from "../../constants/Colors";
 
 const menuData = [
+    { name: i18n.t(TRANSLATIONS_KEY.MENU_ITEM_MY_TRIPS), screenName: "MyBookings", iconName: "car-side", iconSize: 30, resetHistory: true, key: 'asd' },
     { name: i18n.t(TRANSLATIONS_KEY.MENU_ITEM_MY_PROFILE), screenName: "EditProfile", iconName: 'account', key: 'sdwwe' },
     { name: i18n.t(TRANSLATIONS_KEY.MENU_ITEM_PRIVACY_POLICY), screenName: "Policy", iconName: 'shield', key: 'swwe' },
     { name: i18n.t(TRANSLATIONS_KEY.MENU_ITEM_MENU_ITEM), screenName: "ShareCode", iconName: 'share-variant', key: 'sggewwe' },
@@ -49,18 +50,6 @@ const menuData = [
 const DrawerMenu = ({ navigation }: { navigation: any }) => {
     const [profile] = useGlobalState('profile')
 
-    const hasFullProfile = userHasFullProfile(profile || {})
-    const hasAllFiles = userHasAllFiles(profile || {})
-
-    const wasDrawerOpen = useIsDrawerOpen();
-
-    useEffect(() => {
-        if (hasFullProfile && hasAllFiles) {
-            const found = menuData.find(i => i.key == "asd")
-            if (!found) menuData.unshift({ name: "My Trips", screenName: "MyBookings", iconName: "car-side", iconSize: 30, resetHistory: true, key: 'asd' });
-        }
-    }, [wasDrawerOpen])
-
     return (
         <SafeAreaView style={styles.container}>
             <View style={{ flex: 1}}>
@@ -69,7 +58,7 @@ const DrawerMenu = ({ navigation }: { navigation: any }) => {
                         {profile?.selfiurl == "" && (
                             <Avatar
                                 style={{ width: 125, height: 125, }}
-                                source={require('../../image/hannkicon.png')}
+                                source={require('../../image/retajicon.png')}
                             />
                         )}
                         {profile?.selfiurl != "" && (
