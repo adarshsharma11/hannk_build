@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
 import 'react-native-gesture-handler';
 import React, { useEffect, useState, useReducer } from 'react'
 import './utils/ErrorTrack';
@@ -25,14 +18,17 @@ import SuccessPhoneVerificationScreen from './screens/SuccessPhoneVerification';
 import EmptyLoadingScreen from './screens/EmptyLoadingScreen';
 import VerifyPhoneScreen from './screens/VerifyPhoneScreen';
 import VerifyEmailScreen from './screens/VerifyEmailScreen';
-import { useGlobalState, dispatchGlobalState } from './state';
+import { useGlobalState, dispatchGlobalState, saveAppConfig } from './state';
 import SplashScreen from 'react-native-splash-screen'
 import { Alert } from 'react-native';
 import { AppState } from 'react-native'
+import { getAppConfig } from 'hannk-mobile-common'
 import BackgroundTimer from 'react-native-background-timer';
 import './utils/i18n';
 import RefCodeScreen from './screens/RefCodeScreen';
 import HasRefCodeScreen from './screens/HasRefCodeScreen';
+import { APP_BRAND_COLOR } from './constants/Colors';
+import { CLIENT_ID } from 'react-native-dotenv';
 
 if (!Object.fromEntries) {
   Object.fromEntries = Object.fromEntries || function(arr) {
@@ -49,6 +45,14 @@ export default () => {
   const [token] = useGlobalState('token');
   const [profile] = useGlobalState('profile');
   const [error] = useGlobalState('error');
+
+  const { getAppConfig: doGetAppConfig, getAppConfigReq } = getAppConfig(CLIENT_ID)
+
+  useEffect(() => {
+    if (getAppConfigReq.data && !getAppConfigReq.loading) {
+      saveAppConfig(getAppConfigReq.data)
+    }
+  }, [getAppConfigReq.loading])
 
   const cb = (nextAppState) => {
     if (nextAppState.match(/inactive|background/)) {
@@ -76,52 +80,52 @@ export default () => {
   }, []);
   const j = { ...EvaMapping }
   //j.strict["text-font-family"] = "SF-UI-Display-Regular"
-  j.components.Input.appearances.default.variantGroups.status.basic.state.focused.borderColor = '#000000'
+  j.components.Input.appearances.default.variantGroups.status.basic.state.focused.borderColor = APP_BRAND_COLOR
   j.components.Input.appearances.default.variantGroups.status.basic.backgroundColor = "white"
 
-  j.components.Input.appearances.default.variantGroups.status.basic.state.focused.borderColor = '#000000'
+  j.components.Input.appearances.default.variantGroups.status.basic.state.focused.borderColor = APP_BRAND_COLOR
   j.components.Input.appearances.default.variantGroups.status.basic.backgroundColor = "white"
 
   j.components.Toggle.appearances.default.variantGroups.status.basic.backgroundColor = "white"
-  j.components.Toggle.appearances.default.variantGroups.status.basic.borderColor = "#00000080"
-  j.components.Toggle.appearances.default.variantGroups.status.basic.state.checked.backgroundColor = "#000000"
-  j.components.Toggle.appearances.default.variantGroups.status.basic.state.checked.borderColor = "#000000"
-  j.components.Toggle.appearances.default.variantGroups.status.basic.state.checked.iconTintColor = "#000000"
-  j.components.Toggle.appearances.default.variantGroups.status.basic.state.focused.borderColor = "#000000"
-  j.components.Toggle.appearances.default.variantGroups.status.basic.state.focused.backgroundColor = "#000000"
-  j.components.Toggle.appearances.default.variantGroups.status.basic.state.active.backgroundColor = "#000000"
-  j.components.Toggle.appearances.default.variantGroups.status.basic.state.active.borderColor = "#000000"
-  j.components.Toggle.appearances.default.variantGroups.status.basic.state["checked.active"].backgroundColor = "#000000"
-  j.components.Toggle.appearances.default.variantGroups.status.basic.state["checked.active"].borderColor = "#000000"
+  j.components.Toggle.appearances.default.variantGroups.status.basic.borderColor = APP_BRAND_COLOR
+  j.components.Toggle.appearances.default.variantGroups.status.basic.state.checked.backgroundColor = APP_BRAND_COLOR
+  j.components.Toggle.appearances.default.variantGroups.status.basic.state.checked.borderColor = APP_BRAND_COLOR
+  j.components.Toggle.appearances.default.variantGroups.status.basic.state.checked.iconTintColor = APP_BRAND_COLOR
+  j.components.Toggle.appearances.default.variantGroups.status.basic.state.focused.borderColor = APP_BRAND_COLOR
+  j.components.Toggle.appearances.default.variantGroups.status.basic.state.focused.backgroundColor = APP_BRAND_COLOR
+  j.components.Toggle.appearances.default.variantGroups.status.basic.state.active.backgroundColor = APP_BRAND_COLOR
+  j.components.Toggle.appearances.default.variantGroups.status.basic.state.active.borderColor = APP_BRAND_COLOR
+  j.components.Toggle.appearances.default.variantGroups.status.basic.state["checked.active"].backgroundColor = APP_BRAND_COLOR
+  j.components.Toggle.appearances.default.variantGroups.status.basic.state["checked.active"].borderColor = APP_BRAND_COLOR
 
   j.components.CheckBox.appearances.default.mapping.width = 25
   j.components.CheckBox.appearances.default.mapping.height = 25
   j.components.CheckBox.appearances.default.mapping.borderWidth = 2
   j.components.CheckBox.appearances.default.variantGroups.status.basic.backgroundColor = "white"
-  j.components.CheckBox.appearances.default.variantGroups.status.basic.borderColor = "#000000"
-  j.components.CheckBox.appearances.default.variantGroups.status.basic.state.checked.backgroundColor = "#000000"
-  j.components.CheckBox.appearances.default.variantGroups.status.basic.state.checked.borderColor = "#000000"
-  j.components.CheckBox.appearances.default.variantGroups.status.basic.state.focused.borderColor = "#000000"
-  j.components.CheckBox.appearances.default.variantGroups.status.basic.state.focused.backgroundColor = "#000000"
-  j.components.CheckBox.appearances.default.variantGroups.status.basic.state.active.backgroundColor = "#000000"
-  j.components.CheckBox.appearances.default.variantGroups.status.basic.state.active.borderColor = "#000000"
-  j.components.CheckBox.appearances.default.variantGroups.status.basic.state["checked.active"].backgroundColor = "#000000"
-  j.components.CheckBox.appearances.default.variantGroups.status.basic.state["checked.active"].borderColor = "#000000"
+  j.components.CheckBox.appearances.default.variantGroups.status.basic.borderColor = APP_BRAND_COLOR
+  j.components.CheckBox.appearances.default.variantGroups.status.basic.state.checked.backgroundColor = APP_BRAND_COLOR
+  j.components.CheckBox.appearances.default.variantGroups.status.basic.state.checked.borderColor = APP_BRAND_COLOR
+  j.components.CheckBox.appearances.default.variantGroups.status.basic.state.focused.borderColor = APP_BRAND_COLOR
+  j.components.CheckBox.appearances.default.variantGroups.status.basic.state.focused.backgroundColor = APP_BRAND_COLOR
+  j.components.CheckBox.appearances.default.variantGroups.status.basic.state.active.backgroundColor = APP_BRAND_COLOR
+  j.components.CheckBox.appearances.default.variantGroups.status.basic.state.active.borderColor = APP_BRAND_COLOR
+  j.components.CheckBox.appearances.default.variantGroups.status.basic.state["checked.active"].backgroundColor = APP_BRAND_COLOR
+  j.components.CheckBox.appearances.default.variantGroups.status.basic.state["checked.active"].borderColor = APP_BRAND_COLOR
 
   j.components.CheckBox.appearances.default.variantGroups.status.control.backgroundColor = "white"
-  j.components.CheckBox.appearances.default.variantGroups.status.control.borderColor = "#000000"
-  j.components.CheckBox.appearances.default.variantGroups.status.control.state.checked.backgroundColor = "#000000"
-  j.components.CheckBox.appearances.default.variantGroups.status.control.state.checked.borderColor = "#000000"
-  j.components.CheckBox.appearances.default.variantGroups.status.control.state.focused.borderColor = "#000000"
-  j.components.CheckBox.appearances.default.variantGroups.status.control.state.focused.backgroundColor = "#000000"
-  j.components.CheckBox.appearances.default.variantGroups.status.control.state.active.backgroundColor = "#000000"
-  j.components.CheckBox.appearances.default.variantGroups.status.control.state.active.borderColor = "#000000"
-  j.components.CheckBox.appearances.default.variantGroups.status.control.state["checked.active"].backgroundColor = "#000000"
-  j.components.CheckBox.appearances.default.variantGroups.status.control.state["checked.active"].borderColor = "#000000"
+  j.components.CheckBox.appearances.default.variantGroups.status.control.borderColor = APP_BRAND_COLOR
+  j.components.CheckBox.appearances.default.variantGroups.status.control.state.checked.backgroundColor = APP_BRAND_COLOR
+  j.components.CheckBox.appearances.default.variantGroups.status.control.state.checked.borderColor = APP_BRAND_COLOR
+  j.components.CheckBox.appearances.default.variantGroups.status.control.state.focused.borderColor = APP_BRAND_COLOR
+  j.components.CheckBox.appearances.default.variantGroups.status.control.state.focused.backgroundColor = APP_BRAND_COLOR
+  j.components.CheckBox.appearances.default.variantGroups.status.control.state.active.backgroundColor = APP_BRAND_COLOR
+  j.components.CheckBox.appearances.default.variantGroups.status.control.state.active.borderColor = APP_BRAND_COLOR
+  j.components.CheckBox.appearances.default.variantGroups.status.control.state["checked.active"].backgroundColor = APP_BRAND_COLOR
+  j.components.CheckBox.appearances.default.variantGroups.status.control.state["checked.active"].borderColor = APP_BRAND_COLOR
   j.components.CheckBox.appearances.default.variantGroups.status.control.state.checked.iconTintColor = "white"
 
-  j.components.Spinner.appearances.default.variantGroups.status.basic.borderColor = "#000000"
-  j.components.Spinner.appearances.default.variantGroups.status.primary.borderColor = "#000000"
+  j.components.Spinner.appearances.default.variantGroups.status.basic.borderColor = APP_BRAND_COLOR
+  j.components.Spinner.appearances.default.variantGroups.status.primary.borderColor = APP_BRAND_COLOR
 
   j.components.Card.appearances.outline.mapping.bodyPaddingVertical = 8
 

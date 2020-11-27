@@ -45,7 +45,7 @@ const DocumentScreen = () => {
             return {
               currencyCode: storedData?.currency_code,
               image_preview_url: storedData?.veh_picture ? storedData?.veh_picture : 'https://carimages.rent.it/EN/1539285845928.png',
-              leftImageUri: '../image/app_ico.png',
+              leftImageUri: '../image/hannkicon.png',
               keyLess: false,
               "tripDate": moment.utc(moment.unix(i.unixPTime)),
               "pickupLocation": i.pLocation,

@@ -29,7 +29,7 @@ const ShareCodeScreen = () => {
             <Button
               onPress={() => {
                 const options = {
-                  message: `Download the Retaj app from Play Store or Apple Store and use my activation code RI0000${profile?.id} to start renting cars.`,
+                  message: `Download the Hannk app from Play Store or Apple Store and use my activation code RI0000${profile?.id} to start renting cars.`,
                   title: "Invite a friend",
                 }
                 Share.open(options)

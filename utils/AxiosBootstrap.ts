@@ -17,7 +17,7 @@ axiosInstance.interceptors.request.use(
     }
 
     const customeHeaders = {
-      AppName: `Retaj`,
+      AppName: `Hannk`,
       ClientId:  CLIENT_ID,
       Auth
     }

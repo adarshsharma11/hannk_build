@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../../../utils/i18n';
 import { APP_BRAND_COLOR } from '../../../constants/Colors';
 import { CarSearchItem } from '../../../types/SearchVehicleResponse';
-const retajlogo = require('../../../image/app_ico.png')
+const retajlogo = require('../../../image/hannkicon.png')
 
 const _dataProvider = new DataProvider((r1, r2) => r1.VehID !== r2.VehID)
 

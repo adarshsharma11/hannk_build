@@ -46,7 +46,7 @@ const CarTripInfoCard: React.FC<TripCardProps> = (props) => {
         {props.leftImageUri && (
           <Image
             style={{ width: 50, height: 50 }}
-            source={require('../image/app_ico.png')}
+            source={require('../image/hannkicon.png')}
           />
         )}
 

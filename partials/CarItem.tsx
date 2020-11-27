@@ -44,7 +44,7 @@ const CarItem: React.FC<Props> = ({ vehicle, isActive, onClick, showBookButton, 
                     </View>
 
                     <View style={{ padding: '3%', position: 'absolute', right: 0 }}>
-                        <Avatar style={{ borderRadius: 10 }} shape='square' source={require('../image/app_ico.png')} />
+                        <Avatar style={{ borderRadius: 10 }} shape='square' source={require('../image/hannkicon.png')} />
                     </View>
                 </View>
                 <Layout style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', width: '70%', backgroundColor: '#00000000' }}>
