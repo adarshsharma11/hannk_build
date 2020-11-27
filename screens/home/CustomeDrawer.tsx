@@ -58,7 +58,7 @@ const DrawerMenu = ({ navigation }: { navigation: any }) => {
                         {profile?.selfiurl == "" && (
                             <Avatar
                                 style={{ width: 125, height: 125, }}
-                                source={require('../../image/retajicon.png')}
+                                source={require('../../image/hannkicon.png')}
                             />
                         )}
                         {profile?.selfiurl != "" && (
