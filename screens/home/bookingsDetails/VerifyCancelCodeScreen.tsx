@@ -9,6 +9,7 @@ import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/nativ
 import { AppFontBold, AppFontRegular } from '../../../constants/fonts'
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../../../utils/i18n';
+import { APP_BRAND_COLOR } from '../../../constants/Colors';
 
 const DocumentScreen = () => {
   const { i18n } = useTranslation();
@@ -22,35 +23,12 @@ const DocumentScreen = () => {
   const [error , setError] = React.useState<string | null>(null);
   const [counter, setCounter] = React.useState(30);
 
-  const [cancelReq, cancelBooking] = useAxios({
-    url: `https://OTA.right-cars.com/`,
-    method: 'POST',
-    data: `<OTA_VehCancelRQ xmlns="http://www.opentravel.org/OTA/2003/05"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05
-    VehCancelRQ.xsd">
-    <POS>
-    <Source>
-    <RequestorID Type="5" ID="MOBILE001" />
-    </Source>
-    </POS>
-    <VehCancelRQCore>
-    <ResNumber Number="${route.params.registratioNumber}"/>
-    </VehCancelCore>
-    <VehCancelRQInfo>
-    </VehCancelRQInfo>
-    </OTA_VehCancelRQ>`,
-    headers: {
-      "Content-Type": "application/soap+xml;charset=utf-8"
-    },
-  }, { manual: true })
-
   const [codeReq, callAPI] = useAxios({
     url: GRCGDS_BACKEND,
     method: 'POST'
   }, {manual: true})
 
-  console.log(route.params)
+  console.log(route.params.registratioNumber)
 
   useEffect(() => {
     if (route.params.reservationStatus == 'Cancelled') return
@@ -120,15 +98,15 @@ const DocumentScreen = () => {
         <Layout style={{ display: 'flex', flexDirection: 'column', backgroundColor: '#00000000' }}>
           <Text style={{ textAlign: 'left' }} category="h3">{i18n.t(TRANSLATIONS_KEY.OPT_SCREEN_TITLE).toString()}</Text>
           <Text category="s1"> {i18n.t(TRANSLATIONS_KEY.OPT_SCREEN_SUB_TITLE).toString()} </Text>
-          <Text style={{ color: '#000000' }}>({profile?.mobilecode}) {profile?.mobilenumber}</Text>
+          <Text style={{ color: APP_BRAND_COLOR }}>({profile?.mobilecode}) {profile?.mobilenumber}</Text>
         </Layout>
 
 
         <Layout style={{ display: 'flex', flexDirection: 'row', height: '20%', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#00000000', marginTop: '15%' }}>
-          <TextInput onBlur={() => { setIdxFocusInput(-1) }} onFocus={() => { setIdxFocusInput(0) }} ref={ref => inputs[0].current = ref} value={pin[0] !== -1 ? pin[0].toString() : ''} onKeyPress={(e) => { onInput(e) }} maxLength={1} style={{ textAlign: 'center', fontFamily: AppFontBold, borderColor: idxFocusInput == 0 ? '#000000' : '#2f378c', borderWidth: 1, backgroundColor: 'white', borderRadius: 30, fontSize: 34, height: 80, width: '20%' }} />
-          <TextInput onBlur={() => { setIdxFocusInput(-1) }} onFocus={() => { setIdxFocusInput(1) }} ref={ref => inputs[1].current = ref} value={pin[1] !== -1 ? pin[1].toString() : ''} onKeyPress={(e) => { onInput(e) }} maxLength={1} style={{ textAlign: 'center', fontFamily: AppFontBold, borderColor: idxFocusInput == 1 ? '#000000' : '#2f378c', borderWidth: 1, backgroundColor: 'white', borderRadius: 30, fontSize: 34, height: 80, width: '20%' }} />
-          <TextInput onBlur={() => { setIdxFocusInput(-1) }} onFocus={() => { setIdxFocusInput(2) }} ref={ref => inputs[2].current = ref} value={pin[2] !== -1 ? pin[2].toString() : ''} onKeyPress={(e) => { onInput(e) }} maxLength={1} style={{ textAlign: 'center', fontFamily: AppFontBold, borderColor: idxFocusInput == 2 ? '#000000' : '#2f378c', borderWidth: 1, backgroundColor: 'white', borderRadius: 30, fontSize: 34, height: 80, width: '20%' }} />
-          <TextInput onBlur={() => { setIdxFocusInput(-1) }} onFocus={() => { setIdxFocusInput(3) }} ref={ref => inputs[3].current = ref} value={pin[3] !== -1 ? pin[3].toString() : ''} onKeyPress={(e) => { onInput(e) }} maxLength={1} style={{ textAlign: 'center', fontFamily: AppFontBold, borderColor: idxFocusInput == 3 ? '#000000' : '#2f378c', borderWidth: 1, backgroundColor: 'white', borderRadius: 30, fontSize: 34, height: 80, width: '20%' }} />
+          <TextInput onBlur={() => { setIdxFocusInput(-1) }} onFocus={() => { setIdxFocusInput(0) }} ref={ref => inputs[0].current = ref} value={pin[0] !== -1 ? pin[0].toString() : ''} onKeyPress={(e) => { onInput(e) }} maxLength={1} style={{ textAlign: 'center', fontFamily: AppFontBold, borderColor: idxFocusInput == 0 ? APP_BRAND_COLOR : '#2f378c', borderWidth: 1, backgroundColor: 'white', borderRadius: 30, fontSize: 34, height: 80, width: '20%' }} />
+          <TextInput onBlur={() => { setIdxFocusInput(-1) }} onFocus={() => { setIdxFocusInput(1) }} ref={ref => inputs[1].current = ref} value={pin[1] !== -1 ? pin[1].toString() : ''} onKeyPress={(e) => { onInput(e) }} maxLength={1} style={{ textAlign: 'center', fontFamily: AppFontBold, borderColor: idxFocusInput == 1 ? APP_BRAND_COLOR : '#2f378c', borderWidth: 1, backgroundColor: 'white', borderRadius: 30, fontSize: 34, height: 80, width: '20%' }} />
+          <TextInput onBlur={() => { setIdxFocusInput(-1) }} onFocus={() => { setIdxFocusInput(2) }} ref={ref => inputs[2].current = ref} value={pin[2] !== -1 ? pin[2].toString() : ''} onKeyPress={(e) => { onInput(e) }} maxLength={1} style={{ textAlign: 'center', fontFamily: AppFontBold, borderColor: idxFocusInput == 2 ? APP_BRAND_COLOR : '#2f378c', borderWidth: 1, backgroundColor: 'white', borderRadius: 30, fontSize: 34, height: 80, width: '20%' }} />
+          <TextInput onBlur={() => { setIdxFocusInput(-1) }} onFocus={() => { setIdxFocusInput(3) }} ref={ref => inputs[3].current = ref} value={pin[3] !== -1 ? pin[3].toString() : ''} onKeyPress={(e) => { onInput(e) }} maxLength={1} style={{ textAlign: 'center', fontFamily: AppFontBold, borderColor: idxFocusInput == 3 ? APP_BRAND_COLOR : '#2f378c', borderWidth: 1, backgroundColor: 'white', borderRadius: 30, fontSize: 34, height: 80, width: '20%' }} />
         </Layout>
         {error && <Text style={{ color: 'red'}}>{error}</Text>}
 
@@ -143,12 +121,11 @@ const DocumentScreen = () => {
             callAPI({
               data: {
                 module_name: 'VERIFY_CANCEL_CODE',
-                code: pin.join('')
+                code: pin.join(''),
+                bookingId: route.params.registratioNumber
               }
             })
-            .then((r) => {
-              return cancelBooking()
-            })
+
             .then((r) => {
               console.log(r.data)
                 if (r.data.includes('Errors')) {
@@ -161,15 +138,15 @@ const DocumentScreen = () => {
 
           }}
           size="giant"
-          disabled={cancelReq.loading}
-          accessoryRight={cancelReq.loading ? LoadingSpinner : undefined}
+          disabled={codeReq.loading}
+          accessoryRight={codeReq.loading ? LoadingSpinner : undefined}
           style={{
             marginTop: '15%',
-            backgroundColor: cancelReq.loading == false ? '#000000' : '#000000',
-            borderColor: cancelReq.loading == false ? '#000000' : '#000000',
+            backgroundColor: codeReq.loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
+            borderColor: codeReq.loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
             marginBottom: '15%',
             borderRadius: 10,
-            shadowColor: '#000000',
+            shadowColor: APP_BRAND_COLOR,
             shadowOffset: {
               width: 0,
               height: 10,
@@ -202,7 +179,7 @@ const DocumentScreen = () => {
                 Alert.alert('Code Sended', 'A cancel code has been sended to you')
               })
             }}
-            style={{ color: counter == 30 ? '#000000':'#00000080' }}>{i18n.t(TRANSLATIONS_KEY.OPT_RESEND).toString()}</Text>
+            style={{ color: counter == 30 ? APP_BRAND_COLOR: `${APP_BRAND_COLOR}80` }}>{i18n.t(TRANSLATIONS_KEY.OPT_RESEND).toString()}</Text>
         </Layout>
 
         {counter != 30 && (<Layout style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', backgroundColor: '#00000000', marginTop: '5%' }}>
@@ -216,7 +193,7 @@ const DocumentScreen = () => {
                 navigation.goBack()
               }
             }}
-            style={{ color: '#000000' }}>{i18n.t(TRANSLATIONS_KEY.OPT_LATER).toString()}</Text>
+            style={{ color: APP_BRAND_COLOR }}>{i18n.t(TRANSLATIONS_KEY.OPT_LATER).toString()}</Text>
         </Layout>
 
       </Layout>

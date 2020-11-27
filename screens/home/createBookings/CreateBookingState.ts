@@ -1,5 +1,5 @@
 import { createGlobalState } from 'react-hooks-global-state';
-import { PricedEquip, VehVendorAvail } from '../../../types/SearchVehicleResponse';
+import { PricedEquip, CarSearchItem } from '../../../types/SearchVehicleResponse';
 import moment from 'moment';
 import { setHours, setMinutes, addDays } from 'date-fns'
 
@@ -20,7 +20,7 @@ type InitialState = {
 
     extras: (PricedEquip & { amount: number }) []
 
-    vehicle: VehVendorAvail | null
+    vehicle: CarSearchItem | null
 };
  
 const initialCreatingBookingState: InitialState = {

@@ -12,6 +12,7 @@ import MapView from 'react-native-maps';
 import { AppFontBold } from '../../../constants/fonts';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../../../utils/i18n';
+import { APP_BRAND_COLOR } from '../../../constants/Colors';
 
 const DocumentScreen = () => {
   const navigation = useNavigation();
@@ -71,11 +72,11 @@ const DocumentScreen = () => {
           left: '10%',
           width: '80%',
           position: 'absolute',
-          backgroundColor: '#000000',
-          borderColor: '#000000',
+          backgroundColor: APP_BRAND_COLOR,
+          borderColor: APP_BRAND_COLOR,
           marginBottom: '15%',
           borderRadius: 10,
-          shadowColor: '#000000',
+          shadowColor: APP_BRAND_COLOR,
           shadowOffset: {
             width: 0,
             height: 10,

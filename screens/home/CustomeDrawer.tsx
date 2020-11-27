@@ -20,10 +20,12 @@ import { AppFontRegular } from "../../constants/fonts";
 import i18n, { TRANSLATIONS_KEY } from "../../utils/i18n";
 import { CommonActions, useNavigationState } from "@react-navigation/native";
 import { SELFIE_URL } from "../../constants/FilePaths";
+import { APP_BRAND_COLOR } from "../../constants/Colors";
 
 const menuData = [
     { name: i18n.t(TRANSLATIONS_KEY.MENU_ITEM_MY_PROFILE), screenName: "EditProfile", iconName: 'account', key: 'sdwwe' },
     { name: i18n.t(TRANSLATIONS_KEY.MENU_ITEM_PRIVACY_POLICY), screenName: "Policy", iconName: 'shield', key: 'swwe' },
+    { name: i18n.t(TRANSLATIONS_KEY.MENU_ITEM_MENU_ITEM), screenName: "ShareCode", iconName: 'share-variant', key: 'sggewwe' },
     { name: i18n.t(TRANSLATIONS_KEY.MENU_ITEM_TERMS_CONDITIONS), screenName: "TermsConditions", iconName: 'file-document', key: 'sdsfwwe' },
     {
         name: i18n.t(TRANSLATIONS_KEY.MENU_ITEM_LOGOUT), iconName: 'logout', key: 'assdrw', onPress: () => {
@@ -67,7 +69,7 @@ const DrawerMenu = ({ navigation }: { navigation: any }) => {
                         {profile?.selfiurl == "" && (
                             <Avatar
                                 style={{ width: 125, height: 125, }}
-                                source={require('../../image/rightcars.png')}
+                                source={require('../../image/app_ico.png')}
                             />
                         )}
                         {profile?.selfiurl != "" && (
@@ -132,7 +134,7 @@ const DrawerItem = ({ navigation, name, iconName, screenName, iconSize, resetHis
                 }
             }}
         >
-            <MaterialCommunityIcon style={{ marginLeft: '8%', marginRight: '4%', color: '#000000', fontSize: iconSize || 25 }} name={iconName} />
+            <MaterialCommunityIcon style={{ marginLeft: '8%', marginRight: '4%', color: APP_BRAND_COLOR, fontSize: iconSize || 25 }} name={iconName} />
             <Text style={styles.menuItemText}>{name}</Text>
         </TouchableOpacity>
     );

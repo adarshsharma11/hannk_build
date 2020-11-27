@@ -10,6 +10,7 @@ import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/nativ
 import { AppFontBold, AppFontRegular } from '../constants/fonts'
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../utils/i18n';
+import { APP_BRAND_COLOR } from '../constants/Colors';
 
 const DocumentScreen = () => {
   const [profile] = useGlobalState('profile');
@@ -31,7 +32,7 @@ const DocumentScreen = () => {
 
   const [idxFocusInput, setIdxFocusInput] = useState<number>(-1);
   const [pin, setPin] = useState<Array<number>>([-1, -1, -1, -1]);
-  const [error , setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [counter, setCounter] = useState(30);
 
   const onInput = ({ nativeEvent: { key }, ...e }: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
@@ -82,23 +83,23 @@ const DocumentScreen = () => {
       <Layout style={{ flex: 1, padding: '5%', backgroundColor: 'white' }}>
 
         <Layout style={{ display: 'flex', flexDirection: 'column', backgroundColor: '#00000000' }}>
-        <Text style={{ textAlign: 'left' }} category="h3">{i18n.t(TRANSLATIONS_KEY.OPT_SCREEN_TITLE).toString()}</Text>
-        <Text category="s1"> {i18n.t(TRANSLATIONS_KEY.OPT_SCREEN_SUB_TITLE).toString()} </Text>
-          <Text style={{ color: '#000000' }}>({profile?.mobilecode}) {profile?.mobilenumber}</Text>
+          <Text style={{ textAlign: 'left' }} category="h3">{i18n.t(TRANSLATIONS_KEY.OPT_SCREEN_TITLE).toString()}</Text>
+          <Text category="s1"> {i18n.t(TRANSLATIONS_KEY.OPT_SCREEN_SUB_TITLE).toString()} </Text>
+          <Text style={{ color: APP_BRAND_COLOR }}>({profile?.mobilecode}) {profile?.mobilenumber}</Text>
         </Layout>
 
 
         <Layout style={{ display: 'flex', flexDirection: 'row', height: '20%', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#00000000', marginTop: '15%' }}>
-          <TextInput onBlur={() => { setIdxFocusInput(-1) }} onFocus={() => { setIdxFocusInput(0) }} ref={ref => inputs[0].current = ref} value={pin[0] !== -1 ? pin[0].toString() : ''} onKeyPress={(e) => { onInput(e) }} maxLength={1} style={{ textAlign: 'center', fontFamily: AppFontBold, borderColor: idxFocusInput == 0 ? '#000000' : '#2f378c', borderWidth: 1, backgroundColor: 'white', borderRadius: 30, fontSize: 34, height: 80, width: '20%', color: '#000000' }} />
-          <TextInput onBlur={() => { setIdxFocusInput(-1) }} onFocus={() => { setIdxFocusInput(1) }} ref={ref => inputs[1].current = ref} value={pin[1] !== -1 ? pin[1].toString() : ''} onKeyPress={(e) => { onInput(e) }} maxLength={1} style={{ textAlign: 'center', fontFamily: AppFontBold, borderColor: idxFocusInput == 1 ? '#000000' : '#2f378c', borderWidth: 1, backgroundColor: 'white', borderRadius: 30, fontSize: 34, height: 80, width: '20%', color: '#000000' }} />
-          <TextInput onBlur={() => { setIdxFocusInput(-1) }} onFocus={() => { setIdxFocusInput(2) }} ref={ref => inputs[2].current = ref} value={pin[2] !== -1 ? pin[2].toString() : ''} onKeyPress={(e) => { onInput(e) }} maxLength={1} style={{ textAlign: 'center', fontFamily: AppFontBold, borderColor: idxFocusInput == 2 ? '#000000' : '#2f378c', borderWidth: 1, backgroundColor: 'white', borderRadius: 30, fontSize: 34, height: 80, width: '20%', color: '#000000' }} />
-          <TextInput onBlur={() => { setIdxFocusInput(-1) }} onFocus={() => { setIdxFocusInput(3) }} ref={ref => inputs[3].current = ref} value={pin[3] !== -1 ? pin[3].toString() : ''} onKeyPress={(e) => { onInput(e) }} maxLength={1} style={{ textAlign: 'center', fontFamily: AppFontBold, borderColor: idxFocusInput == 3 ? '#000000' : '#2f378c', borderWidth: 1, backgroundColor: 'white', borderRadius: 30, fontSize: 34, height: 80, width: '20%', color: '#000000' }} />
+          <TextInput onBlur={() => { setIdxFocusInput(-1) }} onFocus={() => { setIdxFocusInput(0) }} ref={ref => inputs[0].current = ref} value={pin[0] !== -1 ? pin[0].toString() : ''} onKeyPress={(e) => { onInput(e) }} maxLength={1} style={{ textAlign: 'center', fontFamily: AppFontBold, borderColor: idxFocusInput == 0 ? APP_BRAND_COLOR : '#2f378c', borderWidth: 1, backgroundColor: 'white', borderRadius: 30, fontSize: 34, height: 80, width: '20%', color: '#000000' }} />
+          <TextInput onBlur={() => { setIdxFocusInput(-1) }} onFocus={() => { setIdxFocusInput(1) }} ref={ref => inputs[1].current = ref} value={pin[1] !== -1 ? pin[1].toString() : ''} onKeyPress={(e) => { onInput(e) }} maxLength={1} style={{ textAlign: 'center', fontFamily: AppFontBold, borderColor: idxFocusInput == 1 ? APP_BRAND_COLOR : '#2f378c', borderWidth: 1, backgroundColor: 'white', borderRadius: 30, fontSize: 34, height: 80, width: '20%', color: '#000000' }} />
+          <TextInput onBlur={() => { setIdxFocusInput(-1) }} onFocus={() => { setIdxFocusInput(2) }} ref={ref => inputs[2].current = ref} value={pin[2] !== -1 ? pin[2].toString() : ''} onKeyPress={(e) => { onInput(e) }} maxLength={1} style={{ textAlign: 'center', fontFamily: AppFontBold, borderColor: idxFocusInput == 2 ? APP_BRAND_COLOR : '#2f378c', borderWidth: 1, backgroundColor: 'white', borderRadius: 30, fontSize: 34, height: 80, width: '20%', color: '#000000' }} />
+          <TextInput onBlur={() => { setIdxFocusInput(-1) }} onFocus={() => { setIdxFocusInput(3) }} ref={ref => inputs[3].current = ref} value={pin[3] !== -1 ? pin[3].toString() : ''} onKeyPress={(e) => { onInput(e) }} maxLength={1} style={{ textAlign: 'center', fontFamily: AppFontBold, borderColor: idxFocusInput == 3 ? APP_BRAND_COLOR : '#2f378c', borderWidth: 1, backgroundColor: 'white', borderRadius: 30, fontSize: 34, height: 80, width: '20%', color: '#000000' }} />
         </Layout>
-        {error && <Text style={{ color: 'red'}}>{error}</Text>}
+        {error && <Text style={{ color: 'red' }}>{error}</Text>}
 
         <Button
           onPress={() => {
-            if (pin.some(i => i == -1 )) {
+            if (pin.some(i => i == -1)) {
               setError("Code is required")
               return
             } else {
@@ -113,22 +114,22 @@ const DocumentScreen = () => {
                   "code": parseInt(pin.join(""))
                 }
               })
-              .then(() => {
-                dispatchGlobalState({ type: 'profile', state: {...profile, vphone: 1 } })
-                if (profile.vemail == 0) {
-                  navigation.navigate('SuccessEmail')
-                } else if (profile.vemail == 1){
-                  if (route?.params?.onSuccess) {
-                    route.params.onSuccess(navigation)
+                .then(() => {
+                  dispatchGlobalState({ type: 'profile', state: { ...profile, vphone: 1 } })
+                  if (profile.vemail == 0) {
+                    navigation.navigate('SuccessEmail')
+                  } else if (profile.vemail == 1) {
+                    if (route?.params?.onSuccess) {
+                      route.params.onSuccess(navigation)
+                    } else {
+                      console.log('going home', profile.vphone)
+                      console.log('routes', navigation.dangerouslyGetState().routes)
+                      navigation.navigate('Home')
+                    }
                   } else {
-                    console.log('going home', profile.vphone)
-                    console.log('routes', navigation.dangerouslyGetState().routes)
-                    navigation.navigate('Home')
+                    dispatchGlobalState({ type: 'logout' })
                   }
-                } else {
-                  dispatchGlobalState({ type: 'logout' })
-                }
-              })
+                })
               return
             }
 
@@ -142,27 +143,27 @@ const DocumentScreen = () => {
                   "code": parseInt(pin.join(""))
                 }
               })
-              .then((res) => {
-                dispatchGlobalState({ type: 'token', state: res.data.token })
-                dispatchGlobalState({ type: 'profile', state: res.data })
-                if (res.data.vphone != 1) navigation.navigate('Opt')
-                if (res.data.vemail != 1) navigation.navigate('VerifyEmail')
-                if (res.data.vphone == 1 && res.data.vemail == 1) navigation.navigate('Home')
-              })
+                .then((res) => {
+                  dispatchGlobalState({ type: 'token', state: res.data.token })
+                  dispatchGlobalState({ type: 'profile', state: res.data })
+                  if (res.data.vphone != 1) navigation.navigate('Opt')
+                  if (res.data.vemail != 1) navigation.navigate('VerifyEmail')
+                  if (res.data.vphone == 1 && res.data.vemail == 1) navigation.navigate('Home')
+                })
             }
-            
-              
+
+
           }}
           size="giant"
           disabled={loading}
           accessoryRight={loading ? LoadingSpinner : undefined}
           style={{
             marginTop: '15%',
-            backgroundColor: loading == false ? '#000000' : '#000000',
-            borderColor: loading == false ? '#000000' : '#000000',
+            backgroundColor: loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
+            borderColor: loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
             marginBottom: '15%',
             borderRadius: 10,
-            shadowColor: '#000000',
+            shadowColor: APP_BRAND_COLOR,
             shadowOffset: {
               width: 0,
               height: 10,
@@ -174,9 +175,9 @@ const DocumentScreen = () => {
           {() => <Text style={{ color: 'white', fontFamily: AppFontBold, fontSize: 18 }}>{i18n.t(TRANSLATIONS_KEY.VERIFY_WORD).toString()}</Text>}
         </Button>
         <Layout style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', backgroundColor: '#00000000' }}>
-        <Text style={{ textAlign: 'center' }}>
-          {i18n.t(TRANSLATIONS_KEY.OPT_DID_NOT_RECEIVE).toString()}
-        </Text>
+          <Text style={{ textAlign: 'center' }}>
+            {i18n.t(TRANSLATIONS_KEY.OPT_DID_NOT_RECEIVE).toString()}
+          </Text>
           <Text
             onPress={() => {
               if (!profile) return
@@ -184,24 +185,26 @@ const DocumentScreen = () => {
 
               const timer = setInterval(() => {
                 setCounter(p => {
-                  const v = p-1
-                  if (v == 0){
+                  const v = p - 1
+                  if (v == 0) {
                     clearInterval(timer)
                     return 30
                   }
                   return v
                 })
               }, 1000);
-              
+
               if (profile && profile.vphone != 1) {
                 console.log('calling RESEND_VERIFY')
-                doVerify({ data: {
-                  "module_name": "RESEND_VERIFY",
-                  "id": profile.id
-                }})
-                .then(() => {
-                  setPin([-1, -1, -1, -1])
+                doVerify({
+                  data: {
+                    "module_name": "RESEND_VERIFY",
+                    "id": profile.id
+                  }
                 })
+                  .then(() => {
+                    setPin([-1, -1, -1, -1])
+                  })
                 return
               }
 
@@ -215,17 +218,17 @@ const DocumentScreen = () => {
                     "id": profile.id
                   }
                 })
-                .then(() => {
-                  setPin([-1, -1, -1, -1])
-                })
+                  .then(() => {
+                    setPin([-1, -1, -1, -1])
+                  })
               }
 
             }}
-            style={{ color: counter == 30 ? '#000000':'#00000080' }}>{i18n.t(TRANSLATIONS_KEY.OPT_RESEND).toString()}</Text>
+            style={{ color: counter == 30 ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}80` }}>{i18n.t(TRANSLATIONS_KEY.OPT_RESEND).toString()}</Text>
         </Layout>
 
         {counter != 30 && (<Layout style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', backgroundColor: '#00000000', marginTop: '5%' }}>
-        <Text >{i18n.t(TRANSLATIONS_KEY.WAIT_WORD).toString()} {counter} {i18n.t(TRANSLATIONS_KEY.OPT_WAIT_SMS).toString()} </Text>
+          <Text >{i18n.t(TRANSLATIONS_KEY.WAIT_WORD).toString()} {counter} {i18n.t(TRANSLATIONS_KEY.OPT_WAIT_SMS).toString()} </Text>
         </Layout>)}
 
         <Layout style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', backgroundColor: '#00000000', marginTop: '5%' }}>
@@ -237,7 +240,7 @@ const DocumentScreen = () => {
                 navigation.navigate('Login')
               }
             }}
-            style={{ color: '#000000' }}>{i18n.t(TRANSLATIONS_KEY.OPT_LATER).toString()}</Text>
+            style={{ color: APP_BRAND_COLOR }}>{i18n.t(TRANSLATIONS_KEY.OPT_LATER).toString()}</Text>
         </Layout>
 
       </Layout>

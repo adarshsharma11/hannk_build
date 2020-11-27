@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { AppFontBold, AppFontRegular } from '../../constants/fonts';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../../utils/i18n';
+import { APP_BRAND_COLOR } from '../../constants/Colors';
 
 const DocumentScreen = () => {
   const navigation = useNavigation();
@@ -302,10 +303,10 @@ const DocumentScreen = () => {
           }}
           size="giant"
           style={{
-            backgroundColor: '#000000',
-            borderColor: '#000000',
+            backgroundColor: APP_BRAND_COLOR,
+            borderColor: APP_BRAND_COLOR,
             borderRadius: 10,
-            shadowColor: '#000000',
+            shadowColor: APP_BRAND_COLOR,
             shadowOffset: {
               width: 0,
               height: 10,

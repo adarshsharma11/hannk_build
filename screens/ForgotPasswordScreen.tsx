@@ -9,6 +9,7 @@ import { GRCGDS_BACKEND } from 'react-native-dotenv'
 import { AppFontBold, AppFontRegular } from '../constants/fonts'
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../utils/i18n';
+import { APP_BRAND_COLOR } from '../constants/Colors';
 
 const DocumentScreen = () => {
   const navigation = useNavigation();
@@ -59,11 +60,11 @@ const DocumentScreen = () => {
           }}
           size="large"
           style={{
-            backgroundColor: loading == false ? '#000000' : '#000000',
-            borderColor: loading == false ? '#000000' : '#000000',
+            backgroundColor: loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
+            borderColor: loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
             marginBottom: '15%',
             borderRadius: 10,
-            shadowColor: '#000000',
+            shadowColor: APP_BRAND_COLOR,
             shadowOffset: {
               width: 0,
               height: 10,
@@ -74,8 +75,8 @@ const DocumentScreen = () => {
           }}>
           {() => <Text style={{ fontFamily: AppFontBold,color: 'white', fontSize: 18 }}>{i18n.t(TRANSLATIONS_KEY.FORGOT_SEND).toString()}</Text>}
           </Button>
-        <Layout style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', backgroundColor: '#00000000' }}>
-          <Text onPress={() => navigation.navigate("Login")} style={{ color: '#000000' }}>{i18n.t(TRANSLATIONS_KEY.FORGOT_BACK_TO_SIGN).toString()}</Text>
+        <Layout style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', backgroundColor: `${APP_BRAND_COLOR}00` }}>
+          <Text onPress={() => navigation.navigate("Login")} style={{ color: APP_BRAND_COLOR }}>{i18n.t(TRANSLATIONS_KEY.FORGOT_BACK_TO_SIGN).toString()}</Text>
         </Layout>
 
       </Layout>

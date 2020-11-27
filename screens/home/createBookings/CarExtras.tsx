@@ -9,7 +9,7 @@ import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { useCreateBookingState } from './CreateBookingState';
 import TimeCheckbox from '../../../partials/TimeCheckbox';
 import CarItem from '../../../partials/CarItem';
-import { VehVendorAvail, PricedEquip } from '../../../types/SearchVehicleResponse';
+import { CarSearchItem, PricedEquip } from '../../../types/SearchVehicleResponse';
 import ResolveCurrencySymbol from '../../../utils/ResolveCurrencySymbol';
 import MenuButton from '../../../partials/MenuButton';
 import Decimal from 'decimal.js';
@@ -17,10 +17,11 @@ import { AppFontBold, AppFontRegular } from '../../../constants/fonts'
 import { TRANSLATIONS_KEY } from '../../../utils/i18n';
 import { useTranslation } from 'react-i18next';
 import BackButton from '../../../partials/BackButton';
+import { APP_BRAND_COLOR } from '../../../constants/Colors';
 
 type ParamList = {
     CarExtras: {
-        vehicle: VehVendorAvail;
+        vehicle: CarSearchItem;
     };
 };
 export default () => {
@@ -33,6 +34,14 @@ export default () => {
     const [amountSelected, setAmountSelected] = useState(0)
     const [selectedEquip, setSelectedEquip] = useState<PricedEquip | null>(null)
 
+    const veh = route.params.vehicle
+
+    veh.VehAvailCore.TotalCharge.RateTotalAmount =  new Decimal(veh.VehAvailCore.TotalCharge.RateTotalAmount).add(selectedExtras.reduce((total, next) => {
+        const extraTotal = new Decimal(next.PricedEquip.Charge.Amount).times(next.amount);
+        total = new Decimal(total).add(extraTotal).toNumber()
+        return total
+    },0)).toFixed(2)
+
     return (
         <SafeAreaView style={{ flex: 1 }} >
             <ScrollView contentContainerStyle={{ flexGrow: 1, padding: '5%', justifyContent: 'space-between', display: 'flex' }} keyboardShouldPersistTaps={"handled"} style={{ backgroundColor: 'white' }}>
@@ -40,37 +49,26 @@ export default () => {
                     <MenuButton />
                     <BackButton />
                 </View>
-                <Layout>
-                    <CarItem style={{ marginBottom: '5%' }} centerCarName={true} vehicle={{
-                        ...route.params.vehicle,
-                        TotalCharge: {
-                            ...route.params.vehicle.TotalCharge,
-                            RateTotalAmount: new Decimal(route.params.vehicle.TotalCharge.RateTotalAmount).add(selectedExtras.reduce((total, next) => {
-                                const extraTotal = new Decimal(next.Charge.Amount).times(next.amount);
-                                total = new Decimal(total).add(extraTotal).toNumber()
-                                return total
-                            },0)).toFixed(2)
-                        }
-                        }} />
-
+                <Layout style={{ flexGrow: 1 }}>
+                    <CarItem style={{ marginBottom: '5%' }} centerCarName={true} vehicle={veh} />
                     <Text style={{ marginBottom: '5%' }}>
                         {i18n.t(TRANSLATIONS_KEY.CAR_EXTRAS_TAG).toString()}
                     </Text>
 
-                    {route.params.vehicle.PricedEquips.map(equip => {
-                        const found = selectedExtras.find(i =>i.Equipment.vendorEquipID == equip.Equipment.vendorEquipID)
-                        const currentPrice = found ? found.amount*equip.Charge.Amount: null;
+                    {route.params.vehicle.VehAvailCore.PricedEquips.map(equip => {
+                        const found = selectedExtras.find(i => i.PricedEquip.Equipment.vendorEquipID == equip.PricedEquip.Equipment.vendorEquipID)
+                        const currentPrice = found ? found.amount * parseFloat(equip.PricedEquip.Charge.Amount): null;
                         return (
                             <TimeCheckbox
                                 style={{ marginBottom: '5%' }}
                                 checked={found != null && found.amount != 0}
-                                title={`${equip.Equipment.Description} ${currentPrice ? `(${ResolveCurrencySymbol(found?.Charge.Taxamount.CurrencyCode)}${currentPrice})` : ''}`}
+                                title={`${equip.PricedEquip.Equipment.Description} ${currentPrice ? `(${ResolveCurrencySymbol(found?.PricedEquip.Charge.Taxamounts.Taxamount.CurrencyCode)}${currentPrice})` : ''}`}
                                 replaceCheckbox={() => {
-                                    const found = selectedExtras.find(i => i.Equipment.Description == equip.Equipment.Description)
-                                    return <View style={{ backgroundColor: found ? '#000000' : 'white', borderColor: found ? 'white' : '#000000', borderWidth: 1, borderRadius: 20, height: 35, width: 35, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                    const found = selectedExtras.find(i => i.PricedEquip.Equipment.Description == equip.PricedEquip.Equipment.Description)
+                                    return <View style={{ backgroundColor: found ? APP_BRAND_COLOR : 'white', borderColor: found ? 'white' : APP_BRAND_COLOR, borderWidth: 1, borderRadius: 20, height: 35, width: 35, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                         {found ?
                                             <Text style={{ fontSize: 15, color: 'white' }}>{found.amount}</Text>
-                                            : <Text style={{ fontSize: 25, color: '#000000' }} >+</Text>}
+                                            : <Text style={{ fontSize: 25, color: APP_BRAND_COLOR }} >+</Text>}
                                     </View>
                                 }}
                                 onChange={() => {
@@ -81,13 +79,13 @@ export default () => {
                         );
                     })}
 
-                    <Layout style={{ marginTop: '5%' }}>
+                    <Layout style={{ marginTop: 'auto' }}>
                         <Button
-                            onPress={() => navigation.navigate('Payment', { vehicle: route.params.vehicle })}
+                        onPress={() => navigation.navigate('Payment', { vehicle: route.params.vehicle })}
                             size="giant" style={{
                                 borderRadius: 10,
-                                backgroundColor: '#000000',
-                                borderColor: '#000000',
+                                backgroundColor: APP_BRAND_COLOR,
+                                borderColor: APP_BRAND_COLOR,
                                 paddingLeft: 20,
                                 paddingRight: 20,
                                 marginBottom: '2%'
@@ -130,14 +128,14 @@ export default () => {
                                 name="up"
                             />
                         </View>
-                        <Text style={{ color: '#000000', fontSize: 18 }} onPress={() => {
+                        <Text style={{ color: APP_BRAND_COLOR, fontSize: 18 }} onPress={() => {
                             setAmountSelected(0)
                             setShowCounterModal(false)
                             if (!selectedEquip) return
                             setExtras(p => {
-                                const found = p.find(i => i.Equipment.vendorEquipID == selectedEquip.Equipment.vendorEquipID)
+                                const found = p.find(i => i.PricedEquip.Equipment.vendorEquipID == selectedEquip.PricedEquip.Equipment.vendorEquipID)
                                 if (found) {
-                                    const toReturn = [ ...p.filter(i => i.Equipment.vendorEquipID !== selectedEquip.Equipment.vendorEquipID) ]
+                                    const toReturn = [ ...p.filter(i => i.PricedEquip.Equipment.vendorEquipID !== selectedEquip.PricedEquip.Equipment.vendorEquipID) ]
                                     if (amountSelected != 0) toReturn.push({ ...selectedEquip, amount: amountSelected })
                                     return toReturn
                                     
@@ -167,7 +165,7 @@ export default () => {
                                     marginLeft: 'auto',
                                     width: '70%',
                                     height: 30,
-                                    borderColor: '#000000',
+                                    borderColor: APP_BRAND_COLOR,
                                     borderWidth: item == amountSelected ? 1 : 0,
                                     borderRadius: 10
                                 }}>

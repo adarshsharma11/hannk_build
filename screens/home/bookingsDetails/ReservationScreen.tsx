@@ -24,6 +24,9 @@ import { TRANSLATIONS_KEY } from '../../../utils/i18n';
 import GdprScreen from './GdprScreen';
 import InsuranceScreen from './InsuranceScreen';
 import MainTermsScreen from './MainTermsScreen';
+import { APP_BRAND_COLOR } from '../../../constants/Colors';
+import userHasAllFiles from '../../../utils/userHasAllFiles';
+import { useGlobalState } from '../../../state';
 
 const DocumentScreen = () => {
   const route = useRoute();
@@ -57,20 +60,20 @@ const DocumentScreen = () => {
             </Layout>
 
             <View style={{ flexDirection: 'row', display: 'flex', justifyContent: 'space-around' }}>
-              <Layout style={{ marginBottom: '3%' }}>
+              <Layout style={{ marginBottom: '3%', alignItems: 'center', width: '50%' }}>
                 <Text style={{ textAlign: 'center', color: 'grey', fontFamily: AppFontBold }} category="s1">
                   {i18n.t(TRANSLATIONS_KEY.DETAILS_PICKUP_LOCATION_TAG).toString()}
                 </Text>
-                <Text style={{ textAlign: 'center', fontFamily: AppFontRegular, fontSize: 16 }}>
+                <Text style={{ flexShrink: 1, textAlign: 'center', fontFamily: AppFontRegular, fontSize: 16 }}>
                   {route.params.pickupLocation}
                 </Text>
               </Layout>
 
-              <Layout style={{ marginBottom: '3%' }}>
+              <Layout style={{ marginBottom: '3%', alignItems: 'center', width: '50%' }}>
                 <Text style={{ textAlign: 'center', color: 'grey', fontFamily: AppFontBold }} category="s1">
                   {i18n.t(TRANSLATIONS_KEY.DETAILS_DROP_LOCATION_TAG).toString()}
                 </Text>
-                <Text style={{ textAlign: 'center', fontFamily: AppFontRegular, fontSize: 16 }}>
+                <Text style={{ flexShrink: 1,  textAlign: 'center', fontFamily: AppFontRegular, fontSize: 16 }}>
                   {route.params.dropOffLocation}
                 </Text>
               </Layout>
@@ -182,6 +185,7 @@ export default function App({ navigation, route }) {
   const [, setDetails] = useCarDetailState("details");
   const [isAllowing, setIsAllowing] = useCarDetailState("isAllowing");
   const { i18n } = useTranslation();
+  const [profile] = useGlobalState("profile");
 
 
   useEffect(() => {
@@ -261,14 +265,13 @@ export default function App({ navigation, route }) {
         options={{
           tabBarButton: () => {
             return (
-              <View style={{ width: '25%' }}>
-                <TouchableOpacity style={{ height: '100%' }} onPress={() => {
+              <View style={{ width: '25%', opacity: 0.5 }}>
+                <TouchableOpacity disabled={true} style={{ height: '100%' }} onPress={() => {
                   navigation.navigate('KeyedReservation', route.params.params)
                   return
-
                 }}>
                   <View style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', borderColor: 'rgba(0,0,0,0.2)', borderRightWidth: 0 }}>
-                    <MaterialIcons name="location-on" style={{ color: '#000000' }} size={24} />
+                    <MaterialIcons name="location-on" style={{ color: APP_BRAND_COLOR }} size={24} />
                     <Text style={{ marginLeft: '5%', color: 'gray', fontFamily: AppFontRegular, fontSize: 12, textTransform: 'uppercase' }}>
                       {i18n.t(TRANSLATIONS_KEY.DETAILS_DIRECTION_MENU_OPTION).toString()}
                     </Text>
@@ -291,7 +294,7 @@ export default function App({ navigation, route }) {
                   Linking.openURL(`tel:${route.params.params.pickupLocationPhoneNumber}`)
                 }}>
                   <View style={{ height: '100%', borderColor: 'rgba(0,0,0,0.2)', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', }}>
-                    <MaterialIcons name="phone" style={{ color: '#000000' }} size={24} />
+                    <MaterialIcons name="phone" style={{ color: APP_BRAND_COLOR }} size={24} />
                     <Text style={{ textAlign: 'center', color: 'gray', fontFamily: AppFontRegular, fontSize: 12, textTransform: 'uppercase' }}>
                       {i18n.t(TRANSLATIONS_KEY.DETAILS_HELP_MENU_OPTION).toString()}
                     </Text>
@@ -308,7 +311,7 @@ export default function App({ navigation, route }) {
         component={ReportScreen}
         options={{
           tabBarButton: () => {
-            const cannotCollect = route.params.params.pickupTime.isAfter(moment().add('h', 24)) && route.params.params.reservationStatus != 'Cancelled' && route.params.params.reservationStatus != 'Completed'
+            const cannotCollect = (route.params.params.pickupTime.isAfter(moment().add(24, 'h')) && route.params.params.reservationStatus != 'Cancelled' && route.params.params.reservationStatus != 'Completed') || (profile != null && !userHasAllFiles(profile))
 
             return (
               <View style={{ width: '25%' }}>
@@ -318,7 +321,7 @@ export default function App({ navigation, route }) {
                   navigation.navigate('GdprScreen', { ...route.params.params })
                 }}>
                   <View style={{ height: '100%', borderColor: 'rgba(0,0,0,0.2)', borderRightWidth: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', }}>
-                    <MaterialIcons name="directions-car" style={{ color: cannotCollect ? '#00000040' : '#000000' }} size={24} />
+                    <MaterialIcons name="directions-car" style={{ color: cannotCollect ? `${APP_BRAND_COLOR}40` : APP_BRAND_COLOR }} size={24} />
                     <Text style={{ textAlign: 'center', color: 'gray', fontFamily: AppFontRegular, fontSize: 12, textTransform: 'uppercase' }}>
                       {i18n.t(TRANSLATIONS_KEY.DETAILS_COLLECT_MENU_OPTION).toString()}
                     </Text>

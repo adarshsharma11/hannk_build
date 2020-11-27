@@ -8,6 +8,7 @@ import useAxios from 'axios-hooks'
 import { AppFontBold, AppFontRegular } from '../constants/fonts'
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../utils/i18n';
+import { APP_BRAND_COLOR } from '../constants/Colors';
 
 const HasRefCodeScreen = () => {
   const navigation = useNavigation();
@@ -30,11 +31,11 @@ const HasRefCodeScreen = () => {
           onPress={() => navigation.navigate("RefCode")}
           size="large"
           style={{
-            backgroundColor: '#000000',
-            borderColor: '#000000',
+            backgroundColor: APP_BRAND_COLOR,
+            borderColor: APP_BRAND_COLOR,
             marginBottom: '5%',
             borderRadius: 10,
-            shadowColor: '#000000',
+            shadowColor: APP_BRAND_COLOR,
             shadowOffset: {
               width: 0,
               height: 10,
@@ -65,7 +66,7 @@ const HasRefCodeScreen = () => {
           {() => <Text style={{ fontFamily: AppFontBold, color: 'white', fontSize: 18 }}>{i18n.t(TRANSLATIONS_KEY.NO_WORD).toString()}</Text>}
         </Button>
         <Layout style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', backgroundColor: '#00000000' }}>
-          <Text onPress={() => navigation.navigate("Login")} style={{ color: '#000000' }}>{i18n.t(TRANSLATIONS_KEY.FORGOT_BACK_TO_SIGN).toString()}</Text>
+          <Text onPress={() => navigation.navigate("Login")} style={{ color: APP_BRAND_COLOR }}>{i18n.t(TRANSLATIONS_KEY.FORGOT_BACK_TO_SIGN).toString()}</Text>
         </Layout>
 
       </Layout>

@@ -9,6 +9,7 @@ import MenuButton from '../../partials/MenuButton';
 import LocationIconComponent from '../../image/LocationIconComponent';
 import { useNavigation, useRoute, StackActions, CommonActions, useFocusEffect } from '@react-navigation/native';
 import { AppFontBold, AppFontRegular } from '../../constants/fonts'
+import { APP_BRAND_COLOR } from '../../constants/Colors';
 
 const DocumentScreen = () => {
   const navigation = useNavigation();
@@ -127,11 +128,11 @@ const DocumentScreen = () => {
                 onPress={(e) => { GPSState.requestAuthorization(GPSState.AUTHORIZED_WHENINUSE) }}
                 size="giant"
                 style={{
-                  backgroundColor: '#000000',
-                  borderColor: '#000000',
+                  backgroundColor: APP_BRAND_COLOR,
+                  borderColor: APP_BRAND_COLOR,
                   marginBottom: '15%',
                   borderRadius: 10,
-                  shadowColor: '#000000',
+                  shadowColor: APP_BRAND_COLOR,
                   shadowOffset: {
                     width: 0,
                     height: 10,
@@ -146,7 +147,7 @@ const DocumentScreen = () => {
             </>
           }
 
-          <Text onPress={() => navigation.navigate('MyBookings')} style={{ color: '#000000' }}>Skip for now</Text>
+          <Text onPress={() => navigation.navigate('MyBookings')} style={{ color: APP_BRAND_COLOR }}>Skip for now</Text>
 
 
           {/*{isLocationEnabled ? (

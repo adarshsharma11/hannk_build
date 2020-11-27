@@ -7,6 +7,7 @@ import moment from 'moment';
 import TripCard from '../../partials/TripCard';
 import ResolveCurrencySymbol from '../../utils/ResolveCurrencySymbol';
 import { AppFontBold, AppFontRegular } from '../../constants/fonts'
+import { APP_BRAND_COLOR } from '../../constants/Colors';
 
 export default () => {
     const navigation = useNavigation();
@@ -41,8 +42,8 @@ export default () => {
                             onPress={() => navigation.navigate('MyBookings')}
                             size="giant" style={{
                                 borderRadius: 10,
-                                backgroundColor: '#000000',
-                                borderColor: '#000000',
+                                backgroundColor: APP_BRAND_COLOR,
+                                borderColor: APP_BRAND_COLOR,
                                 paddingLeft: 20,
                                 paddingRight: 20,
                                 marginBottom: '2%'

@@ -29,6 +29,7 @@ import { AppFontBold, AppFontRegular } from '../constants/fonts'
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../utils/i18n';
 import { HandleAppleLoginResponse } from '../utils/HandleAppleLoginResponse';
+import { APP_BRAND_COLOR } from '../constants/Colors';
 
 export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScreenProps>) => {
     const { i18n } = useTranslation();
@@ -84,8 +85,8 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                 <View style={{ backgroundColor: 'rgba(255,255,255,0.85)', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, zIndex: 4 }}>
                     <Progress.Circle
                         showsText={true}
-                        textStyle={{ color: "#000000" }}
-                        color={"#000000"}
+                        textStyle={{ color: APP_BRAND_COLOR }}
+                        color={APP_BRAND_COLOR}
                         borderWidth={4}
                         size={150}
                         indeterminate={true}
@@ -178,11 +179,11 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                                         onPress={(e) => { handleSubmit() }}
                                         size="giant"
                                         style={{
-                                            backgroundColor: loading == false ? '#000000' : '#000000',
-                                            borderColor: loading == false ? '#000000' : '#000000',
+                                            backgroundColor: loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
+                                            borderColor: loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
                                             marginBottom: '15%',
                                             borderRadius: 10,
-                                            shadowColor: '#000000',
+                                            shadowColor: APP_BRAND_COLOR,
                                             shadowOffset: {
                                                 width: 0,
                                                 height: 10,
@@ -209,6 +210,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                             }
                             LoginManager.logInWithPermissions(["public_profile", "email"])
                                 .then(async (r) => {
+                                    console.log(r)
                                     await AsyncStorage.removeItem('appleLogin')
                                     setLoadingLogin(true)
                                     return r
@@ -255,7 +257,7 @@ export default ({ navigation }: StackScreenProps<NonLoginScreenProps & LoginScre
                         <Text style={{ color: 'black' }}>
                             {i18n.t(TRANSLATIONS_KEY.LOGIN_DONT_HAVE_ACCOUNT).toString()}{' '}
                         </Text>
-                        <Text onPress={() => navigation.navigate('HasRefCodeScreen')} style={{ color: '#000000' }}>
+                        <Text onPress={() => navigation.navigate('HasRefCodeScreen')} style={{ color: APP_BRAND_COLOR }}>
                             {i18n.t(TRANSLATIONS_KEY.LOGIN_SIGN_UP).toString()}
                         </Text>
                     </Layout>

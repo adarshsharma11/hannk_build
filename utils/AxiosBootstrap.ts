@@ -2,6 +2,7 @@ import { configure } from 'axios-hooks'
 import Axios from 'axios'
 import { getGlobalState, dispatchGlobalState } from '../state';
 import { encrypt, decrypt } from './Encription';
+import { CLIENT_ID } from 'react-native-dotenv';
 
 export const axiosInstance = Axios.create({})
 
@@ -9,15 +10,23 @@ axiosInstance.interceptors.request.use(
   config => {
     const state = getGlobalState()
 
+    let Auth = undefined
 
     if (state.token) {
-      config.headers.Auth = `Bearer ${state.token}`;
+      Auth = `Bearer ${state.token}`;
     }
+
+    const customeHeaders = {
+      AppName: `Retaj`,
+      ClientId:  CLIENT_ID,
+      Auth
+    }
+
+    config.headers = customeHeaders
 
     //config.data = JSON.parse(encrypt(config.data))
 
-    console.log(config.url)
-    console.log(config.headers.Auth)
+    //console.log(config.headers)
 
     return config;
   }

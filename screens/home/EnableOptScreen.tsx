@@ -3,6 +3,7 @@ import { Layout, Text, Button, Datepicker, NativeDateService, TabView, Card, Ava
 import { SafeAreaView, TextInput, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AppFontBold, AppFontRegular } from '../../constants/fonts'
+import { APP_BRAND_COLOR } from '../../constants/Colors';
 
 const DocumentScreen = () => {
   const navigation = useNavigation();
@@ -21,11 +22,11 @@ const DocumentScreen = () => {
           onPress={() => navigation.navigate('VerifyPhone')}
           size="giant"
           style={{
-            backgroundColor: '#000000',
-            borderColor: '#000000',
+            backgroundColor: APP_BRAND_COLOR,
+            borderColor: APP_BRAND_COLOR,
             marginBottom: '15%',
             borderRadius: 10,
-            shadowColor: '#000000',
+            shadowColor: APP_BRAND_COLOR,
             shadowOffset: {
               width: 0,
               height: 10,
@@ -39,7 +40,7 @@ const DocumentScreen = () => {
         <Layout style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', backgroundColor: '#00000000' }}>
           <Text onPress={() => {
             navigation.navigate('MyBookings')
-          }} style={{ textAlign: 'center', color: '#000000' }}>Skip for now</Text>
+          }} style={{ textAlign: 'center', color: APP_BRAND_COLOR }}>Skip for now</Text>
         </Layout>
 
       </Layout>

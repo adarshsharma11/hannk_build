@@ -1,5 +1,6 @@
 import { createGlobalState, createStore } from 'react-hooks-global-state';
 import AsyncStorage from '@react-native-community/async-storage';
+import { LoginManager } from 'react-native-fbsdk';
 
 type InitialState = {
     storedBookings: []
@@ -7,7 +8,10 @@ type InitialState = {
     token: null | string
     error: null | string
     success: null | string
-    profile: null | { [key: string]: any }
+    profile: null | { [key: string]: any },
+    paypalClientId: null | string,
+    paypalSecretKey: null | string,
+    termsAndConditions: null | string,
 }
 const initialState: InitialState = {
     storedBookings: [],
@@ -15,13 +19,24 @@ const initialState: InitialState = {
     token: null,
     error: null,
     success: null,
-    profile: null
+    profile: null,
+    paypalClientId: null,
+    paypalSecretKey: null,
+    termsAndConditions: null,
 };
 
 const normalReducer = (state: any, action: { type: string, state?: any }): InitialState => {
     switch (action.type) {
         case 'error': {
             return { ...state, error: action.state };
+        }
+        case 'config': {
+            return {
+                ...state,
+                paypalClientId: action.state.paypalClientId,
+                paypalSecretKey: action.state.paypalSecretKey,
+                termsAndConditions: action.state.termsAndConditions
+            };
         }
         case 'loading': {
             return { ...state, loading: action.state };
@@ -35,6 +50,7 @@ const normalReducer = (state: any, action: { type: string, state?: any }): Initi
             return { ...state, profile: action.state };
         }
         case 'logout': {
+            LoginManager.logOut();
             AsyncStorage.removeItem('token')
             AsyncStorage.removeItem('profile')
             AsyncStorage.removeItem('appleLogin')
@@ -64,6 +80,10 @@ const normalReducer = (state: any, action: { type: string, state?: any }): Initi
 
 export const { dispatch: dispatchGlobalState, useGlobalState, getState: getGlobalState } = createStore(normalReducer, initialState)
 
+export const saveAppConfig = (config: any) => {
+    dispatchGlobalState({ type: "config", state: config })
+}
+
 AsyncStorage.getItem('token')
     .then(token => {
         if (token) {
@@ -82,7 +102,7 @@ AsyncStorage.getItem('bookings')
     .then(bookings => {
         if (bookings) {
             const bookingsArr = JSON.parse(bookings)
-            bookingsArr.forEach(booking => {
+            bookingsArr.forEach((booking: any) => {
                 dispatchGlobalState({ type: 'saveBooking', state: booking })
             });
         }

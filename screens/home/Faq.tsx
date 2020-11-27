@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import MenuButton from '../../partials/MenuButton';
 import { ScrollView } from 'react-native-gesture-handler';
 import { AppFontBold } from '../../constants/fonts';
+import { APP_BRAND_COLOR } from '../../constants/Colors';
 
 const DocumentScreen = () => {
   const navigation = useNavigation();
@@ -32,10 +33,10 @@ const DocumentScreen = () => {
           }}
           size="giant"
           style={{
-            backgroundColor: '#000000',
-            borderColor: '#000000',
+            backgroundColor: APP_BRAND_COLOR,
+            borderColor: APP_BRAND_COLOR,
             borderRadius: 10,
-            shadowColor: '#000000',
+            shadowColor: APP_BRAND_COLOR,
             shadowOffset: {
               width: 0,
               height: 10,

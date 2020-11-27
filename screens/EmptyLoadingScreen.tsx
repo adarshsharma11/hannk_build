@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Layout, Text, Button } from '@ui-kitten/components';
 import { SafeAreaView, TextInput, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
 import * as Progress from 'react-native-progress';
+import { APP_BRAND_COLOR } from '../constants/Colors';
 
 const DocumentScreen = () => {
 
@@ -12,8 +13,8 @@ const DocumentScreen = () => {
         <Layout>
           <Progress.Circle
             showsText={true}
-            textStyle={{ color: "#000000" }}
-            color={"#00000050"}
+            textStyle={{ color: APP_BRAND_COLOR }}
+            color={`${APP_BRAND_COLOR}50`}
             borderWidth={4}
             size={180}
             indeterminate={true}

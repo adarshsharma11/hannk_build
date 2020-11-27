@@ -5,6 +5,7 @@ import { GRCGDS_BACKEND } from "react-native-dotenv"
 import { axiosInstance } from "./AxiosBootstrap"
 
 export const handlePermissionPromt = (result: LoginResult) => {
+    console.log(result)
     if (result.isCancelled) {
         throw new Error("Login cancelled");
     }
@@ -22,7 +23,7 @@ export const handleUserData = async (response: LoginResult, refCode?: string) =>
     return axiosInstance({
         url: `${GRCGDS_BACKEND}`,
         method: 'POST',
-        data: {token: access.accessToken, module_name: 'LOGIN_WITH_SIMPLE_FACEBOOK', refCode, mobileApp: 'HannkApp' }
+        data: {token: access.accessToken, module_name: 'LOGIN_WITH_SIMPLE_FACEBOOK', refCode, mobileApp: 'RetajApp' }
     })
         .then((res) => {
             dispatchGlobalState({ type: 'token', state: res.data.token })

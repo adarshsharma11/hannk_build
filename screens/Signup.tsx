@@ -32,6 +32,7 @@ import { TRANSLATIONS_KEY } from '../utils/i18n';
 import { HandleAppleLoginResponse } from '../utils/HandleAppleLoginResponse';
 import userHasFullProfile from '../utils/userHasFullProfile';
 import AsyncStorage from '@react-native-community/async-storage';
+import { APP_BRAND_COLOR } from '../constants/Colors';
 
 
 export default () => {
@@ -108,7 +109,7 @@ export default () => {
                             <Text style={{ color: 'black' }}>
                                 {i18n.t(TRANSLATIONS_KEY.REGISTER_HAVE_ACCOUNT).toString()}
                             </Text>
-                            <Text onPress={() => navigation.navigate('Login')} style={{ color: '#000000' }}>
+                            <Text onPress={() => navigation.navigate('Login')} style={{ color: APP_BRAND_COLOR }}>
                                 {i18n.t(TRANSLATIONS_KEY.REGISTER_LOG_IN).toString()}
                             </Text>
                         </Layout>
@@ -260,11 +261,11 @@ export default () => {
                                         size="giant"
                                         style={{
                                             marginTop: '10%',
-                                            backgroundColor: loading == false ? '#000000' : '#000000',
-                                            borderColor: loading == false ? '#000000' : '#000000',
-                                            marginBottom: '10%',
+                                            backgroundColor: loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
+                                            borderColor: loading == false ? APP_BRAND_COLOR : `${APP_BRAND_COLOR}50`,
+                                            marginBottom: '5%',
                                             borderRadius: 10,
-                                            shadowColor: '#000000',
+                                            shadowColor: APP_BRAND_COLOR,
                                             shadowOffset: {
                                                 width: 0,
                                                 height: 10,
@@ -311,9 +312,9 @@ export default () => {
 
                     <Layout style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: '5%', flexWrap: 'wrap' }}>
                         <Text style={{ fontFamily: AppFontRegular, color: 'black' }}>{i18n.t(TRANSLATIONS_KEY.REGISTER_BY_CLICK_YOU_ACCEPT).toString()}</Text>
-                        <Text style={{ fontFamily: AppFontRegular, color: '#000000' }}>{i18n.t(TRANSLATIONS_KEY.REGISTER_TERM_COND).toString()} </Text>
+                        <Text style={{ fontFamily: AppFontRegular, color: APP_BRAND_COLOR }}>{i18n.t(TRANSLATIONS_KEY.REGISTER_TERM_COND).toString()} </Text>
                         <Text style={{ fontFamily: AppFontRegular, color: 'black' }}>{i18n.t(TRANSLATIONS_KEY.REGISTER_AS_WELL).toString()} </Text>
-                        <Text style={{ fontFamily: AppFontRegular, color: '#000000' }}>{i18n.t(TRANSLATIONS_KEY.REGISTER_PRIVACY).toString()}</Text>
+                        <Text style={{ fontFamily: AppFontRegular, color: APP_BRAND_COLOR }}>{i18n.t(TRANSLATIONS_KEY.REGISTER_PRIVACY).toString()}</Text>
                     </Layout>
                 </Layout>
             </ScrollView>

@@ -3,27 +3,30 @@ import { Layout, Text, List, Button, Card } from '@ui-kitten/components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIconsIcons from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
-import { SafeAreaView, Image, TouchableOpacity, Dimensions, View, TouchableWithoutFeedback } from 'react-native';
+import { SafeAreaView, ScrollView, TouchableOpacity, Dimensions, View, TouchableWithoutFeedback } from 'react-native';
 import { RecyclerListView, DataProvider, LayoutProvider } from "recyclerlistview";
 import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
 import CarItem from '../../../partials/CarItem';
 import { useCreateBookingState } from './CreateBookingState';
 import { VehVendorAvail, VehRentalCore } from '../../../type/SearchVehicleResponse';
-import { ScrollView } from 'react-native-gesture-handler';
+import { HannkCarItem } from 'hannk-mobile-common';
 import GetCategoryByAcrissCode from '../../../utils/GetCategoryByAcrissCode';
 import { AppFontBold, AppFontRegular } from '../../../constants/fonts'
 import Orientation, { OrientationType } from 'react-native-orientation-locker';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../../../utils/i18n';
+import { APP_BRAND_COLOR } from '../../../constants/Colors';
+import { CarSearchItem } from '../../../types/SearchVehicleResponse';
+const retajlogo = require('../../../image/app_ico.png')
 
 const _dataProvider = new DataProvider((r1, r2) => r1.VehID !== r2.VehID)
 
 type ParamList = {
   CarsList: {
-    cars: VehVendorAvail[];
+    cars: CarSearchItem[];
   };
 };
-const DocumentScreen = () => {
+const CarsListScreen = () => {
   const route = useRoute<RouteProp<ParamList, 'CarsList'>>();
   const { i18n } = useTranslation();
 
@@ -52,7 +55,7 @@ const DocumentScreen = () => {
         dim.height = 190;
       } else {
         dim.width = Dimensions.get('window').width;
-        dim.height = 305;
+        dim.height = 380;
       }
     }
   )
@@ -92,20 +95,21 @@ const DocumentScreen = () => {
     cars.unshift({ header: true, vehicle: { deeplink: 'q' } })
     const sortedCars = cars
       .sort((a, b) => {
-        if (!a.TotalCharge) return 1
-        if (!b.TotalCharge) return 1
-        if (sortState == "LowToHigh") return parseFloat(a.TotalCharge.RateTotalAmount) - parseFloat(b.TotalCharge.RateTotalAmount)
-        if (sortState == "HighToLow") return parseFloat(b.TotalCharge.RateTotalAmount) - parseFloat(a.TotalCharge.RateTotalAmount)
+        if (!a.VehAvailCore || !a.VehAvailCore.TotalCharge) return 1
+        if (!b.VehAvailCore || !b.VehAvailCore.TotalCharge) return 1
+        if (sortState == "LowToHigh") return parseFloat(a.VehAvailCore.TotalCharge.RateTotalAmount) - parseFloat(b.VehAvailCore.TotalCharge.RateTotalAmount)
+        if (sortState == "HighToLow") return parseFloat(b.VehAvailCore.TotalCharge.RateTotalAmount) - parseFloat(a.VehAvailCore.TotalCharge.RateTotalAmount)
+        return 0
       });
     setDataToUse(_dataProvider.cloneWithRows(sortedCars))
     const transmissions = cars
-      .filter(c => c.VehID)
-      .map(c => c.Vehicle.TransmissionType);
+      .filter(c => c.VehAvailCore && c.VehAvailCore.VehID)
+      .map(c => c.VehAvailCore.Vehicle.TransmissionType);
     setCarTransmissionOptions(Array.from((new Set(transmissions)).values()))
 
     const categories = cars
-      .filter(c => c.VehID)
-      .map(c => GetCategoryByAcrissCode(c.Vehicle.VehType.VehicleCategory));
+      .filter(c => c.VehAvailCore && c.VehAvailCore.VehID)
+      .map(c => GetCategoryByAcrissCode(c.VehAvailCore.Vehicle.VehType.VehicleCategory));
     setCarTypeOptions(Array.from((new Set(categories)).values()))
 
     return () => Orientation.removeDeviceOrientationListener(onOrientationDidChange);
@@ -114,10 +118,11 @@ const DocumentScreen = () => {
   useEffect(() => {
     const sortedCars = cars
       .sort((a, b) => {
-        if (!a.TotalCharge) return 1
-        if (!b.TotalCharge) return 1
-        if (sortState == "LowToHigh") return parseFloat(a.TotalCharge.RateTotalAmount) - parseFloat(b.TotalCharge.RateTotalAmount)
-        if (sortState == "HighToLow") return parseFloat(b.TotalCharge.RateTotalAmount) - parseFloat(a.TotalCharge.RateTotalAmount)
+        if (!a.VehAvailCore || !a.VehAvailCore.TotalCharge) return 1
+        if (!b.VehAvailCore || !b.VehAvailCore.TotalCharge) return 1
+        if (sortState == "LowToHigh") return parseFloat(a.VehAvailCore.TotalCharge.RateTotalAmount) - parseFloat(b.VehAvailCore.TotalCharge.RateTotalAmount)
+        if (sortState == "HighToLow") return parseFloat(b.VehAvailCore.TotalCharge.RateTotalAmount) - parseFloat(a.VehAvailCore.TotalCharge.RateTotalAmount)
+        return 0
       });
     setDataToUse(_dataProvider.cloneWithRows(sortedCars))
   }, [sortState])
@@ -129,16 +134,16 @@ const DocumentScreen = () => {
     if (transmissionFilters.length != 0) {
       carsToFilter = carsToFilter
         .filter((a) => {
-          if (!a.TotalCharge) return true
-          return transmissionFilters.includes(a.Vehicle.TransmissionType);
+          if (!a.VehAvailCore || !a.VehAvailCore.TotalCharge) return true
+          return transmissionFilters.includes(a.VehAvailCore.Vehicle.TransmissionType);
         })
     }
 
     if (typesFiter.length != 0) {
       carsToFilter = carsToFilter
         .filter((a) => {
-          if (!a.TotalCharge) return true
-          return typesFiter.includes(GetCategoryByAcrissCode(a.Vehicle.VehType.VehicleCategory));
+          if (!a.VehAvailCore || !a.VehAvailCore.TotalCharge) return true
+          return typesFiter.includes(GetCategoryByAcrissCode(a.VehAvailCore.Vehicle.VehType.VehicleCategory));
         })
     }
 
@@ -168,7 +173,7 @@ const DocumentScreen = () => {
               if (o.header) {
                 return (
                   <>
-                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#00000050', marginBottom: '2%' }}>
+                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: `${APP_BRAND_COLOR}50`, marginBottom: '2%' }}>
                       <View style={{ padding: '3%' }}>
                         <View style={{ width: '100%' }}>
                           <Text style={{ fontSize: 18, textAlign: 'left', fontFamily: AppFontBold }}>{route.params.searchParams.pickUpLocation.locationname}</Text>
@@ -185,7 +190,7 @@ const DocumentScreen = () => {
                           navigation.goBack()
                         }
                       }}>
-                        <View style={{ backgroundColor: '#2f9eba', width: '15%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ backgroundColor: `${APP_BRAND_COLOR}50`, width: '15%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                           <MaterialIconsIcons style={{ color: 'white' }} name={"edit"} size={24} />
                         </View>
                       </TouchableWithoutFeedback>
@@ -196,7 +201,7 @@ const DocumentScreen = () => {
                           <MaterialCommunityIcons style={{ alignSelf: 'flex-start', marginTop: 'auto', marginBottom: 'auto', color: 'gray' }} name={"sort-variant"} size={18} />
                           <Text style={{ fontSize: 18, textAlign: 'center', width: '50%', fontFamily: AppFontBold }}>
                             {i18n.t(TRANSLATIONS_KEY.CAR_LIST_SORT_LABEL).toString()}
-                        </Text>
+                          </Text>
                         </View>
                       </TouchableOpacity>
                       <TouchableOpacity style={{ width: '49%', marginLeft: '1%' }} onPress={() => setShowFilterModal(true)}>
@@ -204,7 +209,7 @@ const DocumentScreen = () => {
                           <MaterialCommunityIcons style={{ alignSelf: 'flex-start', marginTop: 'auto', marginBottom: 'auto', color: 'gray' }} name={"filter"} size={18} />
                           <Text style={{ fontSize: 18, textAlign: 'center', width: '50%', fontFamily: AppFontBold }}>
                             {i18n.t(TRANSLATIONS_KEY.CAR_LIST_FILTER_LABEL).toString()}
-                        </Text>
+                          </Text>
                         </View>
                       </TouchableOpacity>
                     </View>
@@ -213,10 +218,22 @@ const DocumentScreen = () => {
               }
 
               return (
-                <CarItem centerCarName={true} key={o.VehID} vehicle={o} isActive={selectedIdx == idx} onClick={() => {
-                  if (idx == selectedIdx) return setSelectedIdx(-1)
-                  return setSelectedIdx(idx)
-                }} />
+                <HannkCarItem
+                  APP_BRAND_COLOR={APP_BRAND_COLOR}
+                  CAR_LIST_ITEM_FUEL_POLICY={i18n.t(TRANSLATIONS_KEY.CAR_LIST_ITEM_FUEL_POLICY).toString()}
+                  CAR_LIST_ITEM_FUEL_POLICY_LILE_TO_LIKE={i18n.t(TRANSLATIONS_KEY.CAR_LIST_ITEM_FUEL_POLICY_LILE_TO_LIKE).toString()}
+                  CAR_LIST_ITEM_MILEAGE={i18n.t(TRANSLATIONS_KEY.CAR_LIST_ITEM_MILEAGE).toString()}
+                  CAR_LIST_ITEM_UNLIMITED={i18n.t(TRANSLATIONS_KEY.CAR_LIST_ITEM_UNLIMITED).toString()}
+                  carLogo={{ source: "https://image.shutterstock.com/image-vector/edit-vector-icon-260nw-546038194.jpg" }}
+                  showBookButton={true}
+                  centerCarName={true}
+                  key={o.VehID}
+                  vehicle={o}
+                  isActive={selectedIdx == idx}
+                  onClick={() => {
+                    setVehicle(cars[idx])
+                    navigation.navigate('CarExtras', { vehicle: cars[idx] })
+                  }} />
               );
             }}
 
@@ -228,12 +245,12 @@ const DocumentScreen = () => {
           onPress={() => navigation.goBack()}
           size="medium"
           style={{
-            backgroundColor: '#000000',
-            borderColor: '#000000',
+            backgroundColor: APP_BRAND_COLOR,
+            borderColor: APP_BRAND_COLOR,
             width: '80%',
             marginBottom: '5%',
             borderRadius: 10,
-            shadowColor: '#000000',
+            shadowColor: APP_BRAND_COLOR,
             shadowOffset: {
               width: 0,
               height: 10,
@@ -243,32 +260,6 @@ const DocumentScreen = () => {
             elevation: 10,
           }}>
           {() => <Text style={{ fontFamily: AppFontBold, color: 'white', fontSize: 18 }}>Go back</Text>}
-        </Button>
-      )}
-      {route.params.cars.length != 0 && (
-        <Button
-          onPress={() => {
-            setVehicle(cars[selectedIdx])
-            navigation.navigate('CarExtras', { vehicle: cars[selectedIdx] })
-          }}
-          disabled={selectedIdx == -1 ? true : false}
-          size="medium"
-          style={{
-            backgroundColor: selectedIdx != -1 ? '#00000050' : '#000000',
-            borderColor: selectedIdx != -1 ? '#000000' : '#000000',
-            width: '80%',
-            marginBottom: '5%',
-            borderRadius: 10,
-            shadowColor: '#000000',
-            shadowOffset: {
-              width: 0,
-              height: 10,
-            },
-            shadowOpacity: 0.51,
-            shadowRadius: 13.16,
-            elevation: 10,
-          }}>
-          {() => <Text style={{ fontFamily: AppFontBold, color: 'white', fontSize: 18 }}>{i18n.t(TRANSLATIONS_KEY.CAR_LIST_BOOOK_NOW_BTN).toString()}</Text>}
         </Button>
       )}
       <Modal
@@ -291,8 +282,8 @@ const DocumentScreen = () => {
               <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={{ fontSize: 18, color: '#33adcc', fontFamily: AppFontBold, marginBottom: '5%' }}>
                   {i18n.t(TRANSLATIONS_KEY.CAR_LIST_LOW_TO_HIGH_OPTION).toString()}
-            </Text>
-                {sortState == "LowToHigh" && <MaterialCommunityIcons style={{ alignSelf: 'flex-start', color: '#000000' }} name={"check"} size={24} />}
+                </Text>
+                {sortState == "LowToHigh" && <MaterialCommunityIcons style={{ alignSelf: 'flex-start', color: APP_BRAND_COLOR }} name={"check"} size={24} />}
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
@@ -302,8 +293,8 @@ const DocumentScreen = () => {
               <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={{ fontSize: 18, color: '#33adcc', fontFamily: AppFontBold, marginBottom: '5%' }}>
                   {i18n.t(TRANSLATIONS_KEY.CAR_LIST_HIGH_TO_LOW_OPTION).toString()}
-            </Text>
-                {sortState == "HighToLow" && <MaterialCommunityIcons style={{ alignSelf: 'flex-start', color: '#000000' }} name={"check"} size={24} />}
+                </Text>
+                {sortState == "HighToLow" && <MaterialCommunityIcons style={{ alignSelf: 'flex-start', color: APP_BRAND_COLOR }} name={"check"} size={24} />}
               </View>
             </TouchableOpacity>
           </Layout>
@@ -349,10 +340,10 @@ const DocumentScreen = () => {
                       elevation: 2,
                     }}>
                     <View style={{ display: 'flex', flexDirection: 'row' }}>
-                      <Text style={{ textAlign: 'left', color: '#000000', fontFamily: AppFontRegular }} category="h6">
+                      <Text style={{ textAlign: 'left', color: APP_BRAND_COLOR, fontFamily: AppFontRegular }} category="h6">
                         {i}
                       </Text>
-                      {transmissionFilters.includes(i) && <MaterialCommunityIcons style={{ marginLeft: '2%', color: '#000000' }} name={"check"} size={24} />}
+                      {transmissionFilters.includes(i) && <MaterialCommunityIcons style={{ marginLeft: '2%', color: APP_BRAND_COLOR }} name={"check"} size={24} />}
                     </View>
                   </Card>
                 );
@@ -383,10 +374,10 @@ const DocumentScreen = () => {
                       elevation: 2,
                     }}>
                     <View style={{ display: 'flex', flexDirection: 'row' }}>
-                      <Text style={{ textAlign: 'left', color: '#000000', fontFamily: AppFontRegular }} category="h6">
+                      <Text style={{ textAlign: 'left', color: APP_BRAND_COLOR, fontFamily: AppFontRegular }} category="h6">
                         {i}
                       </Text>
-                      {typesFiter.includes(i) && <MaterialCommunityIcons style={{ marginLeft: '2%', color: '#000000' }} name={"check"} size={24} />}
+                      {typesFiter.includes(i) && <MaterialCommunityIcons style={{ marginLeft: '2%', color: APP_BRAND_COLOR }} name={"check"} size={24} />}
                     </View>
                   </Card>
                 );
@@ -400,10 +391,10 @@ const DocumentScreen = () => {
                 size="small"
                 style={{
                   width: '48%',
-                  backgroundColor: '#000000',
-                  borderColor: '#000000',
+                  backgroundColor: APP_BRAND_COLOR,
+                  borderColor: APP_BRAND_COLOR,
                   borderRadius: 10,
-                  shadowColor: '#000000',
+                  shadowColor: APP_BRAND_COLOR,
                   shadowOffset: {
                     width: 0,
                     height: 10,
@@ -431,10 +422,10 @@ const DocumentScreen = () => {
                 size="small"
                 style={{
                   width: '48%',
-                  backgroundColor: '#000000',
-                  borderColor: '#000000',
+                  backgroundColor: APP_BRAND_COLOR,
+                  borderColor: APP_BRAND_COLOR,
                   borderRadius: 10,
-                  shadowColor: '#000000',
+                  shadowColor: APP_BRAND_COLOR,
                   shadowOffset: {
                     width: 0,
                     height: 10,
@@ -463,4 +454,4 @@ const DocumentScreen = () => {
   );
 };
 
-export default DocumentScreen
+export default CarsListScreen

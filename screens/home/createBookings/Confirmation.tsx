@@ -11,11 +11,15 @@ import MenuButton from '../../../partials/MenuButton';
 import { AppFontBold } from '../../../constants/fonts'
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../../../utils/i18n';
+import { APP_BRAND_COLOR } from '../../../constants/Colors';
+import userHasAllFiles from '../../../utils/userHasAllFiles';
+import { useGlobalState } from '../../../state';
 
 
 export default () => {
     const navigation = useNavigation();
     const { i18n } = useTranslation();
+    const [profile] = useGlobalState("profile");
 
     const [departureTime, setDepartureTime] = useCreateBookingState("departureTime");
     const [returnTime, setReturnTime] = useCreateBookingState("returnTime");
@@ -24,14 +28,13 @@ export default () => {
     const [arrivalTime, setArrivalTime] = useCreateBookingState("arrivalTime");
     const [reservationNumber] = useCreateBookingState("reservationNumber");
     const [, setExtras] = useCreateBookingState("extras");
-    const [, setVehicle] = useCreateBookingState("vehicle");
+    const [vehicle, setVehicle] = useCreateBookingState("vehicle");
     const [, setInmediatePickup] = useCreateBookingState("inmediatePickup");
 
     const [extras] = useCreateBookingState("extras");
-    const [vehicle] = useCreateBookingState("vehicle");
 
-    const totalToCharge = new Decimal(vehicle?.TotalCharge.RateTotalAmount || '0.0').add(extras.reduce((prev, next) => {
-        prev = new Decimal(next.Charge.Amount).times(next.amount).add(prev).toNumber()
+    const totalToCharge = new Decimal(vehicle?.VehAvailCore.TotalCharge.RateTotalAmount || '0.0').add(extras.reduce((prev, next) => {
+        prev = new Decimal(next.PricedEquip.Charge.Amount).times(next.amount).add(prev).toNumber()
         return prev
     }, 0)).toString()
 
@@ -48,16 +51,23 @@ export default () => {
                         dropOffLocation={returnLocation?.locationname || ''}
                         dropoffTime={moment(returnTime)}
 
-                        carName={vehicle?.Vehicle.VehMakeModel.Name || 'Car'}
+                        carName={vehicle?.VehAvailCore.Vehicle.VehMakeModel.Name || 'Car'}
                         finalCost={totalToCharge.toString()}
-                        currencyCode={vehicle?.TotalCharge.CurrencyCode || 'USD'}
+                        currencyCode={vehicle?.VehAvailCore.TotalCharge.CurrencyCode || 'USD'}
                         arrivalTime={arrivalTime}
-                        image_preview_url={vehicle?.Vehicle.VehMakeModel.PictureURL}
+                        image_preview_url={vehicle?.VehAvailCore.Vehicle.VehMakeModel.PictureURL}
                         reservationNumber={reservationNumber}
 
                         leftImageUri={undefined}
                         keyLess={false}
                     />
+
+                    { profile && !userHasAllFiles(profile) && (
+                        <>
+                            <Text style={{ textAlign: 'center'}}>Please ensure to fill in your profile details and upload required documents before collecting the vehicle.</Text>
+                            <Text style={{ textAlign: 'center'}}>Before you collect your car, please complete the profile verification process.</Text>
+                        </>
+                    )}
 
                     <Layout style={{ marginTop: '5%' }}>
                         <Button
@@ -85,8 +95,8 @@ export default () => {
                             }}
                             size="giant" style={{
                                 borderRadius: 10,
-                                backgroundColor: '#000000',
-                                borderColor: '#000000',
+                                backgroundColor: APP_BRAND_COLOR,
+                                borderColor: APP_BRAND_COLOR,
                                 paddingLeft: 20,
                                 paddingRight: 20,
                                 marginBottom: '2%'
