@@ -10,6 +10,7 @@
     "test": "jest",
     "lint": "eslint .",
     "android:log": "adb logcat com.anotherapp:D *:W",
+    "postinstall": "patch-package",
     "updateCommon": "npm install anshumanpandey/hannk-mobile-common#master",
     "build:debug": "react-native run-android --variant=release"
   },
@@ -109,6 +110,7 @@
     "eslint": "^6.5.1",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.58.0",
+    "patch-package": "^6.2.2",
     "react-native-clean-project": "^3.3.0",
     "react-native-typescript-transformer": "^1.2.13",
     "react-test-renderer": "16.11.0",
