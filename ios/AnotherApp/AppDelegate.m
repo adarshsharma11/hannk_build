@@ -5,6 +5,7 @@
 #import <React/RCTRootView.h>
 #import "RNSplashScreen.h"  // here
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <GoogleMaps/GoogleMaps.h>
 
 #if DEBUG
 #import <FlipperKit/FlipperClient.h>
@@ -40,6 +41,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
++  [GMSServices provideAPIKey:@"AIzaSyANQVx-uSKNoAATutGUc_tTud5N5L3bztI"];
   [[FBSDKApplicationDelegate sharedInstance] application:application
       didFinishLaunchingWithOptions:launchOptions];
   //  New adding fonts script
