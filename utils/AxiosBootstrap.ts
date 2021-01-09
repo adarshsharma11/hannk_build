@@ -2,7 +2,7 @@ import { configure } from 'axios-hooks'
 import Axios from 'axios'
 import { getGlobalState, dispatchGlobalState } from '../state';
 import { encrypt, decrypt } from './Encription';
-import { CLIENT_ID } from 'react-native-dotenv';
+import { CLIENT_ID, API_KEY } from 'react-native-dotenv';
 
 export const axiosInstance = Axios.create({})
 
@@ -19,14 +19,15 @@ axiosInstance.interceptors.request.use(
     const customeHeaders = {
       AppName: `Hannk`,
       ClientId:  CLIENT_ID,
-      Auth
+      Auth,
+      APIKEY: API_KEY, 
     }
 
     config.headers = customeHeaders
 
     //config.data = JSON.parse(encrypt(config.data))
 
-    //console.log(config.headers)
+    console.log(config.url)
 
     return config;
   }

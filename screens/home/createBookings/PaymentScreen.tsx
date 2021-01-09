@@ -56,7 +56,7 @@ const PaymentScreen = () => {
 
     const [extras] = useCreateBookingState("extras");
 
-    const urls = getPaypalUrls("LIVE")
+    const urls = getPaypalUrls("DEV")
     const { generatePaymentOrderFor, getAccessTokenReq } = UsePaypal({ paypalClientId, paypalSecretKey, paypalPaymentUrl: urls.PAYPAL_CAPTURE_URL, paypalTokenUrl: urls.PAYPAL_TOKEN_URL })
 
     const paypalJson = GET_PAYPAL_JSON(

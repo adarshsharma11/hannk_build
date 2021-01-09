@@ -13,7 +13,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import GetLocation from 'react-native-get-location'
 // @ts-ignore
 import SystemSetting from 'react-native-system-setting'
-import useAxios from 'axios-hooks'
+import useAxios, { makeUseAxios } from 'axios-hooks'
 import moment from 'moment';
 import LoadingSpinner from '../../../partials/LoadingSpinner';
 import { VehAvailCore, VehicleResponse, VehSearch } from '../../../types/SearchVehicleResponse';
@@ -22,12 +22,14 @@ import { checkMultiple, PERMISSIONS, RESULTS, request } from 'react-native-permi
 import { AppFontBold, AppFontRegular } from '../../../constants/fonts'
 import Orientation, { OrientationType } from 'react-native-orientation-locker';
 import { useTranslation } from 'react-i18next';
-import { HannkSuggestionInput, HannkDatePicker, HannkTimePicker } from 'hannk-mobile-common';
+import { HannkSuggestionInput, HannkDatePicker, HannkTimePicker, HannkUtils } from 'hannk-mobile-common';
 import { TRANSLATIONS_KEY } from '../../../utils/i18n';
 import BackButton from '../../../partials/BackButton';
 import { setHours, getHours, addHours, isAfter, setMinutes, getMinutes } from 'date-fns'
 import { APP_BRAND_COLOR } from '../../../constants/Colors';
-import { GRCGDS_BACKEND } from 'react-native-dotenv';
+import { API_KEY, CLIENT_ID, GRCGDS_BACKEND } from 'react-native-dotenv';
+
+const simpleUseAxios = makeUseAxios({ });
 
 const DATE_FORMAT = "DD MMM YYYY"
 
@@ -49,10 +51,9 @@ export default () => {
     const [showReturnTimepicker, setShowReturnTimepicker] = useState(false);
 
 
-    const [{ data, loading, error }, doSearch] = useAxios<VehAvailCore[]>({
-        url: GRCGDS_BACKEND,
-        method: 'GET',
-        validateStatus: () => true
+    const [{ data, loading, error }, doSearch] = simpleUseAxios({
+        url: "https://www.grcgds.com/test_ota/",
+        method: 'POST',
     }, { manual: true })
 
     const onOrientationDidChange = (orientation: OrientationType) => {
@@ -93,7 +94,7 @@ export default () => {
                 .then((result) => {
                     switch (result["android.permission.ACCESS_FINE_LOCATION"]) {
                         case RESULTS.UNAVAILABLE:
-                            console.log('[ANDROID] This feature is not available (on this device / in this context)');
+                            console.log('This feature is not available (on this device / in this context)');
                             break;
                         case RESULTS.DENIED:
                             console.log('The permission has not been requested / is denied but requestable');
@@ -105,7 +106,7 @@ export default () => {
                             break;
                         case RESULTS.GRANTED:
                             console.log('The permission is granted');
-                            /*GetLocation.getCurrentPosition({
+                            GetLocation.getCurrentPosition({
                                 enableHighAccuracy: true,
                                 timeout: 15000,
                             })
@@ -115,7 +116,7 @@ export default () => {
                                 .catch(error => {
                                     const { code, message } = error;
                                     console.warn(code, message);
-                                })*/
+                                })
                             break;
                         case RESULTS.BLOCKED:
                             console.log('The permission is denied and not requestable anymore');
@@ -125,7 +126,9 @@ export default () => {
 
                     switch (result["ios.permission.LOCATION_WHEN_IN_USE"]) {
                         case RESULTS.UNAVAILABLE:
-                            console.log('[IOS] This feature is not available (on this device / in this context)');
+                            console.log(
+                                'This feature is not available (on this device / in this context)',
+                            );
                             break;
                         case RESULTS.DENIED:
                             console.log('The permission has not been requested / is denied but requestable');
@@ -205,6 +208,7 @@ export default () => {
                         onOriginLocationSelected={(l) => {
                             setOriginLocation(l)
                         }}
+                        endpoint={GRCGDS_BACKEND}
                         onReturnLocationSelected={(l) => setReturnLocation(l)}
                     />
                     {inmediatePickup !== null && (
@@ -297,29 +301,37 @@ export default () => {
                                 setReturnLocation(originLocation)
                             }
 
-                            doSearch({
-                                params: {
-                                    module_name: "SEARCH_VEHICLE",
+                            const params = {
+                                client_id: CLIENT_ID,
+                                api_key: API_KEY,
+                                pickup_date: departureTime.toISOString().slice(0, -5),
 
-                                    pickup_date: moment(departureTime).format(`YYYY-MM-DD`),
-                                    pickup_time: moment(departureTime).format(`HH:ss`),
+                                dropoff_date: returnTime.toISOString().slice(0, -5),
 
-                                    dropoff_date: moment(returnTime).format(`YYYY-MM-DD`),
-                                    dropoff_time: moment(returnTime).format(`HH:ss`),
+                                pickup_location: originLocation.internalcode,
+                                dropoff_location: returnLocation ? returnLocation.internalcode : originLocation.internalcode,
+                            }
 
-                                    pickup_location: originLocation.internalcode,
-                                    dropoff_location: returnLocation ? returnLocation.internalcode : originLocation.internalcode,
-                                }
-                            })
+                            const b = HannkUtils.GenerateAvailabilityApiBody(params)
+                            console.log(b)
+
+                            if (inmediatePickup) {
+                                navigation.navigate("InmediatePickup");
+                                return
+                            }
+
+                            doSearch({ data: b, headers: { "Content-Type": "application/xml"} })
                                 .then(res => {
-                                    console.log(res.data.length)
-                                    if (res.data.length == 0) {
+                                    const raw = res.data.VehVendorAvails[0].VehVendorAvail[0].VehAvails[0].VehAvail
+                                    const cars = raw.map(HannkUtils.MapOtaAvailabilityResponse)
+                                    console.log(cars.length)
+                                    if (cars.length == 0) {
                                         navigation.navigate("NoResult");
                                     } else {
                                         navigation.navigate(
                                             'CarsList',
                                             {
-                                                cars: res.data,
+                                                cars: cars,
                                                 searchParams: {
                                                     pickUpDate: moment(departureTime),
                                                     pickUpTime: moment(departureTime),

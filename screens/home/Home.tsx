@@ -34,6 +34,7 @@ import isAppleLogin from '../../utils/isAppleLogin';
 import useEffectSkipInitialRender from '../../utils/UseEffectSkipInitialRender';
 import isAppleUser from '../../utils/isAppleUser';
 import ShareCodeScreen from './ShareCode';
+import InmediatePickupScreen from './createBookings/InmediatePickupScreen';
 
 
 const Drawer = createDrawerNavigator();
@@ -56,6 +57,7 @@ const allScreens = [
     { name: 'Policy', screen: <Drawer.Screen name="Policy" component={PolicyScreen} /> },
     { name: 'TermsConditions', screen: <Drawer.Screen name="TermsConditions" component={TermsConditionsScreen} /> },
     { name: 'NoResult', screen: <Drawer.Screen name="NoResult" component={NoResultScreen} /> },
+    { name: 'InmediatePickup', screen: <Drawer.Screen name="InmediatePickup" component={InmediatePickupScreen} /> },
     { name: 'Faq', screen: <Drawer.Screen name="Faq" component={FaqScreen} /> },
 ]
 export default ({ navigation }: StackScreenProps<LoginScreenProps>) => {

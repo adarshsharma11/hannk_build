@@ -12,6 +12,8 @@ type InitialState = {
     paypalClientId: null | string,
     paypalSecretKey: null | string,
     termsAndConditions: null | string,
+    initialBanner: null | string,
+    initialScreen: string,
 }
 const initialState: InitialState = {
     storedBookings: [],
@@ -23,6 +25,8 @@ const initialState: InitialState = {
     paypalClientId: null,
     paypalSecretKey: null,
     termsAndConditions: null,
+    initialBanner: null,
+    initialScreen: "Home"
 };
 
 const normalReducer = (state: any, action: { type: string, state?: any }): InitialState => {
@@ -35,7 +39,8 @@ const normalReducer = (state: any, action: { type: string, state?: any }): Initi
                 ...state,
                 paypalClientId: action.state.paypalClientId,
                 paypalSecretKey: action.state.paypalSecretKey,
-                termsAndConditions: action.state.termsAndConditions
+                termsAndConditions: action.state.termsAndConditions,
+                initialBanner: action.state.banner,
             };
         }
         case 'loading': {

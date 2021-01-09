@@ -28,7 +28,8 @@ import './utils/i18n';
 import RefCodeScreen from './screens/RefCodeScreen';
 import HasRefCodeScreen from './screens/HasRefCodeScreen';
 import { APP_BRAND_COLOR } from './constants/Colors';
-import { CLIENT_ID } from 'react-native-dotenv';
+import { CLIENT_ID, GRCGDS_BACKEND } from 'react-native-dotenv';
+import Banner from './Banner';
 
 if (!Object.fromEntries) {
   Object.fromEntries = Object.fromEntries || function(arr) {
@@ -45,14 +46,22 @@ export default () => {
   const [token] = useGlobalState('token');
   const [profile] = useGlobalState('profile');
   const [error] = useGlobalState('error');
+  const [, setInitialScreen] = useGlobalState('initialScreen'); 
 
-  const { getAppConfig: doGetAppConfig, getAppConfigReq } = getAppConfig(CLIENT_ID)
+  const { getAppConfig: doGetAppConfig, getAppConfigReq } = getAppConfig(CLIENT_ID, true, GRCGDS_BACKEND)
 
   useEffect(() => {
     if (getAppConfigReq.data && !getAppConfigReq.loading) {
       saveAppConfig(getAppConfigReq.data)
+      SplashScreen.hide()
     }
   }, [getAppConfigReq.loading])
+
+  useEffect(() => {
+    if (!profile || profile.vphone != 1 || profile.vemail != 1 || !token) {
+      setInitialScreen("Login")
+    }
+  }, [token, profile])
 
   const cb = (nextAppState) => {
     if (nextAppState.match(/inactive|background/)) {
@@ -146,12 +155,14 @@ export default () => {
         <Stack.Navigator headerMode='none'>
           {(token && profile && profile.vemail == 1) && (
             <>
+              <Stack.Screen name="Banner" component={Banner} initialParams={{ goTo: "Home" }} />
               <Stack.Screen name="Home" component={Home} />
             </>
           )}
 
           {(!profile || profile.vphone != 1 || profile.vemail != 1 || !token) && (
             <>
+              <Stack.Screen name="Banner" component={Banner} initialParams={{ goTo: "Home" }} />
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Signup" component={Signup} />
               <Stack.Screen name="TwitterLogin" component={TwitterLoginScreen} />
