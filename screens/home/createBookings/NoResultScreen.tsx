@@ -3,7 +3,6 @@ import { Layout, Text, Button } from '@ui-kitten/components';
 import { SafeAreaView, View, StyleSheet, Dimensions, Image } from 'react-native';
 // @ts-ignore
 import GPSState from 'react-native-gps-state'
-//@ts-ignore
 import GetLocation from 'react-native-get-location'
 import LoadingSpinner from '../../../partials/LoadingSpinner';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -79,21 +78,22 @@ const DocumentScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
+      console.log("NoResults GPSState.isAuthorized", GPSState.isAuthorized())
       if (!GPSState.isAuthorized()) {
         GPSState.requestAuthorization(GPSState.AUTHORIZED_WHENINUSE)
       }
 
       GetLocation.getCurrentPosition({
         enableHighAccuracy: true,
-        timeout: 15000,
+        timeout: 30 * 1000,
       })
         .then(location => {
-          console.log(location)
+          console.log("NoResults location",location)
           setCurrentLocation(location)
         })
         .catch(error => {
           const { code, message } = error;
-          console.warn(code, message);
+          console.warn("GetLocation.getCurrentPosition",code, message);
         })
 
     }, [])
@@ -289,6 +289,7 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
+    zIndex: -1,
   },
 });
 export default DocumentScreen

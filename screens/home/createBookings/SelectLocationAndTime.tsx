@@ -93,7 +93,7 @@ export default () => {
                 .then((result) => {
                     switch (result["android.permission.ACCESS_FINE_LOCATION"]) {
                         case RESULTS.UNAVAILABLE:
-                            console.log('This feature is not available (on this device / in this context)');
+                            console.log('[ANDROID] This feature is not available (on this device / in this context)');
                             break;
                         case RESULTS.DENIED:
                             console.log('The permission has not been requested / is denied but requestable');
@@ -105,7 +105,7 @@ export default () => {
                             break;
                         case RESULTS.GRANTED:
                             console.log('The permission is granted');
-                            GetLocation.getCurrentPosition({
+                            /*GetLocation.getCurrentPosition({
                                 enableHighAccuracy: true,
                                 timeout: 15000,
                             })
@@ -115,7 +115,7 @@ export default () => {
                                 .catch(error => {
                                     const { code, message } = error;
                                     console.warn(code, message);
-                                })
+                                })*/
                             break;
                         case RESULTS.BLOCKED:
                             console.log('The permission is denied and not requestable anymore');
@@ -125,9 +125,7 @@ export default () => {
 
                     switch (result["ios.permission.LOCATION_WHEN_IN_USE"]) {
                         case RESULTS.UNAVAILABLE:
-                            console.log(
-                                'This feature is not available (on this device / in this context)',
-                            );
+                            console.log('[IOS] This feature is not available (on this device / in this context)');
                             break;
                         case RESULTS.DENIED:
                             console.log('The permission has not been requested / is denied but requestable');
@@ -314,6 +312,7 @@ export default () => {
                                 }
                             })
                                 .then(res => {
+                                    console.log(res.data.length)
                                     if (res.data.length == 0) {
                                         navigation.navigate("NoResult");
                                     } else {
@@ -335,7 +334,8 @@ export default () => {
                                         );
                                     }
                                 })
-                                .catch(() => {
+                                .catch((err) => {
+                                    console.log(err)
                                     navigation.navigate("NoResult");
                                 })
                         }} size="giant" style={{
