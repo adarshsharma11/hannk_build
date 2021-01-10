@@ -7,13 +7,20 @@ import { useFocusEffect } from '@react-navigation/native';
 export default ({ navigation, route }: StackScreenProps<any>) => {
     const [initialBanner] = useGlobalState('initialBanner');
     const [initialScreen] = useGlobalState('initialScreen');
-
-    console.log(initialBanner)
+    const [timeOut, setUseTimeout] = useState(0);
+    const [navigated, setNavigated] = useState(false);
 
     useFocusEffect(
         React.useCallback(() => {
-            setTimeout(() => navigation.navigate(initialScreen), 10000)
-        }, [])
+            if (navigated == false) {
+                const t = setTimeout(() => navigation.navigate(initialScreen), 10000)
+                setUseTimeout(t)
+                console.log("Banner screen", initialScreen)
+                if (timeOut != 0) {
+                    clearTimeout(timeOut)
+                }
+            }
+        }, [initialScreen])
     );
 
     return (

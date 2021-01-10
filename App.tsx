@@ -60,6 +60,8 @@ export default () => {
   useEffect(() => {
     if (!profile || profile.vphone != 1 || profile.vemail != 1 || !token) {
       setInitialScreen("Login")
+    } else {
+      setInitialScreen("Home")
     }
   }, [token, profile])
 
