@@ -41,7 +41,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-+  [GMSServices provideAPIKey:@"AIzaSyANQVx-uSKNoAATutGUc_tTud5N5L3bztI"];
+  [GMSServices provideAPIKey:@"AIzaSyANQVx-uSKNoAATutGUc_tTud5N5L3bztI"];
   [[FBSDKApplicationDelegate sharedInstance] application:application
       didFinishLaunchingWithOptions:launchOptions];
   //  New adding fonts script
