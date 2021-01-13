@@ -289,6 +289,7 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
+    zIndex: -1
   },
 });
 export default InmediatePickupScreen
