@@ -105,25 +105,25 @@ const InmediatePickupScreen = () => {
 
   const getLatLong = (address) => {
     Geocoder.from(address)
-		.then(json => {
-			var location = json.results[0].geometry.location;
-      let initialRegion = {
-        latitude: Number(location.lat),
-        longitude: Number(location.lng),
-        latitudeDelta: 0.05,
-        longitudeDelta: 0.05
-      }
-      let data = [{
-        coordinates: {
+      .then(json => {
+        var location = json.results[0].geometry.location;
+        let initialRegion = {
           latitude: Number(location.lat),
-          longitude: Number(location.lng)
-        },
-        type:'default'
-      }]
-      setMarkers(data)
-      setRegion(initialRegion)
-		})
-    .catch(error => console.warn(error));
+          longitude: Number(location.lng),
+          latitudeDelta: 0.05,
+          longitudeDelta: 0.05
+        }
+        let data = [{
+          coordinates: {
+            latitude: Number(location.lat),
+            longitude: Number(location.lng)
+          },
+          type: 'default'
+        }]
+        setMarkers(data)
+        setRegion(initialRegion)
+      })
+      .catch(error => console.warn(error));
   }
 
   const addToFilterArray = (filterToAdd) => {
@@ -145,75 +145,39 @@ const InmediatePickupScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      <Layout style={{ position: 'absolute', padding: '5%', backgroundColor: 'red', zIndex: 2, display: 'flex', flexDirection: 'row', backgroundColor: '#00000000', alignItems: 'center', justifyContent: 'center',marginTop:'2%' }}>
+      <Layout style={{ position: 'absolute', padding: '5%', backgroundColor: 'red', zIndex: 2, display: 'flex', flexDirection: 'row', backgroundColor: '#00000000', alignItems: 'center', justifyContent: 'center', marginTop: '2%' }}>
         <MenuButton />
       </Layout>
-      <Layout style={{position:'absolute', marginTop:20}}>
+      <Layout style={{ position: 'absolute', marginTop: Dimensions.get('screen').width * 0.10, marginLeft: Dimensions.get('screen').width * 0.20, zIndex: 20, width: Dimensions.get('screen').width * 0.65, backgroundColor: 'red' }}>
 
-      <Layout style={{ position: 'absolute', padding: '5%', marginTop: 20, width: Dimensions.get('window').width * 0.80, marginLeft: Dimensions.get('window').width * 0.15, backgroundColor: 'red', zIndex: 2, display: 'flex', flexDirection: 'row', backgroundColor: '#00000000', alignItems: 'center', justifyContent: 'center' }}>
-        <GooglePlacesAutocomplete
-          placeholder='Google map search'
-          onPress={(data, details = null) => {
-            getLatLong(data.description)
-          }}
-          query={{
-            key: 'AIzaSyDMqBE_zk5yuMq_V4mlrVKZee7Lro-8y3M',
-            language: 'en',
-          }}
-        />
+        <Layout>
+          <GooglePlacesAutocomplete
+            placeholder='Google map search'
+            onPress={(data, details = null) => {
+              getLatLong(data.description)
+            }}
+            query={{
+              key: 'AIzaSyDMqBE_zk5yuMq_V4mlrVKZee7Lro-8y3M',
+              language: 'en',
+            }}
+          />
+        </Layout>
+        <Layout style={{ flexDirection: 'row', backgroundColor: 'black', alignItems: 'center', justifyContent: 'center' }}>
+          <TouchableOpacity style={{ marginHorizontal: 10 }} onPress={() => addToFilterArray('charge point')}>
+            {filter.includes('charge point') ? <Image source={require('../../../image/icon-chargepoint-available.png')} /> : <Image source={require('../../../image/icon-chargepoint-inuse.png')} />}
+          </TouchableOpacity>
+          <TouchableOpacity style={{ marginHorizontal: 10 }} onPress={() => addToFilterArray('car')}>
+            {filter.includes('car') ? <Image source={require('../../../image/icon-car-available.png')} /> : <Image source={require('../../../image/icon-car-notavailable.png')} />}
+          </TouchableOpacity>
+          <TouchableOpacity style={{ marginHorizontal: 10 }} onPress={() => addToFilterArray('bike')}>
+            {filter.includes('bike') ? <Image source={require('../../../image/icon-bike-available.png')} /> : <Image source={require('../../../image/icon-bike-unavailable.png')} />}
+          </TouchableOpacity>
+          <TouchableOpacity style={{ marginHorizontal: 10 }} onPress={() => addToFilterArray('scooter')}>
+            {filter.includes('scooter') ? <Image source={require('../../../image/icon-scooter-available.png')} /> : <Image source={require('../../../image/icon-scooter-unavailable.png')} />}
+          </TouchableOpacity>
+        </Layout>
       </Layout>
-      <Layout style={{ position: 'absolute', backgroundColor: 'red', zIndex: 2, display: 'flex', flexDirection: 'row', backgroundColor: 'black', alignItems: 'center', justifyContent: 'center', marginTop: Dimensions.get('window').height * 0.1, width: Dimensions.get('window').width * 0.7, marginLeft: Dimensions.get('window').width * 0.2, height: Dimensions.get('window').height * 0.1 }}>
-        <TouchableOpacity style={{ marginHorizontal: 10 }} onPress={() => addToFilterArray('charge point')}>
-          {filter.includes('charge point') ? <Image source={require('../../../image/icon-chargepoint-available.png')} /> : <Image source={require('../../../image/icon-chargepoint-inuse.png')} />}
-        </TouchableOpacity>
-        <TouchableOpacity style={{ marginHorizontal: 10 }} onPress={() => addToFilterArray('car')}>
-          {filter.includes('car') ? <Image source={require('../../../image/icon-car-available.png')} /> : <Image source={require('../../../image/icon-car-notavailable.png')} />}
-        </TouchableOpacity>
-        <TouchableOpacity style={{ marginHorizontal: 10 }} onPress={() => addToFilterArray('bike')}>
-          {filter.includes('bike') ? <Image source={require('../../../image/icon-bike-available.png')} /> : <Image source={require('../../../image/icon-bike-unavailable.png')} />}
-        </TouchableOpacity>
-        <TouchableOpacity style={{ marginHorizontal: 10 }} onPress={() => addToFilterArray('scooter')}>
-          {filter.includes('scooter') ? <Image source={require('../../../image/icon-scooter-available.png')} /> : <Image source={require('../../../image/icon-scooter-unavailable.png')} />}
-        </TouchableOpacity>
-      </Layout>
-      </Layout>
-      
-      {/* <Layout style={{ padding: '5%',position: 'absolute',display: 'flex', flexDirection: 'column', backgroundColor: 'white', marginTop: '15%', marginBottom: '10%' }}>
-        <Text style={{ fontFamily: AppFontBold, textAlign: 'center' }} category="h5">
-          {i18n.t(TRANSLATIONS_KEY.NO_RESULT_TITLE).toString()}
-        </Text>
-        <Text style={{ color: '#8F9BB3', textAlign: 'center', marginBottom: '50%' }} category="h6">
-          {i18n.t(TRANSLATIONS_KEY.NO_RESULT_SUB_TITLE).toString()}
-        </Text>
-      </Layout> */}
 
-      {/* <Button
-        onPress={() => {
-          if (navigation.canGoBack()) {
-            navigation.goBack()
-          }
-        }}
-        size="giant"
-        style={{
-          top: '80%',
-          left: '10%',
-          width: '80%',
-          position: 'absolute',
-          backgroundColor: APP_BRAND_COLOR,
-          borderColor: APP_BRAND_COLOR,
-          marginBottom: '15%',
-          borderRadius: 10,
-          shadowColor: APP_BRAND_COLOR,
-          shadowOffset: {
-            width: 0,
-            height: 10,
-          },
-          shadowOpacity: 0.51,
-          shadowRadius: 13.16,
-          elevation: 10,
-        }}>
-        {() => <Text style={{ color: 'white', fontFamily: AppFontBold, fontSize: 18 }}>{i18n.t(TRANSLATIONS_KEY.NO_RESULT_GO_BACK_BTN).toString()}</Text>}
-      </Button> */}
       <View style={styles.container}>
         <MapView
           provider={PROVIDER_GOOGLE} // remove if not using Google Maps
