@@ -148,7 +148,7 @@ const InmediatePickupScreen = () => {
       <Layout style={{ position: 'absolute', padding: '5%', backgroundColor: 'red', zIndex: 2, display: 'flex', flexDirection: 'row', backgroundColor: '#00000000', alignItems: 'center', justifyContent: 'center', marginTop: '2%' }}>
         <MenuButton />
       </Layout>
-      <Layout style={{ position: 'absolute', marginTop: Dimensions.get('screen').width * 0.10, marginLeft: Dimensions.get('screen').width * 0.20, zIndex: 20, width: Dimensions.get('screen').width * 0.65, backgroundColor: 'red' }}>
+      <Layout style={{ position: 'absolute', marginTop: Dimensions.get('screen').width * (Platform.OS == "android" ? 0.10 : 0.25), marginLeft: Dimensions.get('screen').width * 0.20, zIndex: 20, width: Dimensions.get('screen').width * 0.65, backgroundColor: 'red' }}>
 
         <Layout>
           <GooglePlacesAutocomplete
