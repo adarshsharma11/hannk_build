@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Text, Button } from '@ui-kitten/components';
-import { SafeAreaView, View, StyleSheet, Dimensions, Image } from 'react-native';
+import { SafeAreaView, View, StyleSheet, Dimensions, Image, Platform } from 'react-native';
 // @ts-ignore
 import GPSState from 'react-native-gps-state'
 //@ts-ignore
@@ -282,7 +282,7 @@ const InmediatePickupScreen = () => {
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    height: (Dimensions.get('screen').height / 100) * 91,
+    height: (Dimensions.get('screen').height / 100) * (Platform.OS == "android" ? 91 : 100),
     width: Dimensions.get('screen').width,
     justifyContent: 'flex-end',
     alignItems: 'center',
