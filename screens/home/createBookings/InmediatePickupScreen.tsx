@@ -282,10 +282,11 @@ const InmediatePickupScreen = () => {
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    height: (Dimensions.get('window').height / 100) * 90,
-    width: Dimensions.get('window').width,
+    height: (Dimensions.get('screen').height / 100) * 91,
+    width: Dimensions.get('screen').width,
     justifyContent: 'flex-end',
-    alignItems: 'center'
+    alignItems: 'center',
+    zIndex: -1
   },
   map: {
     ...StyleSheet.absoluteFillObject,
