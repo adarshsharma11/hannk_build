@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Text, List, Button, Card } from '@ui-kitten/components';
+import { Layout, Text, TabView, Tab, Button, Card, TabBar } from '@ui-kitten/components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIconsIcons from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
 import { SafeAreaView, ScrollView, TouchableOpacity, Dimensions, View, TouchableWithoutFeedback } from 'react-native';
 import { RecyclerListView, DataProvider, LayoutProvider } from "recyclerlistview";
 import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
-import CarItem from '../../../partials/CarItem';
-import { useCreateBookingState } from './CreateBookingState';
+import CarItem from '../../../../partials/CarItem';
+import { useCreateBookingState } from '../CreateBookingState';
 import { VehVendorAvail, VehRentalCore } from '../../../type/SearchVehicleResponse';
 import { HannkCarItem } from 'hannk-mobile-common';
-import GetCategoryByAcrissCode from '../../../utils/GetCategoryByAcrissCode';
-import { AppFontBold, AppFontRegular } from '../../../constants/fonts'
+import GetCategoryByAcrissCode from '../../../../utils/GetCategoryByAcrissCode';
+import { AppFontBold, AppFontRegular } from '../../../../constants/fonts'
 import Orientation, { OrientationType } from 'react-native-orientation-locker';
 import { useTranslation } from 'react-i18next';
-import { TRANSLATIONS_KEY } from '../../../utils/i18n';
-import { APP_BRAND_COLOR } from '../../../constants/Colors';
-import { CarSearchItem } from '../../../types/SearchVehicleResponse';
-const retajlogo = require('../../../image/hannkicon.png')
+import { TRANSLATIONS_KEY } from '../../../../utils/i18n';
+import { APP_BRAND_COLOR } from '../../../../constants/Colors';
+import { CarSearchItem } from '../../../../types/SearchVehicleResponse';
+import BranchMap from './BranchMap';
+const retajlogo = require('../../../../image/hannkicon.png')
 
 const _dataProvider = new DataProvider((r1, r2) => r1.VehID !== r2.VehID)
 
@@ -41,6 +42,7 @@ const CarsListScreen = () => {
   const [transmissionFilters, setTransmissionFilter] = useState<string[]>([])
   const [typesFiter, setTypesFilter] = useState<string[]>([])
   const [applyFilter, setApplyFilter] = useState<boolean>(false)
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
   const cars = route.params.cars
 
@@ -153,93 +155,106 @@ const CarsListScreen = () => {
 
 
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: 'center', backgroundColor: '#f0f2f3' }}>
-      <View style={{ flex: 1, width: '100%', display: 'flex', justifyContent: 'center' }}>
-        {route.params.cars.length == 0 && (
-          <>
-            <Text style={{ fontSize: 28, textAlign: 'center' }}>No cars found :(</Text>
-            <Text style={{ fontSize: 24, textAlign: 'center' }}>Go back and change you search params</Text>
-          </>
-        )}
-        {route.params.cars.length != 0 && (
-          <RecyclerListView
-            canChangeSize={true}
-            style={{ width: '100%', backgroundColor: '#f0f2f3' }}
-            layoutProvider={currentLayoutProvider}
-            dataProvider={dataToUse}
-            rowRenderer={(type, o: VehVendorAvail, idx) => {
+    <SafeAreaView>
+      <TabBar
+        selectedIndex={selectedIndex}
+        onSelect={index => setSelectedIndex(index)}>
+        <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 0 ? APP_BRAND_COLOR : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.ACTIVE_TAB_TXT).toString()}</Text>} />
+        <Tab title='Map View' />
+      </TabBar>
+      {selectedIndex == 0 && (
+        <View style={{ width: '100%', display: 'flex', justifyContent: 'center', minHeight: 1, minWidth: 1 }}>
+          {route.params.cars.length == 0 && (
+            <>
+              <Text style={{ fontSize: 28, textAlign: 'center' }}>No cars found :(</Text>
+              <Text style={{ fontSize: 24, textAlign: 'center' }}>Go back and change you search params</Text>
+            </>
+          )}
+          {route.params.cars.length != 0 && (
+            <RecyclerListView
+              canChangeSize={true}
+              style={{ width: '100%', backgroundColor: '#f0f2f3' }}
+              layoutProvider={currentLayoutProvider}
+              dataProvider={dataToUse}
+              rowRenderer={(type, o: VehVendorAvail, idx) => {
 
-              // @ts-ignore
-              if (o.header) {
-                return (
-                  <>
-                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: `${APP_BRAND_COLOR}50`, marginBottom: '2%' }}>
-                      <View style={{ padding: '3%' }}>
-                        <View style={{ width: '100%' }}>
-                          <Text style={{ fontSize: 18, textAlign: 'left', fontFamily: AppFontBold }}>{route.params.searchParams.pickUpLocation.locationname}</Text>
-                          <Text style={{ fontSize: 15, textAlign: 'left' }}>{route.params.searchParams.pickUpDate.format('MMM DD, h:mm')}</Text>
-                        </View>
+                // @ts-ignore
+                if (o.header) {
+                  return (
+                    <>
+                      <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: `${APP_BRAND_COLOR}50`, marginBottom: '2%' }}>
+                        <View style={{ padding: '3%' }}>
+                          <View style={{ width: '100%' }}>
+                            <Text style={{ fontSize: 18, textAlign: 'left', fontFamily: AppFontBold }}>{route.params.searchParams.pickUpLocation.locationname}</Text>
+                            <Text style={{ fontSize: 15, textAlign: 'left' }}>{route.params.searchParams.pickUpDate.format('MMM DD, h:mm')}</Text>
+                          </View>
 
-                        <View style={{ width: '100%' }}>
-                          <Text style={{ fontSize: 18, textAlign: 'left', fontFamily: AppFontBold }}>{route.params.searchParams.dropOffLocation.locationname}</Text>
-                          <Text style={{ fontSize: 15, textAlign: 'left' }}>{route.params.searchParams.dropOffDate.format('MMM DD, h:mm')}</Text>
+                          <View style={{ width: '100%' }}>
+                            <Text style={{ fontSize: 18, textAlign: 'left', fontFamily: AppFontBold }}>{route.params.searchParams.dropOffLocation.locationname}</Text>
+                            <Text style={{ fontSize: 15, textAlign: 'left' }}>{route.params.searchParams.dropOffDate.format('MMM DD, h:mm')}</Text>
+                          </View>
                         </View>
+                        <TouchableWithoutFeedback onPress={() => {
+                          if (navigation.canGoBack()) {
+                            navigation.goBack()
+                          }
+                        }}>
+                          <View style={{ backgroundColor: `${APP_BRAND_COLOR}50`, width: '15%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <MaterialIconsIcons style={{ color: 'white' }} name={"edit"} size={24} />
+                          </View>
+                        </TouchableWithoutFeedback>
                       </View>
-                      <TouchableWithoutFeedback onPress={() => {
-                        if (navigation.canGoBack()) {
-                          navigation.goBack()
-                        }
-                      }}>
-                        <View style={{ backgroundColor: `${APP_BRAND_COLOR}50`, width: '15%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                          <MaterialIconsIcons style={{ color: 'white' }} name={"edit"} size={24} />
-                        </View>
-                      </TouchableWithoutFeedback>
-                    </View>
-                    <View style={{ display: 'flex', flexDirection: 'row', width: '100%', paddingLeft: '3%', paddingRight: '3%' }}>
-                      <TouchableOpacity style={{ width: '49%' }} onPress={() => setShowSortModal(true)} >
-                        <View style={{ alignItems: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'center', borderWidth: 1, borderColor: '#00000050' }}>
-                          <MaterialCommunityIcons style={{ alignSelf: 'flex-start', marginTop: 'auto', marginBottom: 'auto', color: 'gray' }} name={"sort-variant"} size={18} />
-                          <Text style={{ fontSize: 18, textAlign: 'center', width: '50%', fontFamily: AppFontBold }}>
-                            {i18n.t(TRANSLATIONS_KEY.CAR_LIST_SORT_LABEL).toString()}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                      <TouchableOpacity style={{ width: '49%', marginLeft: '1%' }} onPress={() => setShowFilterModal(true)}>
-                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', borderWidth: 1, borderColor: '#00000050' }}>
-                          <MaterialCommunityIcons style={{ alignSelf: 'flex-start', marginTop: 'auto', marginBottom: 'auto', color: 'gray' }} name={"filter"} size={18} />
-                          <Text style={{ fontSize: 18, textAlign: 'center', width: '50%', fontFamily: AppFontBold }}>
-                            {i18n.t(TRANSLATIONS_KEY.CAR_LIST_FILTER_LABEL).toString()}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                    </View>
-                  </>
+                      <View style={{ display: 'flex', flexDirection: 'row', width: '100%', paddingLeft: '3%', paddingRight: '3%' }}>
+                        <TouchableOpacity style={{ width: '49%' }} onPress={() => setShowSortModal(true)} >
+                          <View style={{ alignItems: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'center', borderWidth: 1, borderColor: '#00000050' }}>
+                            <MaterialCommunityIcons style={{ alignSelf: 'flex-start', marginTop: 'auto', marginBottom: 'auto', color: 'gray' }} name={"sort-variant"} size={18} />
+                            <Text style={{ fontSize: 18, textAlign: 'center', width: '50%', fontFamily: AppFontBold }}>
+                              {i18n.t(TRANSLATIONS_KEY.CAR_LIST_SORT_LABEL).toString()}
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{ width: '49%', marginLeft: '1%' }} onPress={() => setShowFilterModal(true)}>
+                          <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', borderWidth: 1, borderColor: '#00000050' }}>
+                            <MaterialCommunityIcons style={{ alignSelf: 'flex-start', marginTop: 'auto', marginBottom: 'auto', color: 'gray' }} name={"filter"} size={18} />
+                            <Text style={{ fontSize: 18, textAlign: 'center', width: '50%', fontFamily: AppFontBold }}>
+                              {i18n.t(TRANSLATIONS_KEY.CAR_LIST_FILTER_LABEL).toString()}
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    </>
+                  );
+                }
+
+                return (
+                  <HannkCarItem
+                    APP_BRAND_COLOR={APP_BRAND_COLOR}
+                    CAR_LIST_ITEM_FUEL_POLICY={i18n.t(TRANSLATIONS_KEY.CAR_LIST_ITEM_FUEL_POLICY).toString()}
+                    CAR_LIST_ITEM_FUEL_POLICY_LILE_TO_LIKE={i18n.t(TRANSLATIONS_KEY.CAR_LIST_ITEM_FUEL_POLICY_LILE_TO_LIKE).toString()}
+                    CAR_LIST_ITEM_MILEAGE={i18n.t(TRANSLATIONS_KEY.CAR_LIST_ITEM_MILEAGE).toString()}
+                    CAR_LIST_ITEM_UNLIMITED={i18n.t(TRANSLATIONS_KEY.CAR_LIST_ITEM_UNLIMITED).toString()}
+                    carLogo={{ source: "https://image.shutterstock.com/image-vector/edit-vector-icon-260nw-546038194.jpg" }}
+                    showBookButton={true}
+                    centerCarName={true}
+                    key={o.VehID}
+                    vehicle={o}
+                    isActive={selectedIdx == idx}
+                    onClick={() => {
+                      setVehicle(cars[idx])
+                      navigation.navigate('CarExtras', { vehicle: cars[idx] })
+                    }} />
                 );
-              }
+              }}
 
-              return (
-                <HannkCarItem
-                  APP_BRAND_COLOR={APP_BRAND_COLOR}
-                  CAR_LIST_ITEM_FUEL_POLICY={i18n.t(TRANSLATIONS_KEY.CAR_LIST_ITEM_FUEL_POLICY).toString()}
-                  CAR_LIST_ITEM_FUEL_POLICY_LILE_TO_LIKE={i18n.t(TRANSLATIONS_KEY.CAR_LIST_ITEM_FUEL_POLICY_LILE_TO_LIKE).toString()}
-                  CAR_LIST_ITEM_MILEAGE={i18n.t(TRANSLATIONS_KEY.CAR_LIST_ITEM_MILEAGE).toString()}
-                  CAR_LIST_ITEM_UNLIMITED={i18n.t(TRANSLATIONS_KEY.CAR_LIST_ITEM_UNLIMITED).toString()}
-                  carLogo={{ source: "https://image.shutterstock.com/image-vector/edit-vector-icon-260nw-546038194.jpg" }}
-                  showBookButton={true}
-                  centerCarName={true}
-                  key={o.VehID}
-                  vehicle={o}
-                  isActive={selectedIdx == idx}
-                  onClick={() => {
-                    setVehicle(cars[idx])
-                    navigation.navigate('CarExtras', { vehicle: cars[idx] })
-                  }} />
-              );
-            }}
-
-          />
-        )}
-      </View>
+            />
+          )}
+        </View>
+      )}
+      {selectedIndex == 1 && (
+        <View>
+          <BranchMap />
+        </View>
+      )}
       {route.params.cars.length == 0 && (
         <Button
           onPress={() => navigation.goBack()}

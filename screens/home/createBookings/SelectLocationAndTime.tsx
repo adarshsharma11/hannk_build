@@ -62,13 +62,6 @@ export default () => {
     }
 
     useEffect(() => {
-        Orientation.addDeviceOrientationListener(onOrientationDidChange);
-        Orientation.getOrientation(onOrientationDidChange);
-
-        return () => Orientation.removeDeviceOrientationListener(onOrientationDidChange);
-    }, []);
-
-    useEffect(() => {
         if (inmediatePickup == true) {
             setDepartureTime(moment().toDate())
             setOriginLocation({
@@ -90,6 +83,10 @@ export default () => {
 
     useFocusEffect(
         React.useCallback(() => {
+            setOriginLocation({
+                internalcode: '32151',
+                locationname: 'Current Location',
+            })
             checkMultiple([PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION, PERMISSIONS.IOS.LOCATION_WHEN_IN_USE])
                 .then((result) => {
                     switch (result["android.permission.ACCESS_FINE_LOCATION"]) {
@@ -178,24 +175,10 @@ export default () => {
                         <BackButton />
                     </View>
                     <TimeCheckbox
-                        checked={inmediatePickup == undefined ? undefined : inmediatePickup}
-                        style={{ marginBottom: '5%' }}
-                        title={i18n.t(TRANSLATIONS_KEY.NEW_BOOKING_IMMEDIATE_PICKUP_TITLE).toString()}
-                        subTitle={i18n.t(TRANSLATIONS_KEY.NEW_BOOKING_IMMEDIATE_PICKUP_SUBTITLE).toString()}
-                        onChange={(v) => setInmediatePickup(p => {
-                            if (p === null) return true
-                            return !p
-                        })}
-                    />
-                    <TimeCheckbox
-                        checked={inmediatePickup == undefined ? undefined : !inmediatePickup}
+                        nonEditable={true}
+                        checked={true}
                         title={i18n.t(TRANSLATIONS_KEY.NEW_BOOKING_IN_ADVANCE_PICKUP_TITLE).toString()}
-                        onChange={(v) => {
-                            setInmediatePickup(p => {
-                                if (p === null) return false
-                                return !p
-                            })
-                        }}
+                        onChange={(v) => {}}
                     />
                     <HannkSuggestionInput
                         NEW_BOOKING_ENTER_ORIGIN_PLACEHOLDER={i18n.t(TRANSLATIONS_KEY.NEW_BOOKING_ENTER_ORIGIN_PLACEHOLDER).toString()}
@@ -207,6 +190,7 @@ export default () => {
                         isInmediatePickup={inmediatePickup == null ? true : !inmediatePickup}
                         onOriginLocationSelected={(l) => {
                             setOriginLocation(l)
+                            setReturnLocation(l)
                         }}
                         endpoint={GRCGDS_BACKEND}
                         onReturnLocationSelected={(l) => setReturnLocation(l)}
@@ -322,6 +306,8 @@ export default () => {
 
                             doSearch({ data: b, headers: { "Content-Type": "application/xml"} })
                                 .then(res => {
+                                    console.log(res.data)
+
                                     const raw = res.data.VehVendorAvails[0].VehVendorAvail[0].VehAvails[0].VehAvail
                                     const cars = raw.map(HannkUtils.MapOtaAvailabilityResponse)
                                     console.log(cars.length)
