@@ -159,7 +159,7 @@ const CarsListScreen = () => {
       <TabBar
         selectedIndex={selectedIndex}
         onSelect={index => setSelectedIndex(index)}>
-        <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 0 ? APP_BRAND_COLOR : '#aeb1c3' }}>{i18n.t(TRANSLATIONS_KEY.ACTIVE_TAB_TXT).toString()}</Text>} />
+        <Tab style={{ paddingTop: '6%', paddingBottom: '1%' }} title={evaProps => <Text {...evaProps} style={{ fontFamily: AppFontBold, color: selectedIndex == 0 ? APP_BRAND_COLOR : '#aeb1c3' }}>List View</Text>} />
         <Tab title='Map View' />
       </TabBar>
       {selectedIndex == 0 && (

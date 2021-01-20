@@ -35,7 +35,7 @@ const InmediatePickupScreen = () => {
   //   validateStatus: () => true
   // }, { manual: true })
 
-  Geocoder.init("AIzaSyDMqBE_zk5yuMq_V4mlrVKZee7Lro-8y3M");
+  Geocoder.init("AIzaSyAfADVN1iJ2m-ypbDuNVnJ-QM2VnNj_Oj8");
 
   const getData = async (filters) => {
     let dataToAdd = []
@@ -157,7 +157,7 @@ const InmediatePickupScreen = () => {
               getLatLong(data.description)
             }}
             query={{
-              key: 'AIzaSyDMqBE_zk5yuMq_V4mlrVKZee7Lro-8y3M',
+              key: 'AIzaSyAfADVN1iJ2m-ypbDuNVnJ-QM2VnNj_Oj8',
               language: 'en',
             }}
           />
