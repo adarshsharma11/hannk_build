@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Layout, Text, TabView, Tab, Button, Card, TabBar } from '@ui-kitten/components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIconsIcons from 'react-native-vector-icons/MaterialIcons';
@@ -29,9 +29,12 @@ type ParamList = {
 };
 const CarsListScreen = () => {
   const route = useRoute<RouteProp<ParamList, 'CarsList'>>();
+  const mapRef = useRef(null);
   const { i18n } = useTranslation();
 
   const navigation = useNavigation();
+  const [pickedBranch, setPickedBranch] = useCreateBookingState("pickedBranch");
+
   const [, setVehicle] = useCreateBookingState('vehicle')
   const [selectedIdx, setSelectedIdx] = useState(-1)
   const [showFilterModal, setShowFilterModal] = useState(false)
@@ -43,8 +46,19 @@ const CarsListScreen = () => {
   const [typesFiter, setTypesFilter] = useState<string[]>([])
   const [applyFilter, setApplyFilter] = useState<boolean>(false)
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [firstNavigateToMap, setFirstNavigateToMap] = useState<boolean>(false);
 
   const cars = route.params.cars
+
+  const getCars = () => {
+    return cars.filter(c => {
+      return true
+      if (!c.VehAvailCore) return false
+      const carCliendId = c.VehAvailCore.Supplier_ID.slice(4, 6)
+      console.log("carCliendId",carCliendId)
+      return carCliendId == pickedBranch?.clientId
+    })
+  }
 
   const currentLayoutProvider = new LayoutProvider(
     index => {
@@ -94,7 +108,7 @@ const CarsListScreen = () => {
     Orientation.addDeviceOrientationListener(onOrientationDidChange);
     Orientation.getOrientation(onOrientationDidChange);
 
-    cars.unshift({ header: true, vehicle: { deeplink: 'q' } })
+    getCars().unshift({ header: true, vehicle: { deeplink: 'q' } })
     const sortedCars = cars
       .sort((a, b) => {
         if (!a.VehAvailCore || !a.VehAvailCore.TotalCharge) return 1
@@ -164,13 +178,13 @@ const CarsListScreen = () => {
       </TabBar>
       {selectedIndex == 0 && (
         <View style={{ width: '100%', display: 'flex', justifyContent: 'center', minHeight: 1, minWidth: 1 }}>
-          {route.params.cars.length == 0 && (
+          {getCars().length == 0 && (
             <>
-              <Text style={{ fontSize: 28, textAlign: 'center' }}>No cars found :(</Text>
-              <Text style={{ fontSize: 24, textAlign: 'center' }}>Go back and change you search params</Text>
+              <Text style={{ fontSize: 28, textAlign: 'center' }}>No cars found</Text>
+              <Text style={{ fontSize: 22, textAlign: 'center', paddingHorizontal: '1%',marginTop: '15%' }}>Go back and change you search params or pick another branch</Text>
             </>
           )}
-          {route.params.cars.length != 0 && (
+          {getCars().length != 0 && (
             <RecyclerListView
               canChangeSize={true}
               style={{ width: '100%', backgroundColor: '#f0f2f3' }}
@@ -252,14 +266,29 @@ const CarsListScreen = () => {
       )}
       {selectedIndex == 1 && (
         <View>
-          <BranchMap />
+          <BranchMap
+          icon={require('../../../../image/icon-car-available.png')}
+          onLocationChange={(selectedLocation) => {
+            setPickedBranch(selectedLocation)
+            setSelectedIndex(0)
+          }}
+          mapRef={mapRef} onRegionsChange={(regions) => {
+            if (regions.length != 0 && firstNavigateToMap == false) {
+              setTimeout(() => {
+                mapRef?.current?.animateToRegion({ latitude: parseFloat(regions[0].lat), longitude: parseFloat(regions[0].long), latitudeDelta: 0.0922, longitudeDelta: 0.0421 })
+              }, 1000);
+            }
+          }} />
         </View>
       )}
-      {route.params.cars.length == 0 && (
+      {getCars().length == 0 && (
         <Button
           onPress={() => navigation.goBack()}
           size="medium"
           style={{
+            marginTop: '100%',
+            marginLeft: 'auto',
+            marginRight: 'auto',
             backgroundColor: APP_BRAND_COLOR,
             borderColor: APP_BRAND_COLOR,
             width: '80%',

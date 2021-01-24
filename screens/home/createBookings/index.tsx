@@ -8,6 +8,7 @@ import CarExtras from "./CarExtras"
 import PaymentScreen from "./PaymentScreen"
 import WebView from "./WebView"
 import Confirmation from "./Confirmation"
+import PickBranchScreen from './PickBranchScreen';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ function App() {
         <Stack.Screen name="SelectTime" component={SelectTime} />
         <Stack.Screen name="CarsList" component={CarsListScreen} />
         <Stack.Screen name="CarExtras" component={CarExtras} />
+        <Stack.Screen name="PickBranch" component={PickBranchScreen} />
         <Stack.Screen name="Payment" component={PaymentScreen} />
         <Stack.Screen name="WebView" component={WebView} />
         <Stack.Screen name="Confirmation" component={Confirmation} />

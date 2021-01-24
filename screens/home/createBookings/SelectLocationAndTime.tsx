@@ -174,12 +174,6 @@ export default () => {
                         </Text>
                         <BackButton />
                     </View>
-                    <TimeCheckbox
-                        nonEditable={true}
-                        checked={true}
-                        title={i18n.t(TRANSLATIONS_KEY.NEW_BOOKING_IN_ADVANCE_PICKUP_TITLE).toString()}
-                        onChange={(v) => {}}
-                    />
                     <HannkSuggestionInput
                         NEW_BOOKING_ENTER_ORIGIN_PLACEHOLDER={i18n.t(TRANSLATIONS_KEY.NEW_BOOKING_ENTER_ORIGIN_PLACEHOLDER).toString()}
                         NEW_BOOKING_RETURN_DESTINATION_PLACEHOLDER={i18n.t(TRANSLATIONS_KEY.NEW_BOOKING_RETURN_DESTINATION_PLACEHOLDER).toString()}
@@ -315,7 +309,7 @@ export default () => {
                                         navigation.navigate("NoResult");
                                     } else {
                                         navigation.navigate(
-                                            'CarsList',
+                                            'PickBranch',
                                             {
                                                 cars: cars,
                                                 searchParams: {

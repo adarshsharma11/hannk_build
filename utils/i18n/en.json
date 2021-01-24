@@ -101,6 +101,8 @@
 
     "CAR_EXTRAS_TAG": "EQUIPEMENT (OPTIONAL EXTRAS)",
 
+    "PICKBRANCH_SCREEN_TILE": "Select a Branch",
+
     "PAYMENT_SCREEN_TILE": "Pay now",
     "PAYMENT_INFO": "You will be redirected to PayPal's website to acess your account and submit your payment.\nThen you will be return to Hannk App App to obtain your booking confirmation",
     "PAYMENT_AGREE_AND_UNDERSTAND": "I have read understood and accepted",

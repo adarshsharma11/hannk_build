@@ -203,6 +203,8 @@ dependencies {
 
     implementation "androidx.core:core-ktx:+"
     implementation 'com.facebook.soloader:soloader:0.9.0+'
+    implementation 'com.facebook.fresco:fresco:2.0.0'
+    implementation 'com.facebook.fresco:animated-gif:2.0.0' 
 
     implementation project(':react-native-svg')
     implementation fileTree(dir: "libs", include: ["*.jar"])

@@ -51,18 +51,24 @@ export default () => {
   const { getAppConfig: doGetAppConfig, getAppConfigReq } = getAppConfig(CLIENT_ID, true, GRCGDS_BACKEND)
 
   useEffect(() => {
-    if (getAppConfigReq.data && !getAppConfigReq.loading) {
-      saveAppConfig(getAppConfigReq.data)
-      SplashScreen.hide()
+    if (
+      (getAppConfigReq.data || getAppConfigReq.error) &&
+      !getAppConfigReq.loading
+    ) {
+      if (getAppConfigReq.data) {
+        saveAppConfig(getAppConfigReq.data);
+      } else if (getAppConfigReq.error) {
+      }
+      SplashScreen.hide();
     }
-  }, [getAppConfigReq.loading])
+  }, [getAppConfigReq.loading]);
 
   useEffect(() => {
-    if (!profile || profile.vphone != 1 || profile.vemail != 1 || !token) {
+    /*if (!profile || profile.vphone != 1 || profile.vemail != 1 || !token) {
       setInitialScreen("Login")
     } else {
       setInitialScreen("Home")
-    }
+    }*/
   }, [token, profile])
 
   const cb = (nextAppState) => {
@@ -157,14 +163,12 @@ export default () => {
         <Stack.Navigator headerMode='none'>
           {(token && profile && profile.vemail == 1) && (
             <>
-              <Stack.Screen name="Banner" component={Banner} initialParams={{ goTo: "Home" }} />
               <Stack.Screen name="Home" component={Home} />
             </>
           )}
 
           {(!profile || profile.vphone != 1 || profile.vemail != 1 || !token) && (
             <>
-              <Stack.Screen name="Banner" component={Banner} initialParams={{ goTo: "Home" }} />
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Signup" component={Signup} />
               <Stack.Screen name="TwitterLogin" component={TwitterLoginScreen} />
