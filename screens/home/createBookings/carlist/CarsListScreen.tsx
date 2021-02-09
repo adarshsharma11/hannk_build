@@ -267,6 +267,7 @@ const CarsListScreen = () => {
       {selectedIndex == 1 && (
         <View>
           <BranchMap
+          cars={getCars()}
           icon={require('../../../../image/icon-car-available.png')}
           onLocationChange={(selectedLocation) => {
             setPickedBranch(selectedLocation)

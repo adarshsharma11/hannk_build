@@ -27,6 +27,7 @@ const menuData = [
     { name: i18n.t(TRANSLATIONS_KEY.MENU_ITEM_MY_PROFILE), screenName: "EditProfile", iconName: 'account', key: 'sdwwe' },
     { name: i18n.t(TRANSLATIONS_KEY.MENU_ITEM_PRIVACY_POLICY), screenName: "Policy", iconName: 'shield', key: 'swwe' },
     { name: i18n.t(TRANSLATIONS_KEY.MENU_ITEM_MENU_ITEM), screenName: "ShareCode", iconName: 'share-variant', key: 'sggewwe' },
+    { name: i18n.t(TRANSLATIONS_KEY.MENU_ITEM_IMPORT_APP), screenName: "ImportApps", iconName: 'application-import', key: 'sggewaswe' },
     { name: i18n.t(TRANSLATIONS_KEY.MENU_ITEM_TERMS_CONDITIONS), screenName: "TermsConditions", iconName: 'file-document', key: 'sdsfwwe' },
     {
         name: i18n.t(TRANSLATIONS_KEY.MENU_ITEM_LOGOUT), iconName: 'logout', key: 'assdrw', onPress: () => {

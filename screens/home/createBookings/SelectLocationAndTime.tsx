@@ -286,8 +286,10 @@ export default () => {
 
                                 dropoff_date: returnTime.toISOString().slice(0, -5),
 
-                                pickup_location: originLocation.internalcode,
-                                dropoff_location: returnLocation ? returnLocation.internalcode : originLocation.internalcode,
+                                //pickup_location: originLocation.internalcode,
+                                //dropoff_location: returnLocation ? returnLocation.internalcode : originLocation.internalcode,
+                                pickup_location: 'LHRA01',
+                                dropoff_location: 'LHRA01',
                             }
 
                             const b = HannkUtils.GenerateAvailabilityApiBody(params)
@@ -303,6 +305,7 @@ export default () => {
                                     console.log(res.data)
 
                                     const raw = res.data.VehVendorAvails[0].VehVendorAvail[0].VehAvails[0].VehAvail
+
                                     const cars = raw.map(HannkUtils.MapOtaAvailabilityResponse)
                                     console.log(cars.length)
                                     if (cars.length == 0) {

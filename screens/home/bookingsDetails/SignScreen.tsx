@@ -14,7 +14,7 @@ import { TRANSLATIONS_KEY } from '../../../utils/i18n';
 import { APP_BRAND_COLOR } from '../../../constants/Colors';
 
 
-const DocumentScreen = ({ navigation }) => {
+const SignScreen = ({ navigation }) => {
     const { i18n } = useTranslation();
     const signRef = useRef<TextInput | null>(null);
     const route = useRoute();
@@ -31,15 +31,17 @@ const DocumentScreen = ({ navigation }) => {
                     style={[{ flex: 1 }]}
                     showNativeButtons={false}
                     showBorder={false}
-                    saveImageFileInExtStorage={true}
+                    saveImageFileInExtStorage={false}
                     showTitleLabel={false}
                     onDragEvent={() => {
                         setIsClean(false);
                     }}
                     onSaveEvent={(res) => {
+                        console.log(res)
                         navigation.navigate('Report', {
                             signImagePath: `data:image/png;base64,${res.encoded}`,
-                            pathName: res.pathName
+                            pathName: res.pathName,
+                            booking: route?.params?.booking
                         })
                     }}
                 />
@@ -77,4 +79,4 @@ const DocumentScreen = ({ navigation }) => {
     );
 };
 
-export default DocumentScreen
+export default SignScreen

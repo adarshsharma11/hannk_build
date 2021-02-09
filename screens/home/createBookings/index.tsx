@@ -9,6 +9,9 @@ import PaymentScreen from "./PaymentScreen"
 import WebView from "./WebView"
 import Confirmation from "./Confirmation"
 import PickBranchScreen from './PickBranchScreen';
+import ScooterChargeScreen from './ScooterChargeScreen';
+import ScooterPowerScreen from './ScooterPowerScreen';
+import QRScreen from './QRScreen';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +22,10 @@ function App() {
         <Stack.Screen name="CarsList" component={CarsListScreen} />
         <Stack.Screen name="CarExtras" component={CarExtras} />
         <Stack.Screen name="PickBranch" component={PickBranchScreen} />
+        <Stack.Screen name="QRScreen" component={QRScreen} />
         <Stack.Screen name="Payment" component={PaymentScreen} />
+        <Stack.Screen name="ScooterCharge" component={ScooterChargeScreen} />
+        <Stack.Screen name="ScooterPower" component={ScooterPowerScreen} />
         <Stack.Screen name="WebView" component={WebView} />
         <Stack.Screen name="Confirmation" component={Confirmation} />
       </Stack.Navigator>

@@ -27,6 +27,7 @@ import MainTermsScreen from './MainTermsScreen';
 import { APP_BRAND_COLOR } from '../../../constants/Colors';
 import userHasAllFiles from '../../../utils/userHasAllFiles';
 import { useGlobalState } from '../../../state';
+import ActivateScreen from '../ActivateScreen';
 
 const DocumentScreen = () => {
   const route = useRoute();
@@ -158,7 +159,7 @@ const DocumentScreen = () => {
 
             {isAllowing && (
               <Layout style={{ backgroundColor: '#00000000', flex: 1 }}>
-                <Button onPress={() => navigation.navigate("Sign")} size="giant" style={{ borderRadius: 10, backgroundColor: '#5ac8fa', borderColor: '#5ac8fa', paddingLeft: 20, paddingRight: 20, marginBottom: '2%' }}>
+                <Button onPress={() => navigation.navigate("Sign", { booking: route.params })} size="giant" style={{ borderRadius: 10, backgroundColor: '#5ac8fa', borderColor: '#5ac8fa', paddingLeft: 20, paddingRight: 20, marginBottom: '2%' }}>
                   {() => <Text style={{ fontFamily: AppFontRegular, color: 'white' }}>Accept</Text>}
                 </Button>
                 <Button onPress={() => {
@@ -207,6 +208,14 @@ export default function App({ navigation, route }) {
       <Tab.Screen
         name="CompletedReport"
         component={CompletedReportScreen}
+        options={{
+          tabBarButton: () => <></>,
+        }}
+      />
+
+      <Tab.Screen
+        name="Active"
+        component={ActivateScreen}
         options={{
           tabBarButton: () => <></>,
         }}
@@ -311,7 +320,8 @@ export default function App({ navigation, route }) {
         component={ReportScreen}
         options={{
           tabBarButton: () => {
-            const cannotCollect = (route.params.params.pickupTime.isAfter(moment().add(24, 'h')) && route.params.params.reservationStatus != 'Cancelled' && route.params.params.reservationStatus != 'Completed') || (profile != null && !userHasAllFiles(profile))
+            //const cannotCollect = (route.params.params.pickupTime.isAfter(moment().add(24, 'h')) && route.params.params.reservationStatus != 'Cancelled' && route.params.params.reservationStatus != 'Completed') || (profile != null && !userHasAllFiles(profile))
+            const cannotCollect = false
 
             return (
               <View style={{ width: '25%' }}>

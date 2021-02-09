@@ -20,36 +20,40 @@ const GdprScreen = () => {
     const { params } = useRoute<any>();
     const navigation = useNavigation();
     const [gdprText, setGdprText] = useState()
+    const [loading, setLoading] = useState(false)
     const [isAllowing, setIsAllowing] = useCarDetailState("isAllowing");
 
-
-    const [{ data, loading, error }, doLogin] = useAxios({
-        url: `https://ota.right-cars.com/`,
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/xml"
-        },
-        data: `<OTA_resdetmobRQ xmlns="http://www.opentravel.org/OTA/2003/05"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05
-        resdetmob.xsd">
-        <POS>
-        <Source>
-        <RequestorID Type="1" ID="MOBILE001" ID_Name="RightCars" />
-        </Source>
-        </POS>
-        <VehRetResRQCore>
-        <ResNumber Number="${params?.registratioNumber}"/>
-        </VehRetResRQCore>
-        </OTA_resdetmobRQ>`
-    })
-
     useEffect(() => {
-        if (!data) return
-        xml2js.parseString(data, (err, result) => {
-            setGdprText(result.OTA_resdetmobRS.VehRetResRSCore[0].VehReservation[0].VehSegmentInfo[0].GDPR[0].Msg[0])
-        })
-    }, [data])
+        setLoading(true)
+        fetch(`https://ota.right-cars.com/`, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                "Content-Type": "application/xml"
+            },
+            body: `<OTA_resdetmobRQ xmlns="http://www.opentravel.org/OTA/2003/05"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05
+            resdetmob.xsd">
+            <POS>
+            <Source>
+            <RequestorID Type="1" ID="MOBILE001" ID_Name="RightCars" />
+            </Source>
+            </POS>
+            <VehRetResRQCore>
+            <ResNumber Number="${params?.registratioNumber}"/>
+            </VehRetResRQCore>
+            </OTA_resdetmobRQ>` // body data type must match "Content-Type" header
+          })
+          .then(r => {
+              return r.text()
+          })
+          .then(r => {
+              xml2js.parseString(r, (err, result) => {
+                setGdprText(result.OTA_resdetmobRS.VehRetResRSCore[0].VehReservation[0].VehSegmentInfo[0].GDPR[0].Msg[0])
+                setLoading(false)
+            })
+          })
+    }, [])
 
     return (
         <View style={{ paddingTop: '5%', height: '90%', paddingLeft: '5%', paddingRight: '5%', display: 'flex', flexDirection: 'column' }}>

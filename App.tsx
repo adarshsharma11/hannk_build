@@ -103,7 +103,6 @@ export default () => {
   j.components.Input.appearances.default.variantGroups.status.basic.state.focused.borderColor = APP_BRAND_COLOR
   j.components.Input.appearances.default.variantGroups.status.basic.backgroundColor = "white"
 
-  j.components.Toggle.appearances.default.variantGroups.status.basic.backgroundColor = "white"
   j.components.Toggle.appearances.default.variantGroups.status.basic.borderColor = APP_BRAND_COLOR
   j.components.Toggle.appearances.default.variantGroups.status.basic.state.checked.backgroundColor = APP_BRAND_COLOR
   j.components.Toggle.appearances.default.variantGroups.status.basic.state.checked.borderColor = APP_BRAND_COLOR

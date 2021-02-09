@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../../utils/i18n';
 import { resetBookingCreationState } from './createBookings/CreateBookingState';
 import { APP_BRAND_COLOR } from '../../constants/Colors';
+import { getLocalBookings } from '../../state/extraState';
 
 const DocumentScreen = () => {
   const navigation = useNavigation();
@@ -37,7 +38,8 @@ const DocumentScreen = () => {
   useFocusEffect(
     React.useCallback(() => {
       resetBookingCreationState()
-      refetch()
+      //refetch()
+      getLocalBookings()
         .then(r => {
           setParsedResponse(r.data.map(i => {
             const storedData = storedBookings.find(a => a.reservationNumber == i.resnumber)
@@ -63,6 +65,7 @@ const DocumentScreen = () => {
               pLocationAddress: i.pLocationAddress,
               equipment: i?.equipment || [],
               keytype: i?.keytype,
+              vehicleType: i?.vehicleType,
             }
           }))
         })
@@ -88,7 +91,7 @@ const DocumentScreen = () => {
       setUpcommingTrips(upcomming)
 
       const completed = sortedBookings ? sortedBookings.filter(booking => {
-        return booking.dropoffTime.isAfter(moment()) || booking.reservationStatus == 'Cancelled' || booking.reservationStatus == 'Completed'
+        return booking.dropoffTime.isBefore(moment()) || booking.reservationStatus == 'Cancelled' || booking.reservationStatus == 'Completed'
       }) : null
 
       setCompletedTrips(completed)

@@ -19,34 +19,39 @@ const InsuranceScreen = () => {
     const { params } = useRoute<any>();
     const navigation = useNavigation();
     const [gdprText, setGdprText] = useState()
-
-    const [{ data, loading, error }, doLogin] = useAxios({
-        url: `https://ota.right-cars.com/`,
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/xml"
-        },
-        data: `<OTA_resdetmobRQ xmlns="http://www.opentravel.org/OTA/2003/05"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05
-        resdetmob.xsd">
-        <POS>
-        <Source>
-        <RequestorID Type="1" ID="MOBILE001" ID_Name="RightCars" />
-        </Source>
-        </POS>
-        <VehRetResRQCore>
-        <ResNumber Number="${params?.registratioNumber}"/>
-        </VehRetResRQCore>
-        </OTA_resdetmobRQ>`
-    })
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        if (!data) return
-        xml2js.parseString(data, (err, result) => {
-            setGdprText(result.OTA_resdetmobRS.VehRetResRSCore[0].VehReservation[0].VehSegmentInfo[0].Insurance[0].Text[0])
+        fetch(`https://ota.right-cars.com/`, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                "Content-Type": "application/xml"
+            },
+            body: `<OTA_resdetmobRQ xmlns="http://www.opentravel.org/OTA/2003/05"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05
+                resdetmob.xsd">
+                <POS>
+                <Source>
+                <RequestorID Type="1" ID="MOBILE001" ID_Name="RightCars" />
+                </Source>
+                </POS>
+                <VehRetResRQCore>
+                <ResNumber Number="${params?.registratioNumber}"/>
+                </VehRetResRQCore>
+                </OTA_resdetmobRQ>`
         })
-    }, [data])
+            .then(r => {
+                return r.text()
+            })
+            .then(r => {
+                xml2js.parseString(r, (err, result) => {
+                    console.log(result)
+                    setGdprText(result.OTA_resdetmobRS.VehRetResRSCore[0].VehReservation[0].VehSegmentInfo[0].Insurance[0].Text[0])
+                    setLoading(false)
+                })
+            })
+    }, [])
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white' }}>
@@ -68,7 +73,7 @@ const InsuranceScreen = () => {
                     {!loading && gdprText && (
                         <>
                             <Text style={{ textAlign: 'center', fontSize: 34, marginBottom: '5%' }}>Insurance</Text>
-                            <Text style={{flexGrow: 1, textAlign: 'justify' }}>{gdprText}</Text>
+                            <Text style={{ flexGrow: 1, textAlign: 'justify' }}>{gdprText}</Text>
                             <Layout style={{ marginTop: 'auto' }}>
                                 <Button onPress={() => navigation.navigate("MainTermsScreen", params)} size="giant" style={{ borderRadius: 10, backgroundColor: '#5ac8fa', borderColor: '#5ac8fa', paddingLeft: 20, paddingRight: 20, marginBottom: '2%' }}>
                                     {() => <Text style={{ fontFamily: AppFontRegular, color: 'white' }}>Accept</Text>}

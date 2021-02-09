@@ -30,7 +30,7 @@ imageArr[7] = require('../../../image/car-8.jpg')
 const DocumentScreen = ({ navigation }) => {
   const { i18n } = useTranslation();
   const { params } = useRoute<any>();
-  const maxPhotosAmount = 8
+  const maxPhotosAmount = 1
   const [pictures, setPictures] = useState<{ [k: number]: ImagePickerResponse }>({});
   const [currentPicktureIndex, setCurrentPicktureIndex] = useState(0);
   const [uploadPercent, setUploadPercent] = useState(0);
@@ -136,7 +136,7 @@ const DocumentScreen = ({ navigation }) => {
                   type: pictures[currentPicktureIndex].type,
                 });
 
-                post({ data })
+                /*post({ data })
                 .then((r) => {
                   setUploadPercent(0);
                   setCurrentPicktureIndex(p => {
@@ -150,7 +150,17 @@ const DocumentScreen = ({ navigation }) => {
                 })
                 .catch(() => {
                   setUploadPercent(0);
-                })
+                })*/
+
+                setUploadPercent(0);
+                  setCurrentPicktureIndex(p => {
+                    const total = p + 1
+                    if (total == maxPhotosAmount) {
+                      navigation.navigate("CompletedReport", { pictures, signImagePath: params.signImagePath, pathName: params.pathName, booking: params.booking })
+                      return p;
+                    }
+                    return total
+                  })
               }}
               size="giant"
               style={{

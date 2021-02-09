@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../../../utils/i18n';
 import { APP_BRAND_COLOR } from '../../../constants/Colors';
 
-const DocumentScreen = ({ navigation, route }) => {
+const AgreementScreen = ({ navigation, route }) => {
     const { i18n } = useTranslation();
 
     return (
@@ -56,4 +56,4 @@ const DocumentScreen = ({ navigation, route }) => {
     );
 };
 
-export default DocumentScreen
+export default AgreementScreen

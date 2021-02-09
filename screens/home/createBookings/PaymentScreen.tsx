@@ -16,11 +16,12 @@ import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../../../utils/i18n';
 import BackButton from '../../../partials/BackButton';
 import { APP_BRAND_COLOR } from '../../../constants/Colors';
-import { useGlobalState } from '../../../state';
+import { dispatchGlobalState, useGlobalState } from '../../../state';
 import { getPaypalUrls } from '../../../utils/PaypalUrls';
+import moment from 'moment';
 
 const GET_PAYPAL_JSON = (vehicle: CarSearchItem, meta, extras: (PricedEquip & { amount: number })[]) => {
-
+    console.log("vehicle", vehicle.VehAvailCore.TotalCharge.RateTotalAmount)
     return {
         "intent": "CAPTURE",
         "purchase_units": [{
@@ -40,6 +41,7 @@ const GET_PAYPAL_JSON = (vehicle: CarSearchItem, meta, extras: (PricedEquip & { 
 type ParamList = {
     Payment: {
         vehicle: CarSearchItem;
+        goTo: string
     };
 };
 const PaymentScreen = () => {
@@ -139,7 +141,9 @@ const PaymentScreen = () => {
                             <Button
                                 disabled={!termsAcepted}
                                 onPress={async () => {
-                                    generatePaymentOrderFor(paypalJson)
+                                navigation.navigate(route.params.goTo || "Confirmation")
+
+                                    /*generatePaymentOrderFor(paypalJson)
                                         .then((res) => {
                                             console.log(res.data)
                                             navigation.navigate('WebView', { url: res.data.links.find(i => i.rel == 'approve').href, paypalPaymentId: res.data.id, paypalJson: paypalJson, ...paypalJson })
@@ -150,7 +154,7 @@ const PaymentScreen = () => {
                                             if (err.response) {
                                                 console.log(err.response.data);
                                             }
-                                        })
+                                        })*/
                                 }}
                                 accessoryRight={getAccessTokenReq.loading ? LoadingSpinner : undefined}
                                 size="giant" style={{

@@ -44,18 +44,14 @@ const PickBranchScreen = () => {
     return (
         <SafeAreaView style={{ flex: 1 }} >
             <Layout>
-                <View style={{ display: 'flex', flexDirection: 'row', position: "absolute", zIndex: 2, padding: '5%' }}>
+                <View style={{ display: 'flex', flexDirection: 'row', position: "absolute", zIndex: 2, padding: '15%' }}>
                     <MenuButton />
-                    <Text style={{ marginLeft: '5%', fontSize: 24, fontFamily: AppFontBold }}>
-                        {i18n.t(TRANSLATIONS_KEY.PICKBRANCH_SCREEN_TILE).toString()}
-                    </Text>
                 </View>
                 <BranchMap
                     cars={route?.params?.cars}
                     onLocationChange={(location) => {
                         setSelectedLocation(location)
                     }}
-                    icon={require('../../../image/icon-car-available.png')}
                 />
             </Layout>
         </SafeAreaView>

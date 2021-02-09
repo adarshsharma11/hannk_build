@@ -35,6 +35,12 @@ import useEffectSkipInitialRender from '../../utils/UseEffectSkipInitialRender';
 import isAppleUser from '../../utils/isAppleUser';
 import ShareCodeScreen from './ShareCode';
 import InmediatePickupScreen from './createBookings/InmediatePickupScreen';
+import ImportAppScreen from './ImportAppScreen';
+import NoCarReservationScreen from './bookingsDetails/NoCarReservationScreen';
+import CompleteQrBookingScreen from './CompleteQrBookingScreen';
+import ScooterChargeScreen from './createBookings/ScooterChargeScreen';
+import ScooterPowerScreen from './createBookings/ScooterPowerScreen';
+import PaymentScreen from './createBookings/PaymentScreen';
 
 
 const Drawer = createDrawerNavigator();
@@ -45,9 +51,15 @@ const allScreens = [
     { name: 'CreateBooking', screen: <Drawer.Screen name="CreateBooking" component={SelectLocation} /> },
     { name: 'Location', screen: <Drawer.Screen name="Location" component={LocalitationScreen} /> },
     { name: 'Reservation', screen: <Drawer.Screen name="Reservation" component={ReservationScreen} /> },
+    { name: 'NoCarReservation', screen: <Drawer.Screen name="NoCarReservation" component={NoCarReservationScreen} /> },
     { name: 'Damage', screen: <Drawer.Screen name="Damage" component={DamageScreen} /> },
     { name: 'NoPicturDamage', screen: <Drawer.Screen name="NoPicturDamage" component={NoPictureDamageScreen} /> },
+    { name: 'CompleteQrBooking', screen: <Drawer.Screen name="CompleteQrBooking" component={CompleteQrBookingScreen} /> },
+    { name: 'ScooterCharge', screen: <Drawer.Screen name="ScooterCharge" component={ScooterChargeScreen} /> },
+    { name: 'ScooterPower', screen: <Drawer.Screen name="ScooterPower" component={ScooterPowerScreen} /> },
+    { name: 'Payment', screen: <Drawer.Screen name="Payment" component={PaymentScreen} /> },
     { name: 'Activate', screen: <Drawer.Screen name="Activate" component={ActivateScreen} /> },
+    { name: 'ImportApps', screen: <Drawer.Screen name="ImportApps" component={ImportAppScreen} /> },
     { name: 'Notifications', screen: <Drawer.Screen name="Notifications" component={NotificationScreen} /> },
     { name: 'EditProfile', screen: <Drawer.Screen name="EditProfile" component={EditProfile} /> },
     { name: 'Documents', screen: <Drawer.Screen name="Documents" component={DocumentScreen} /> },

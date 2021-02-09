@@ -15,7 +15,7 @@ import { GRCGDS_BACKEND } from 'react-native-dotenv';
 
 const useSimpleAxios = makeUseAxios({})
 
-const DocumentScreen = ({ navigation, route }) => {
+const CompletedReportScreen = ({ navigation, route }) => {
   const { i18n } = useTranslation();
   const [details] = useCarDetailState("details");
   const [isAllowing, setIsAllowing] = useCarDetailState("isAllowing");
@@ -73,7 +73,7 @@ const DocumentScreen = ({ navigation, route }) => {
                 uri: (Platform.OS === 'android') ? `file://${route?.params.pathName}` : route?.params.pathName.replace('file://', '')
               });
 
-              sendFile({data})
+              /*sendFile({data})
               .then((r) => {
                 const data = {
                   module_name: "GENERATE_PDF",
@@ -83,7 +83,8 @@ const DocumentScreen = ({ navigation, route }) => {
                 post({ data })
               })
               .then(r => navigation.navigate("Home", details))
-              .then(err => console.log(err))
+              .then(err => console.log(err))*/
+              navigation.navigate("Activate", route?.params.booking);
               setIsAllowing(false)
             }}
             size="giant"
@@ -109,4 +110,4 @@ const DocumentScreen = ({ navigation, route }) => {
   );
 };
 
-export default DocumentScreen
+export default CompletedReportScreen

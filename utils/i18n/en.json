@@ -19,6 +19,7 @@
     "COMPLETE_WORD": "Complete",
     "OK_WORD": "OK",
     "NEXT_WORD": "Next",
+    "RESERVE_WORD": "Reserve",
     "PROCEED_WORD": "Proceed",
     "SAVE_WORD": "Save",
     "SAVE_NEXT_WORD": "Save & Next",
@@ -59,6 +60,7 @@
 
     "MENU_ITEM_PRIVACY_POLICY": "Privacy Policy",
     "MENU_ITEM_MENU_ITEM": "Invite a Friend",
+    "MENU_ITEM_IMPORT_APP": "Import Booking",
     "MENU_ITEM_TERMS_CONDITIONS": "Terms and Conditions",
     "MENU_ITEM_MY_TRIPS": "My Trips",
     "MENU_ITEM_MY_PROFILE": "My Profile",
@@ -242,6 +244,9 @@
     "VERIFY_EMAIL_DID_NOT_RECEIVE": "Did not receive an email yet?",
     "VERIFY_EMAIL_GO_TO_LOGIN": "Already Verified your Email? Click here",
     "VERIFY_EMAIL_RESEND": "Resend Email",
+
+    "IMPORTAPPS_SCREEN_TITLE": "Import Bookings",
+    "IMPORTAPPS_SCREEN_BTN": "Import",
 
     "TERMS_AND_CONDITIONS_SCREEN_TITLE": "Privacy Policy",
     "TERMS_AND_CONDITIONS_1": "1. Booking Terms and Conditions",
