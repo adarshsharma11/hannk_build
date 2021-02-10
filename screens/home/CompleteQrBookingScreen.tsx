@@ -35,7 +35,7 @@ const CompleteQrBookingScreen = () => {
                 </View>
                 <Button
                     onPress={(e) => {
-                        navigation.navigate("NoCarReservation", { ...route.params, isComplete: true })
+                        navigation.navigate('Reservation', {  screen: 'Home', params: {...route.params.vehicle, booking: route.params.vehicle, isComplete: true, leftImageUri: undefined}} )
                     }}
                     size="giant"
                     style={{

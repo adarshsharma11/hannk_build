@@ -62,7 +62,7 @@ const CarsListScreen = () => {
 
   const currentLayoutProvider = new LayoutProvider(
     index => {
-      if (index == 0) return 'HEADER'
+      //if (index == 0) return 'HEADER'
       return 0
     },
     (type, dim) => {
@@ -108,7 +108,7 @@ const CarsListScreen = () => {
     Orientation.addDeviceOrientationListener(onOrientationDidChange);
     Orientation.getOrientation(onOrientationDidChange);
 
-    getCars().unshift({ header: true, vehicle: { deeplink: 'q' } })
+    //getCars().unshift({ header: true, vehicle: { deeplink: 'q' } })
     const sortedCars = cars
       .sort((a, b) => {
         if (!a.VehAvailCore || !a.VehAvailCore.TotalCharge) return 1

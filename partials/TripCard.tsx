@@ -9,6 +9,7 @@ import { AppFontBold, AppFontRegular } from '../constants/fonts'
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../utils/i18n';
 import { APP_BRAND_COLOR } from '../constants/Colors';
+import { MarkerVehicleType } from '../utils/MarkerVehicleType';
 
 export type TripCardProps = {
   pickupLocation: string
@@ -45,11 +46,7 @@ const TripCard: React.FC<TripCardProps> = (props) => {
   return (
     <TouchableWithoutFeedback onPress={() => {
       //if (props.keyLess) navigation.navigate('Activate', { ...props, leftImageUri: undefined })
-      if (props.vehicleType) {
-        navigation.navigate('NoCarReservation', {  screen: 'Home', booking: props, leftImageUri: undefined} )
-      } else {
-        navigation.navigate('Reservation', {  screen: 'Home', params: {...props, leftImageUri: undefined}} )
-      }
+      navigation.navigate('Reservation', {  screen: 'Home', params: {...props, booking: props, leftImageUri: undefined}} )
     }}>
       <Layout style={{ backgroundColor: '#00000000', marginBottom: '5%' }}>
         <Layout style={{ backgroundColor: '#00000000', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end' }}>
@@ -114,7 +111,24 @@ const TripCard: React.FC<TripCardProps> = (props) => {
             <Layout style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', paddingTop: props.displayPreview == true && props.image_preview_url ? 0 : '5%', paddingBottom: '5%', paddingLeft: '5%', paddingRight: '5%', borderBottomLeftRadius: (props.upcoming || props.completed) ? 0 : 16, borderBottomRightRadius: (props.upcoming || props.completed) ? 0 : 16 }}>
               <Layout style={{ display: 'flex', flexDirection: 'row', width: '50%', alignSelf: 'flex-end' }}>
                 <Layout style={{ marginRight: '3%' }}>
-                  <Avatar style={{ borderRadius: 10 }} shape='square' source={props.keytype == "Keyless" ? require('../image/key.png') : require('../image/keyx.png')} />
+                  {props.vehicleType == MarkerVehicleType.BYCICLE && (
+                    <MaterialCommunityIcon name={'bicycle'} size={60} />
+                  )}
+                  {props.vehicleType == MarkerVehicleType.MOPED && (
+                    <MaterialCommunityIcon name={'motorbike'} size={60} />
+                  )}
+                  {props.vehicleType == MarkerVehicleType.SCOOTER && (
+                    <MaterialCommunityIcon name={'scooter'} size={60} />
+                  )}
+                  {props.vehicleType == MarkerVehicleType.CHARGE && (
+                    <MaterialCommunityIcon name={'battery-charging-high'} size={50} />
+                  )}
+                  {(props.vehicleType == MarkerVehicleType.SHARE) && (
+                    <Avatar style={{ borderRadius: 10 }} shape='square' source={require('../image/keyx.png')} />
+                  )}
+                  {(!props.vehicleType) && (
+                    <Avatar style={{ borderRadius: 10 }} shape='square' source={require('../image/key.png')} />
+                  )}
                 </Layout>
                 <Layout>
                   <Text style={{ fontFamily: AppFontBold, fontSize: 15 }} category='h6'>{props.carName}</Text>

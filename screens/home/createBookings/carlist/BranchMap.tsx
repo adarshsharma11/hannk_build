@@ -9,7 +9,7 @@ import { CarSearchItem, HannkCarItem } from 'hannk-mobile-common';
 import { APP_BRAND_COLOR } from '../../../../constants/Colors';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATIONS_KEY } from '../../../../utils/i18n';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Button } from '@ui-kitten/components';
 import { AppFontBold } from '../../../../constants/fonts';
@@ -110,15 +110,24 @@ const BranchMap = ({ onLocationChange, cars = [], mapRef: outerMapRef, onRegions
     const [returnTime, setReturnTime] = useCreateBookingState("returnTime");
 
     const [{ data = [], loading, error }, doSearch] = simpleUseAxios({
-        url: `https://www.grcgds.com/hannkmobileapp_dev/branches.php?code=${originLocation?.internalcode || 'LHRA01r'}`,
+        url: `https://www.grcgds.com/hannkmobileapp_dev/branches.php?code=${originLocation?.internalcode || 'LHRA01'}`,
         method: 'GET',
     })
 
     useEffect(() => {
-        if (region) {
+        if (region && !loading) {
             mapRef?.current?.animateToRegion(region)
         }
-    }, [region])
+    }, [region, loading])
+
+    useFocusEffect(
+        React.useCallback(() => {
+            if (region) {
+                console.log(region)
+                mapRef?.current?.animateToRegion(region)
+            }
+        }, [])
+    );
 
     useEffect(() => {
         onRegionsChange && onRegionsChange(data)
@@ -193,7 +202,9 @@ const BranchMap = ({ onLocationChange, cars = [], mapRef: outerMapRef, onRegions
                                     <CustomeMarker
                                         calloutContent={() => <></>}
                                         cars={cars}
-                                        onMarkerPress={() => setShowShareModal(true)} icon={require('../../../../image/car-share.png')} marker={shareMarker} />
+                                        onMarkerPress={() => setShowShareModal(true)}
+                                        icon={require('../../../../image/car-share.png')}
+                                        marker={shareMarker} />
 
                                     <CustomeMarker cars={cars} onSelect={(l) => {
                                         storeLocalBooking({
@@ -239,7 +250,7 @@ const BranchMap = ({ onLocationChange, cars = [], mapRef: outerMapRef, onRegions
                                     dropTime: returnTime.toString(),
                                     pickTime: departureTime.toString(),
                                     locationCode: originLocation?.Branchname || 'LHRA01',
-                                    bookingType: route.params.type
+                                    bookingType: MarkerVehicleType.SHARE
                                 })
                                 .then(() => {
                                     navigation.navigate('Payment', { vehicle: cars[0], goTo: 'MyBookings' })
@@ -265,9 +276,9 @@ const BranchMap = ({ onLocationChange, cars = [], mapRef: outerMapRef, onRegions
                     </View>
                     <View style={{ backgroundColor: '#049930', padding: '2%', borderRadius: 10, marginBottom: '2%', width: '90%' }}>
                         <Text style={{ color: 'white', fontSize: 28, textAlign: 'center' }}>
-                            {showChargeDriveTime.type == MarkerVehicleType.BYCICLE && 'Pay Bicycle Ride'}
-                            {showChargeDriveTime.type == MarkerVehicleType.MOPED && 'Pay Urban Moped Ride'}
-                            {showChargeDriveTime.type == MarkerVehicleType.SCOOTER && 'Pay Urban Scooter Ride'}
+                            {showChargeDriveTime.type == MarkerVehicleType.BYCICLE && 'Bicycle'}
+                            {showChargeDriveTime.type == MarkerVehicleType.MOPED && 'Urban Moped'}
+                            {showChargeDriveTime.type == MarkerVehicleType.SCOOTER && 'Urban Scooter'}
                             {showChargeDriveTime.type == MarkerVehicleType.CHARGE && 'Electric Vehicle Charging'}
                         </Text>
                     </View>

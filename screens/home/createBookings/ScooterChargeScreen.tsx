@@ -69,7 +69,7 @@ const ScooterChargeScreen = () => {
                         shadowRadius: 13.16,
                         elevation: 10,
                     }}>
-                    {() => <Text style={{ fontFamily: AppFontBold, color: 'white', fontSize: 18 }}>{i18n.t(TRANSLATIONS_KEY.PAYMENT_BOOOK_NOW_BTN).toString()}</Text>}
+                    {() => <Text style={{ fontFamily: AppFontBold, color: 'white', fontSize: 18 }}>{i18n.t(TRANSLATIONS_KEY.PROCEED_TO_PAYMENT).toString()}</Text>}
                 </Button>
             </ScrollView >
         </SafeAreaView>
