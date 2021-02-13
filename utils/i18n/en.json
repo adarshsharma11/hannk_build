@@ -31,6 +31,8 @@
     "CAMERA_WORD": "Camera",
     "GALLERY_WORD": "Gallery",
     "DONE_WORD": "Done",
+    "START_WORD": "Start",
+    "END_WORD": "End",
     "ACTIVATE_WORD": "Activate",
     "PROCEED_TO_PAYMENT": "Proceed to Payment", 
 
@@ -41,6 +43,7 @@
     "DETAILS_DIRECTION_MENU_OPTION":"Directions",
     "DETAILS_HELP_MENU_OPTION":"Help",
     "DETAILS_COLLECT_MENU_OPTION":"Collect",
+    "DETAILS_CHARGE_MENU_OPTION":"Start Charging",
     "DETAILS_CANCEL_MENU_OPTION":"Cancel",
     "DETAILS_PICKUP_LOCATION_TAG":"Pickup Location",
     "DETAILS_DROP_LOCATION_TAG":"Dropout Location",
@@ -63,12 +66,12 @@
     "MENU_ITEM_MENU_ITEM": "Invite a Friend",
     "MENU_ITEM_IMPORT_APP": "Import Booking",
     "MENU_ITEM_TERMS_CONDITIONS": "Terms and Conditions",
-    "MENU_ITEM_MY_TRIPS": "My Trips",
+    "MENU_ITEM_MY_TRIPS": "My Bookings",
     "MENU_ITEM_MY_PROFILE": "My Profile",
     "MENU_ITEM_LOGOUT": "Logout",
     "LOGOUT_MESSAGE": "Do you really want to logout",
 
-    "MY_TRIPS_SCREEN_TITLE": "My Trips",
+    "MY_TRIPS_SCREEN_TITLE": "My Bookings",
     "CREATE_BTN_TEXT": "Create Booking",
     "ACTIVE_TAB_TXT": "ACTIVE",
     "NO_ACTIVE_BOOKING_TXT": "No active bookings",
@@ -111,7 +114,7 @@
     "PAYMENT_AGREE_AND_UNDERSTAND": "I have read understood and accepted",
     "PAYMENT_BOOOK_NOW_BTN": "Book Now",
 
-    "CONFIRMATION_GO_HOME_BTN": "Go My Trips",
+    "CONFIRMATION_GO_HOME_BTN": "Go My Bookings",
 
     "OPT_SCREEN_TITLE": "Verify phone number",
     "OPT_SCREEN_SUB_TITLE": "Check your SMS messages. We've sent you the PIN at",

@@ -92,44 +92,6 @@ export default ({ navigation }: StackScreenProps<LoginScreenProps>) => {
         screens.unshift({ name: 'MyBookings', screen: <Drawer.Screen name="MyBookings" component={MyTripsScreens} /> })
     }
 
-    useEffect(() => {
-        if (profile && profile.mobilenumber != "" && profile.mobilecode != "" && profile.vphone != 1) {
-            doVerify({
-                data: {
-                    "module_name": "RESEND_VERIFY",
-                    "id": profile.id
-                }
-            })
-                .then(r => console.log(r.data))
-        }
-    }, [])
-
-    useEffect(() => {
-        async function checkPhone() {
-            const isApple = await isAppleLogin()
-            if (profile && ((isApple == true && profile.mobilenumber != "" && profile.mobilecode != "") || (isApple == false && profile.mobilenumber != "" && profile.mobilecode != "" && profile.vphone != 1))) {
-                console.log("mobilenumber", profile.mobilenumber)
-                console.log("mobilecode", profile.mobilecode)
-                console.log("vphone", profile.vphone)
-
-                const found = screens.find(item => item.name === 'Opt')
-
-                if (found) {
-                    screens = [found, ...screens.filter(item => item.name !== 'Opt'),]
-                } else {
-                    screens.unshift({ name: 'Opt', screen: <Drawer.Screen name="VerifyEmail" component={VerifyPhoneScreen} /> });
-                }
-
-            }
-            if (profile && profile.vemail == 0) {
-                if (!screens.find(i => i.name == 'VerifyEmail')) {
-                    screens.unshift({ name: 'VerifyEmail', screen: <Drawer.Screen name="VerifyEmail" component={VerifyEmailScreen} /> });
-                }
-            }
-        }
-        checkPhone()
-    }, [profile])
-
     return (
         <Drawer.Navigator drawerContent={(props) => <DrawerMenu navigation={props.navigation} />} initialRouteName="Home">
             {screens.map((s) => s.screen)}

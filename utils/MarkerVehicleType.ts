@@ -4,4 +4,5 @@ export enum MarkerVehicleType {
     'SCOOTER' = 'SCOOTER',
     'CHARGE' = 'CHARGE',
     'SHARE' = 'SHARE',
+    'RENTAL' = 'RENTAL',
 }

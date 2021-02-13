@@ -14,6 +14,7 @@ type InitialState = {
     termsAndConditions: null | string,
     initialBanner: null | string,
     initialScreen: string,
+    currentLocation: null | {"accuracy": number, "altitude": number, "bearing": number, "latitude": number, "longitude": number, "provider": string, "speed": number, "time": number},
 }
 const initialState: InitialState = {
     storedBookings: [],
@@ -26,7 +27,8 @@ const initialState: InitialState = {
     paypalSecretKey: null,
     termsAndConditions: null,
     initialBanner: null,
-    initialScreen: "Home"
+    initialScreen: "Home",
+    currentLocation: null
 };
 
 const normalReducer = (state: any, action: { type: string, state?: any }): InitialState => {
@@ -61,6 +63,9 @@ const normalReducer = (state: any, action: { type: string, state?: any }): Initi
             AsyncStorage.removeItem('appleLogin')
             return { ...state, token: null, profile: null };
         }
+        case 'currentLocation': {
+            return { ...state, currentLocation: action.state };
+        }
         case 'error': {
             return { ...state, error: action.state };
         }
@@ -87,6 +92,10 @@ export const { dispatch: dispatchGlobalState, useGlobalState, getState: getGloba
 
 export const saveAppConfig = (config: any) => {
     dispatchGlobalState({ type: "config", state: config })
+}
+
+export const setCurrentLocation = (location: any) => {
+    dispatchGlobalState({ type: "currentLocation", state: location })
 }
 
 AsyncStorage.getItem('token')

@@ -99,25 +99,18 @@ const DrawerItem = ({ navigation, name, iconName, screenName, iconSize, resetHis
         <TouchableOpacity
             style={styles.menuItem}
             onPress={() => {
+                console.log(screenName)
                 if (screenName) {
-
-                    /*if (resetHistory == true) {
-                        navigation.dispatch((state) => {
-                            return CommonActions.reset({
-                                ...state,
+                    if (resetHistory == true) {
+                        navigation.dispatch({
+                            ...CommonActions.reset({
                                 index: 0,
-                                routes: [
-                                    { name: screenName },
-                                    ...state.routes
-                                ],
+                                routes: [{ name: screenName }],
                             })
                         });
-                        navigation.closeDrawer()
                     } else {
                         navigation.navigate(screenName)
-                    }*/
-
-                    navigation.navigate(screenName)
+                    }
 
                 } else {
                     onPress && onPress();

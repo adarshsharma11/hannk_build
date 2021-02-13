@@ -9,6 +9,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import { AppFontBold, AppFontRegular } from '../../../constants/fonts';
 import { APP_BRAND_COLOR } from '../../../constants/Colors';
 import { TRANSLATIONS_KEY } from '../../../utils/i18n';
+import { updateBooking } from '../../../state/extraState';
 
 type ParamList = {
     Payment: {
@@ -50,7 +51,9 @@ const ScooterPowerScreen = () => {
                                 }
                             }
                         }
-                        navigation.navigate('Payment', { vehicle, goTo: 'MyBookings' })
+                        console.log(vehicle)
+                        /*updateBooking()
+                        navigation.navigate('Payment', { vehicle, goTo: 'MyBookings' })*/
                     }}
                     size="giant"
                     style={{

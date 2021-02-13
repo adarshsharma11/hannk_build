@@ -25,9 +25,10 @@ import { useTranslation } from 'react-i18next';
 import { HannkSuggestionInput, HannkDatePicker, HannkTimePicker, HannkUtils } from 'hannk-mobile-common';
 import { TRANSLATIONS_KEY } from '../../../utils/i18n';
 import BackButton from '../../../partials/BackButton';
-import { setHours, getHours, addHours, isAfter, setMinutes, getMinutes } from 'date-fns'
+import { setHours, getHours, addHours, isAfter, setMinutes, getMinutes, isBefore } from 'date-fns'
 import { APP_BRAND_COLOR } from '../../../constants/Colors';
 import { API_KEY, CLIENT_ID, GRCGDS_BACKEND } from 'react-native-dotenv';
+import { setCurrentLocation } from '../../../state';
 
 const simpleUseAxios = makeUseAxios({ });
 
@@ -41,7 +42,6 @@ export default () => {
     const [inmediatePickup, setInmediatePickup] = useCreateBookingState("inmediatePickup");
     const [departureTime, setDepartureTime] = useCreateBookingState("departureTime");
     const [returnTime, setReturnTime] = useCreateBookingState("returnTime");
-    const [currentLocation, setCurrentLocation] = useState(null);
     const [currentWidth, setCurrentWidth] = useState(Dimensions.get('window').width);
 
     const [showDepartureDatepicker, setShowDepartureDatepicker] = useState(false);
@@ -49,7 +49,6 @@ export default () => {
 
     const [showReturnDatepicker, setShowReturnDatepicker] = useState(false);
     const [showReturnTimepicker, setShowReturnTimepicker] = useState(false);
-
 
     const [{ data, loading, error }, doSearch] = simpleUseAxios({
         url: "https://www.grcgds.com/test_ota/",
@@ -228,6 +227,7 @@ export default () => {
                             <HannkTimePicker
                                 date={departureTime}
                                 onChange={(d) => {
+                                    console.log(setMinutes(setHours(departureTime, getHours(d)), getMinutes(d)))
                                     setDepartureTime(setMinutes(setHours(departureTime, getHours(d)), getMinutes(d)))
                                     setShowDepartureTimepicker(false)
                                 }}
@@ -273,6 +273,10 @@ export default () => {
                         disabled={originLocation == null || inmediatePickup == null || loading == true}
                         accessoryRight={loading ? LoadingSpinner : undefined}
                         onPress={() => {
+                            if (isBefore(departureTime, new Date()) || isBefore(returnTime, new Date())){
+                                Alert.alert("Error", "Date cannot be before current date and time")
+                                return 
+                            }
                             if (!originLocation) return
 
                             if (!returnLocation) {

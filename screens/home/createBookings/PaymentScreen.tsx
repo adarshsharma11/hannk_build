@@ -60,6 +60,7 @@ const PaymentScreen = () => {
 
     const urls = getPaypalUrls("DEV")
     const { generatePaymentOrderFor, getAccessTokenReq } = UsePaypal({ paypalClientId, paypalSecretKey, paypalPaymentUrl: urls.PAYPAL_CAPTURE_URL, paypalTokenUrl: urls.PAYPAL_TOKEN_URL })
+    console.log(route.params)
 
     const paypalJson = GET_PAYPAL_JSON(
         route.params.vehicle,

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Layout, Text, Button } from '@ui-kitten/components';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView, ScrollView, Image, Alert, View } from 'react-native';
 import LoadingSpinner from '../../../partials/LoadingSpinner';
 import { useRoute, useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -332,6 +333,20 @@ export default function App({ navigation, route }) {
           tabBarButton: () => {
             //const cannotCollect = (route.params.params.pickupTime.isAfter(moment().add(24, 'h')) && route.params.params.reservationStatus != 'Cancelled' && route.params.params.reservationStatus != 'Completed') || (profile != null && !userHasAllFiles(profile))
             const cannotCollect = false
+            let buttonTag = TRANSLATIONS_KEY.DETAILS_COLLECT_MENU_OPTION
+            if (route?.params?.params?.booking.vehicleType == MarkerVehicleType.BYCICLE
+            || route?.params?.params?.booking.vehicleType == MarkerVehicleType.MOPED
+            || route?.params?.params?.booking.vehicleType == MarkerVehicleType.SCOOTER
+            || route?.params?.params?.booking.vehicleType == MarkerVehicleType.CHARGE) {
+              if (route?.params?.params?.isComplete) {
+                buttonTag = TRANSLATIONS_KEY.END_WORD
+              } else {
+                buttonTag = TRANSLATIONS_KEY.START_WORD
+              }
+            }
+
+
+            
 
             return (
               <View style={{ width: '25%' }}>
@@ -342,15 +357,20 @@ export default function App({ navigation, route }) {
                   } else {
                     let nextScreen = "ScooterCharge"
                     if (route?.params?.params?.booking.vehicleType == MarkerVehicleType.CHARGE) {
-                        nextScreen = "ScooterPower"
+                      nextScreen = "ScooterPower"
                     }
-                    navigation.navigate(route?.params?.params?.isComplete ? nextScreen : "CompleteQrBooking", { vehicle: route?.params?.params?.booking, vehicleType: route?.params?.params?.booking?.vehicleType })
+                    navigation.navigate("CompleteQrBooking", { nextScreen: route?.params?.params?.isComplete ? nextScreen: 'Reservation',vehicle: route?.params?.params?.booking, vehicleType: route?.params?.params?.booking?.vehicleType })
                   }
                 }}>
                   <View style={{ height: '100%', borderColor: 'rgba(0,0,0,0.2)', borderRightWidth: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', }}>
-                    <MaterialIcons name="directions-car" style={{ color: cannotCollect ? `${APP_BRAND_COLOR}40` : APP_BRAND_COLOR }} size={24} />
+                    {!route?.params?.params?.booking.vehicleType && <MaterialIcons name="directions-car" style={{ color: cannotCollect ? `${APP_BRAND_COLOR}40` : APP_BRAND_COLOR }} size={24} />}
+                    {route?.params?.params?.booking.vehicleType == MarkerVehicleType.SHARE && <MaterialIcons name="directions-car" style={{ color: cannotCollect ? `${APP_BRAND_COLOR}40` : APP_BRAND_COLOR }} size={24} />}
+                    {route?.params?.params?.booking.vehicleType == MarkerVehicleType.BYCICLE && <MaterialCommunityIcon name="bicycle" style={{ color: cannotCollect ? `${APP_BRAND_COLOR}40` : APP_BRAND_COLOR }} size={24} />}
+                    {route?.params?.params?.booking.vehicleType == MarkerVehicleType.MOPED && <MaterialCommunityIcon name="motorbike" style={{ color: cannotCollect ? `${APP_BRAND_COLOR}40` : APP_BRAND_COLOR }} size={24} />}
+                    {route?.params?.params?.booking.vehicleType == MarkerVehicleType.SCOOTER && <MaterialCommunityIcon name="scooter" style={{ color: cannotCollect ? `${APP_BRAND_COLOR}40` : APP_BRAND_COLOR }} size={24} />}
+                    {route?.params?.params?.booking.vehicleType == MarkerVehicleType.CHARGE && <MaterialCommunityIcon name="car-electric" style={{ color: cannotCollect ? `${APP_BRAND_COLOR}40` : APP_BRAND_COLOR }} size={24} />}
                     <Text style={{ textAlign: 'center', color: 'gray', fontFamily: AppFontRegular, fontSize: 12, textTransform: 'uppercase' }}>
-                      {i18n.t(route?.params?.params?.isComplete ? TRANSLATIONS_KEY.COMPLETE_WORD:TRANSLATIONS_KEY.DETAILS_COLLECT_MENU_OPTION).toString()}
+                      {i18n.t(buttonTag).toString()}
                     </Text>
                   </View>
 
@@ -371,7 +391,8 @@ export default function App({ navigation, route }) {
               <View style={{ width: '25%' }}>
                 <TouchableOpacity disabled={cannotCancel} style={{ height: '100%' }} onPress={() => {
                   if (cannotCancel) return
-                  navigation.navigate('VerifyCancel', { ...route.params.params })
+                  //navigation.navigate('VerifyCancel', { ...route.params.params })
+                  Alert.alert("Cancelled", "Your booking has been cancelled")
                 }}>
                   <View style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', borderColor: 'rgba(0,0,0,0.2)', borderRightWidth: 0, flexDirection: 'column' }}>
                     <MaterialIcons name="cancel" style={{ color: cannotCancel ? '#cf183040' : '#cf1830' }} size={24} />

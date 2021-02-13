@@ -16,6 +16,7 @@ import { AppFontBold } from '../../../../constants/fonts';
 import { useCreateBookingState } from '../CreateBookingState';
 import { MarkerVehicleType } from '../../../../utils/MarkerVehicleType';
 import { storeLocalBooking } from '../../../../state/extraState';
+import { useGlobalState } from '../../../../state';
 
 const simpleUseAxios = makeUseAxios({});
 
@@ -27,15 +28,20 @@ type MarkerParams = {
     onMarkerPress?: (marker: any) => void,
     calloutContent?: () => JSX.Element
 }
-const CustomeMarker = ({ marker, icon, onSelect, calloutContent, onMarkerPress }: MarkerParams) => {
+const CustomeMarker = ({ marker, icon, cars = [],onSelect, calloutContent, onMarkerPress }: MarkerParams) => {
     const markerRef = useRef(null);
     const [price, setPrice] = useState("");
     const [amount, setAmount] = useState(0);
 
     useEffect(() => {
-        setPrice(((Math.random() * 30) + 1).toFixed(2))
-        setAmount(Math.floor(Math.random() * 10) + 1)
-    }, [])
+        const carsOfThisClient = cars.filter(c => c.VehAvailCore.Supplier_ID.slice(4, 2) == marker.clientId)
+        if (carsOfThisClient.length != 0) {
+            setPrice(carsOfThisClient[0].VehAvailCore.TotalCharge.RateTotalAmount)
+        }
+        setAmount(carsOfThisClient?.length || 0)
+    }, [cars])
+
+    
 
     return (
         <Marker
@@ -79,7 +85,8 @@ const CustomeMarker = ({ marker, icon, onSelect, calloutContent, onMarkerPress }
                             </View>
                             <View style={{ padding: '3%' }}>
                                 <Text style={{ fontSize: 20 }}>
-                                    {`${amount} cars available from €${price}`}
+                                    {amount == 0 && "0 cars available"}
+                                    {amount != 0 && `${amount} cars available from €${price}`}
                                 </Text>
                             </View>
                             <TouchableOpacity style={{ backgroundColor: '#00000030', zIndex: -1, borderBottomEndRadius: 25, borderBottomStartRadius: 25 }}>
@@ -98,13 +105,13 @@ type Params = { onRegionsChange?: (regions: any[]) => void, mapRef?: React.Mutab
 const BranchMap = ({ onLocationChange, cars = [], mapRef: outerMapRef, onRegionsChange }: Params) => {
     const [region, setRegion] = useState();
     const [selectedLocation, setSelectedLocation] = useState<string>();
-    const [showQrFor, setShowQrFor] = useState<any>();
     const [showShareModal, setShowShareModal] = useState<boolean>(false);
     const [showChargeDriveTime, setShowChargeDriveTime] = useState<{ show: boolean, type?: MarkerVehicleType, marker?: any }>({ show: false });
     const [originLocation] = useCreateBookingState("originLocation");
     const mapRef = React.createRef();
     const { i18n } = useTranslation();
     const navigation = useNavigation();
+    const [currentLocation] = useGlobalState("currentLocation")
 
     const [departureTime, setDepartureTime] = useCreateBookingState("departureTime");
     const [returnTime, setReturnTime] = useCreateBookingState("returnTime");
@@ -113,6 +120,22 @@ const BranchMap = ({ onLocationChange, cars = [], mapRef: outerMapRef, onRegions
         url: `https://www.grcgds.com/hannkmobileapp_dev/branches.php?code=${originLocation?.internalcode || 'LHRA01'}`,
         method: 'GET',
     })
+
+    useEffect(() => {
+        if (loading) return
+
+        if (originLocation?.internalcode != 32151 && data.length != 0) {
+            console.log('setting region by code')
+            setRegion({ latitude: parseFloat(data[0].lat), longitude: parseFloat(data[0].long), latitudeDelta: 0.0922, longitudeDelta: 0.0421 })
+        } else {
+            console.log('setting region by current location')
+            if (currentLocation) {
+                setRegion({ latitude: currentLocation?.latitude, longitude: currentLocation?.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 })                
+            } else {
+                setRegion({ latitude: parseFloat(data[0].lat), longitude: parseFloat(data[0].long), latitudeDelta: 0.0922, longitudeDelta: 0.0421 })
+            }
+        }
+    }, [data])
 
     useEffect(() => {
         if (region && !loading) {
@@ -163,60 +186,66 @@ const BranchMap = ({ onLocationChange, cars = [], mapRef: outerMapRef, onRegions
                     scrollEnabled={true}
                 >
                     {
-                        data.slice(0, 10).map((marker: any) => {
-                            if (!region) setRegion({ latitude: parseFloat(marker.lat), longitude: parseFloat(marker.long), latitudeDelta: 0.0922, longitudeDelta: 0.0421 })
+                        data.map((marker: any) => {
                             if (!marker || !marker.lat || !marker.long) return <></>
-                            const shareMarker = { ...marker, lat: parseFloat(marker.lat) + 0.0050, long: parseFloat(marker.long) + 0.0050 }
-                            const scooterMarker = { ...marker, lat: parseFloat(marker.lat) + 0.0050, long: parseFloat(marker.long) - 0.0050 }
-                            const mopedMarker = { ...marker, lat: parseFloat(marker.lat) + 0.0150, long: parseFloat(marker.long) - 0.0050 }
-                            const bycicleMarker = { ...marker, lat: parseFloat(marker.lat) + 0.0150, long: parseFloat(marker.long) - 0.0195 }
-                            const chargingMarker = { ...marker, lat: parseFloat(marker.lat) - 0.0100, long: parseFloat(marker.long) - 0.0195 }
-                            return (
-                                <>
-                                    <CustomeMarker
-                                        calloutContent={() => <></>}
-                                        cars={cars}
-                                        onMarkerPress={(marker) => {
-                                            setShowChargeDriveTime({ show: true, type: MarkerVehicleType.CHARGE, marker })
-                                        }}
-                                        icon={require('../../../../image/charge-points.png')}
-                                        marker={chargingMarker} />
-                                    <CustomeMarker
-                                        calloutContent={() => <></>}
-                                        cars={cars}
-                                        onMarkerPress={(marker) => setShowChargeDriveTime({ show: true, type: MarkerVehicleType.BYCICLE, marker })}
-                                        icon={require('../../../../image/bicycle.png')}
-                                        marker={bycicleMarker} />
-                                    <CustomeMarker
-                                        calloutContent={() => <></>}
-                                        cars={cars}
-                                        onMarkerPress={(marker) => setShowChargeDriveTime({ show: true, type: MarkerVehicleType.MOPED, marker })}
-                                        icon={require('../../../../image/moped.png')}
-                                        marker={mopedMarker} />
-                                    <CustomeMarker
-                                        calloutContent={() => <></>}
-                                        cars={cars}
-                                        onMarkerPress={(marker) => setShowChargeDriveTime({ show: true, type: MarkerVehicleType.SCOOTER, marker })}
-                                        icon={require('../../../../image/scooter.png')}
-                                        marker={scooterMarker} />
-                                    <CustomeMarker
-                                        calloutContent={() => <></>}
-                                        cars={cars}
-                                        onMarkerPress={() => setShowShareModal(true)}
-                                        icon={require('../../../../image/car-share.png')}
-                                        marker={shareMarker} />
 
-                                    <CustomeMarker cars={cars} onSelect={(l) => {
-                                        storeLocalBooking({
-                                            dropTime: returnTime.toString(),
-                                            pickTime: departureTime.toString(),
-                                            locationCode: originLocation?.Branchname || 'LHRA01',
-                                        })
-                                        .then(() => {
-                                            setSelectedLocation(l)
-                                        })
-                                    }} icon={require('../../../../image/car-rental.png')} marker={marker} />
-                                </>
+                            if (marker.markerType == MarkerVehicleType.CHARGE) {
+                                return <CustomeMarker
+                                    calloutContent={() => <></>}
+                                    cars={cars}
+                                    onMarkerPress={(marker) => {
+                                        setShowChargeDriveTime({ show: true, type: MarkerVehicleType.CHARGE, marker })
+                                    }}
+                                    icon={require('../../../../image/charge-points.png')}
+                                    marker={marker} />
+                            }
+                            if (marker.markerType == MarkerVehicleType.BYCICLE) {
+                                return <CustomeMarker
+                                    calloutContent={() => <></>}
+                                    cars={cars}
+                                    onMarkerPress={(marker) => setShowChargeDriveTime({ show: true, type: MarkerVehicleType.BYCICLE, marker })}
+                                    icon={require('../../../../image/bicycle.png')}
+                                    marker={marker} />
+                            }
+
+                            if (marker.markerType == MarkerVehicleType.MOPED) {
+                                return <CustomeMarker
+                                calloutContent={() => <></>}
+                                cars={cars}
+                                onMarkerPress={(marker) => setShowChargeDriveTime({ show: true, type: MarkerVehicleType.MOPED, marker })}
+                                icon={require('../../../../image/moped.png')}
+                                marker={marker} />
+                            }
+
+                            if (marker.markerType == MarkerVehicleType.SCOOTER) {
+                                return <CustomeMarker
+                                calloutContent={() => <></>}
+                                cars={cars}
+                                onMarkerPress={(marker) => setShowChargeDriveTime({ show: true, type: MarkerVehicleType.SCOOTER, marker })}
+                                icon={require('../../../../image/scooter.png')}
+                                marker={marker} />
+                            }
+
+                            if (marker.markerType == MarkerVehicleType.SHARE) {
+                                return <CustomeMarker
+                                calloutContent={() => <></>}
+                                cars={cars}
+                                onMarkerPress={() => setShowShareModal(true)}
+                                icon={require('../../../../image/car-share.png')}
+                                marker={marker} />
+                            }
+                            return (
+                                <CustomeMarker cars={cars} onSelect={(l) => {
+                                    storeLocalBooking({
+                                        dropTime: returnTime.toString(),
+                                        pickTime: departureTime.toString(),
+                                        locationCode: originLocation?.Branchname || 'LHRA01',
+                                        isComplete: true
+                                    })
+                                    .then(() => {
+                                        setSelectedLocation(l)
+                                    })
+                                }} icon={require('../../../../image/car-rental.png')} marker={marker} />
                             )
                         })
                     }
@@ -250,7 +279,8 @@ const BranchMap = ({ onLocationChange, cars = [], mapRef: outerMapRef, onRegions
                                     dropTime: returnTime.toString(),
                                     pickTime: departureTime.toString(),
                                     locationCode: originLocation?.Branchname || 'LHRA01',
-                                    bookingType: MarkerVehicleType.SHARE
+                                    bookingType: MarkerVehicleType.SHARE,
+                                    isComplete: true,
                                 })
                                 .then(() => {
                                     navigation.navigate('Payment', { vehicle: cars[0], goTo: 'MyBookings' })
@@ -284,7 +314,9 @@ const BranchMap = ({ onLocationChange, cars = [], mapRef: outerMapRef, onRegions
                     </View>
                     <Button
                         onPress={(e) => {
-                            navigation.navigate("QRScreen", { vehicle: cars[0], type: showChargeDriveTime.type })
+                            let hideQr = false
+                            if (showChargeDriveTime.type == MarkerVehicleType.CHARGE) hideQr = true
+                            navigation.navigate("QRScreen", { vehicle: cars[0], type: showChargeDriveTime.type, hideQr })
                             setShowChargeDriveTime({ show: false })
                         }}
                         size="giant"

@@ -18,6 +18,7 @@ type ParamList = {
     Payment: {
         vehicle: CarSearchItem;
         type: MarkerVehicleType;
+        hideQr: boolean
     };
 };
 const QRScreen = () => {
@@ -31,6 +32,8 @@ const QRScreen = () => {
 
     const baseCircleSize = 250
 
+    const hideQr = route.params.hideQr != undefined ? route.params.hideQr : false
+
     return (
         <SafeAreaView style={{ flex: 1 }} >
             <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }} keyboardShouldPersistTaps={"handled"} style={{ backgroundColor: 'white' }}>
@@ -38,9 +41,7 @@ const QRScreen = () => {
                     <Text style={{ fontSize: 34, textAlign: 'center' }}>Thanks for your booking</Text>
                 </View>
 
-                <View style={{ borderWidth: 1, padding: '10%', marginTop: '5%', alignItems: 'center' }}>
-                    <QRCode logoSize={220} value="http://awesome.link.qr" />
-                </View>
+                <MaterialCommunityIcon name={"checkbox-marked-circle-outline"} color={"green"} size={200} />
                 <Button
                     onPress={(e) => {
                         storeLocalBooking({

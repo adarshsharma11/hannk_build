@@ -9,6 +9,7 @@ import { AppFontBold, AppFontRegular } from '../../../constants/fonts';
 import { APP_BRAND_COLOR } from '../../../constants/Colors';
 import { TRANSLATIONS_KEY } from '../../../utils/i18n';
 import { MarkerVehicleType } from '../../../utils/MarkerVehicleType';
+import { updateBooking } from '../../../state/extraState';
 
 type ParamList = {
     Payment: {
@@ -50,7 +51,10 @@ const ScooterChargeScreen = () => {
                                 }
                             }
                         }
-                        navigation.navigate('Payment', { vehicle, goTo: 'MyBookings' })
+                        updateBooking(route.params.vehicle.registratioNumber, { isCompleted: true })
+                        .then(() => {
+                            navigation.navigate('Payment', { vehicle, goTo: 'MyBookings' })
+                        })
                     }}
                     size="giant"
                     style={{

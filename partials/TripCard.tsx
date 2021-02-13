@@ -110,7 +110,7 @@ const TripCard: React.FC<TripCardProps> = (props) => {
             <Divider />
             <Layout style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', paddingTop: props.displayPreview == true && props.image_preview_url ? 0 : '5%', paddingBottom: '5%', paddingLeft: '5%', paddingRight: '5%', borderBottomLeftRadius: (props.upcoming || props.completed) ? 0 : 16, borderBottomRightRadius: (props.upcoming || props.completed) ? 0 : 16 }}>
               <Layout style={{ display: 'flex', flexDirection: 'row', width: '50%', alignSelf: 'flex-end' }}>
-                <Layout style={{ marginRight: '3%' }}>
+                <Layout style={{ marginRight: '3%', justifyContent: 'center' }}>
                   {props.vehicleType == MarkerVehicleType.BYCICLE && (
                     <MaterialCommunityIcon name={'bicycle'} size={60} />
                   )}
@@ -118,7 +118,7 @@ const TripCard: React.FC<TripCardProps> = (props) => {
                     <MaterialCommunityIcon name={'motorbike'} size={60} />
                   )}
                   {props.vehicleType == MarkerVehicleType.SCOOTER && (
-                    <MaterialCommunityIcon name={'scooter'} size={60} />
+                    <MaterialCommunityIcon name={'scooter'} size={45} />
                   )}
                   {props.vehicleType == MarkerVehicleType.CHARGE && (
                     <MaterialCommunityIcon name={'battery-charging-high'} size={50} />
@@ -136,7 +136,8 @@ const TripCard: React.FC<TripCardProps> = (props) => {
                 </Layout>
               </Layout>
 
-              <Layout style={{ display: 'flex', justifyContent: 'space-between' }}>
+              {props.isCompleted && (
+                <Layout style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Text style={{ fontFamily: AppFontRegular,color: '#ACB1C0', fontSize: 13 }}>
                     {i18n.t(TRANSLATIONS_KEY.TRIP_CAR_COST_TAG).toString()}
                   </Text>
@@ -145,7 +146,7 @@ const TripCard: React.FC<TripCardProps> = (props) => {
                     <Text style={{ fontSize: 15, fontFamily: AppFontBold }}>{props.finalCost}</Text>
                   </View>
                 </Layout>
-
+              )}
             </Layout>
             {(props.upcoming || props.completed) && (<Layout style={{ paddingBottom: '5%', paddingLeft: '5%', paddingRight: '5%', borderBottomLeftRadius: 16, borderBottomRightRadius: 16 }}>
 

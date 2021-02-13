@@ -66,6 +66,7 @@ const DocumentScreen = () => {
               equipment: i?.equipment || [],
               keytype: i?.keytype,
               vehicleType: i?.vehicleType,
+              isCompleted: i?.isCompleted,
             }
           }))
         })
@@ -175,6 +176,7 @@ const DocumentScreen = () => {
                 )}
                 {activeTrips && activeTrips.length !== 0 && <List
                   style={{ backgroundColor: '#f7f9fc', padding: '5%', flexGrow: 1 }}
+                  contentContainerStyle={{ paddingBottom: '25%' }}
                   data={activeTrips}
                   renderItem={(data: any) => {
                     return (
@@ -198,6 +200,7 @@ const DocumentScreen = () => {
                 )}
                 {upcommingTrips && upcommingTrips.length !== 0 && <List
                   style={{ backgroundColor: '#f7f9fc', padding: '5%', flexGrow: 1, marginBottom: 70 }}
+                  contentContainerStyle={{ paddingBottom: '25%' }}
                   data={upcommingTrips}
                   renderItem={(data: any) => {
                     return (
@@ -222,6 +225,7 @@ const DocumentScreen = () => {
                 )}
                 {completedTrips && completedTrips.length !== 0 && <List
                   style={{ backgroundColor: '#f7f9fc', padding: '5%', display: 'flex', flexDirection: 'column' }}
+                  contentContainerStyle={{ paddingBottom: '25%' }}
                   data={completedTrips}
                   renderItem={(data: any) => {
                     return (

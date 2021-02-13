@@ -14,6 +14,7 @@ type ParamList = {
     Payment: {
         vehicle: CarSearchItem;
         type: MarkerVehicleType;
+        nextScreen: string
     };
 };
 const CompleteQrBookingScreen = () => {
@@ -35,7 +36,7 @@ const CompleteQrBookingScreen = () => {
                 </View>
                 <Button
                     onPress={(e) => {
-                        navigation.navigate('Reservation', {  screen: 'Home', params: {...route.params.vehicle, booking: route.params.vehicle, isComplete: true, leftImageUri: undefined}} )
+                        navigation.navigate(route.params.nextScreen, {  screen: 'Home', params: {...route.params.vehicle, booking: route.params.vehicle, isComplete: true, leftImageUri: undefined}, ...route.params} )
                     }}
                     size="giant"
                     style={{

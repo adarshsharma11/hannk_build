@@ -10,6 +10,7 @@ type Params = {
     locationCode: 'LHRA01' | 'SPUA01',
     bookingType: MarkerVehicleType,
     finalCost?: string | number,
+    isComplete?: boolean,
 }
 export const storeLocalBooking = (booking: Params) => {
 
@@ -31,7 +32,8 @@ export const storeLocalBooking = (booking: Params) => {
         "finalCost": booking.finalCost || (Math.random() + parseInt(Math.random().toString().slice(3,5))).toFixed(2),
         "payableOnCollection": "0",
         "unixTime": moment().unix(),
-        "vehicleType": booking.bookingType
+        "vehicleType": booking.bookingType,
+        "isCompleted": booking?.isComplete || false,
     }
 
     return AsyncStorage.getItem('localBookings')
@@ -54,5 +56,20 @@ export const getLocalBookings = () => {
             return { data: [] }
         }
     })
+}
 
+export const updateBooking = (id: string, newData: any) => {
+    return AsyncStorage.getItem('localBookings')
+    .then(bookingsString => {
+        if (!bookingsString) return Promise.resolve()
+
+        const bookings = JSON.parse(bookingsString)
+        const bookingToEdit = bookings.find(b => b.resnumber == id)
+        if (!bookingToEdit) return Promise.resolve()
+
+        const newBookingsArr = bookings.filter(b => b.resnumber != bookingToEdit.resnumber)
+        newBookingsArr.push({ ...bookingToEdit, ...newData })
+        
+        return AsyncStorage.setItem('localBookings', JSON.stringify(newBookingsArr))
+    })
 }
