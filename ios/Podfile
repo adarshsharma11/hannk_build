@@ -92,6 +92,8 @@ target 'AnotherApp' do
 
   pod 'react-native-signature-capture', :path => '../node_modules/react-native-signature-capture'
 
+  pod 'ReactNativeExceptionHandler', :podspec => '../node_modules/react-native-exception-handler/ReactNativeExceptionHandler.podspec'
+
   target 'AnotherAppTests' do
     inherit! :complete
     # Pods for testing
