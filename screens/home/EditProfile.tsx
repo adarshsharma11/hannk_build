@@ -462,7 +462,7 @@ const FileMetadata: React.FC<Props> = ({ docNum, docCountry, day, month, year })
             <Layout style={{ marginBottom: '3%', display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
                 <View>
                     {day != undefined && day != null && typeof day == "string" && day.length > 1 && <Text style={{ textAlign: 'left', fontFamily: AppFontBold }} category="s1">
-                        Expiry
+                        Date of Expiry
                     </Text>}
                     {docNum != undefined && docNum != null && typeof docNum == "string" && docNum.length > 1 && <Text style={{ textAlign: 'left', fontFamily: AppFontBold }} category="s1">
                         Document Number

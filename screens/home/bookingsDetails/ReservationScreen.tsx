@@ -359,7 +359,7 @@ export default function App({ navigation, route }) {
                     if (route?.params?.params?.booking.vehicleType == MarkerVehicleType.CHARGE) {
                       nextScreen = "ScooterPower"
                     }
-                    navigation.navigate("CompleteQrBooking", { nextScreen: route?.params?.params?.isComplete ? nextScreen: 'Reservation',vehicle: route?.params?.params?.booking, vehicleType: route?.params?.params?.booking?.vehicleType })
+                    navigation.navigate("CompleteQrBooking", { isComplete: route?.params?.params?.isComplete, nextScreen: route?.params?.params?.isComplete ? nextScreen: 'Reservation',vehicle: route?.params?.params?.booking, vehicleType: route?.params?.params?.booking?.vehicleType })
                   }
                 }}>
                   <View style={{ height: '100%', borderColor: 'rgba(0,0,0,0.2)', borderRightWidth: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', }}>

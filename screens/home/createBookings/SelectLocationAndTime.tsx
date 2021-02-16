@@ -221,6 +221,9 @@ export default () => {
                                     setReturnTime(setHours(addHours(d, 24), getHours(returnTime)))
                                     setShowDepartureDatepicker(false)
                                 }}
+                                onCancel={() => {
+                                    setShowDepartureDatepicker(false)
+                                }}
                                 date={departureTime}
                                 isVisible={showDepartureDatepicker}
                             />
@@ -229,6 +232,9 @@ export default () => {
                                 onChange={(d) => {
                                     console.log(setMinutes(setHours(departureTime, getHours(d)), getMinutes(d)))
                                     setDepartureTime(setMinutes(setHours(departureTime, getHours(d)), getMinutes(d)))
+                                    setShowDepartureTimepicker(false)
+                                }}
+                                onCancel={() => {
                                     setShowDepartureTimepicker(false)
                                 }}
                                 isVisible={showDepartureTimepicker}
@@ -254,6 +260,9 @@ export default () => {
                                     setReturnTime(setMinutes(setHours(d, getHours(returnTime)), getMinutes(d)))
                                     setShowReturnDatepicker(false)
                                 }}
+                                onCancel={() => {
+                                    setShowReturnDatepicker(false)
+                                }}
                                 date={returnTime}
                                 isVisible={showReturnDatepicker}
                             />
@@ -261,6 +270,9 @@ export default () => {
                                 date={returnTime}
                                 onChange={(d) => {
                                     setReturnTime(setMinutes(setHours(returnTime, getHours(d)), getMinutes(d)))
+                                    setShowReturnTimepicker(false)
+                                }}
+                                onCancel={() => {
                                     setShowReturnTimepicker(false)
                                 }}
                                 isVisible={showReturnTimepicker}

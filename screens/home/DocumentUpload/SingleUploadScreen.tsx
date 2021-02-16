@@ -209,9 +209,14 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                         <View style={{ position: 'absolute', left: 0, zIndex: 4 }}>
                                             <MenuButton />
                                         </View>
-                                        <Text style={{ textAlign: 'center', fontSize: 24, fontFamily: AppFontBold }} category='s2'>
-                                            {currentFileType}
-                                        </Text>
+                                        <View>
+                                            <Text style={{ textAlign: 'center', fontSize: 24, fontFamily: AppFontBold }} category='s2'>
+                                                {currentFileType}
+                                            </Text>
+                                            <Text style={{ textAlign: 'center', fontSize: 18, fontFamily: AppFontBold }}>
+                                                {i18n.t(TRANSLATIONS_KEY.PROFILE_VERIFICATION_TAP_TO_CHOOSE).toString()}
+                                            </Text>
+                                        </View>
                                     </Layout>
                                     {getFilesReq.loading && (
                                         <View style={{ backgroundColor: 'white', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -293,6 +298,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                     {currentFileType != FileTypeEnum.selfi && (
                                         <View style={{ backgroundColor: 'white', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                             <Datepicker
+                                                label={i18n.t(TRANSLATIONS_KEY.PROFILE_VERIFICATION_EXPIRE_DATE_TAG).toString()}
                                                 style={{ paddingLeft: '5%', paddingRight: '5%', marginBottom: '1%', width: '100%' }}
                                                 controlStyle={{
                                                     backgroundColor: 'white',
@@ -310,6 +316,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                             />
 
                                             <Input
+                                                label={i18n.t(TRANSLATIONS_KEY.PROFILE_VERIFICATION_DOCUMENT_NUMBER_TAG).toString()}
                                                 status={errors.docNumber && touched.docNumber ? 'danger' : undefined}
                                                 value={values.docNumber}
                                                 onChangeText={handleChange('docNumber')}
@@ -321,6 +328,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                             />
                                             {errors.docNumber && touched.docNumber && <ErrorLabel style={{ marginLeft: '5%', alignSelf: 'flex-start' }} text={errors.docNumber} />}
                                             <Layout style={{ marginBottom: '1%', width: '90%' }}>
+                                                <Text status={errors.fileCountry ? 'danger': undefined} style={{ color: '#00000065', fontSize: 12 }}>{i18n.t(TRANSLATIONS_KEY.PROFILE_VERIFICATION_FILE_COUNTRY_TAG).toString()}</Text>
                                                 <TouchableOpacity onPress={() => setShowCountryModal(true)}>
                                                     <View style={{ width: '100%', borderWidth: 1, borderColor: errors.fileCountry && touched.fileCountry ? '#ffa5bc' : '#000000', borderRadius: 10 }}>
                                                         {errors.fileCountry && touched.fileCountry && !currentCountryObj && (
@@ -368,10 +376,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                             </Layout>
                                         </View>
                                     )}
-
-                                </ScrollView>
-
-                                <Layout style={{ paddingTop: '2%' }}>
+                                    <Layout style={{ paddingTop: '2%', marginTop: 'auto' }}>
                                     <Button
                                         disabled={buttonIsDisabled()}
                                         accessoryRight={getFilesReq.loading || saving ? LoadingSpinner : undefined}
@@ -405,6 +410,7 @@ const DocumentScreen = ({ route, navigation }: Props) => {
                                         </Text>}
                                     </Button>
                                 </Layout>
+                                </ScrollView>
                             </>
                         )
                     }}

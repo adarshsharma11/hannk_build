@@ -14,7 +14,8 @@ type ParamList = {
     Payment: {
         vehicle: CarSearchItem;
         type: MarkerVehicleType;
-        nextScreen: string
+        nextScreen: string;
+        isComplete: boolean
     };
 };
 const CompleteQrBookingScreen = () => {
@@ -28,7 +29,10 @@ const CompleteQrBookingScreen = () => {
         <SafeAreaView style={{ flex: 1 }} >
             <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }} keyboardShouldPersistTaps={"handled"} style={{ backgroundColor: 'white' }}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: 'white', width: (baseCircleSize - 20), height: (baseCircleSize - 20), borderRadius: (baseCircleSize - 20) / 2 }}>
-                    <Text style={{ fontSize: 34, textAlign: 'center' }}>Scan this code to complete the booking</Text>
+                    <Text style={{ fontSize: 34, textAlign: 'center' }}>
+                        {route.params.isComplete != true ? "Scan this code to start your booking" : undefined}
+                        {route.params.isComplete == true ? "Scan this code to end your booking" : undefined}
+                    </Text>
                 </View>
 
                 <View style={{ borderWidth: 1, padding: '10%', marginTop: '5%', alignItems: 'center' }}>
